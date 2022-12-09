@@ -7,21 +7,21 @@
 
   body,
   html {
-    @apply font-sans text-lg text-gray-900;
+    @apply font-sans text-body-18 text-grey-900;
 
     scroll-behavior: smooth;
   }
 
   .container-padding {
-    @apply md: px-6 lg:px-12 px-4 xl:px-[80px] 2xl:px-[calc((100vw_-_1280px)_/_2)] 3xl:px-[calc((100vw_-_1440px)_/_2)];
+    @apply md:px-6 lg:px-12 px-4 xl:px-[80px] 2xl:px-[calc((100vw_-_1280px)_/_2)] 3xl:px-[calc((100vw_-_1440px)_/_2)];
   }
 
   .container-padding-left {
-    @apply md: pl-6 lg:pl-12 pl-4 xl:pl-[80px] 2xl:pl-[calc((100vw_-_1280px)_/_2)] 3xl:pl-[calc((100vw_-_1440px)_/_2)];
+    @apply md:pl-6 lg:pl-12 pl-4 xl:pl-[80px] 2xl:pl-[calc((100vw_-_1280px)_/_2)] 3xl:pl-[calc((100vw_-_1440px)_/_2)];
   }
 
   .container-padding-right {
-    @apply md: pr-6 lg:pr-12 pr-4 xl:pr-[80px] 2xl:pr-[calc((100vw_-_1280px)_/_2)] 3xl:pr-[calc((100vw_-_1440px)_/_2)];
+    @apply md:pr-6 lg:pr-12 pr-4 xl:pr-[80px] 2xl:pr-[calc((100vw_-_1280px)_/_2)] 3xl:pr-[calc((100vw_-_1440px)_/_2)];
   }
 
 

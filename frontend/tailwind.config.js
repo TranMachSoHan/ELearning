@@ -33,9 +33,10 @@ module.exports = {
         transparent: 'transparent',
         inherit: 'inherit',
         primary: {
+          900: '#0C1131',
           500: '#3D53F5',
           50: '#ECEEFE',
-          
+
           
         },
         
@@ -89,6 +90,7 @@ module.exports = {
           'black': '#171717',
         },
         white: '#FFF',
+        black: '#000'
       },
 
     extend: {
