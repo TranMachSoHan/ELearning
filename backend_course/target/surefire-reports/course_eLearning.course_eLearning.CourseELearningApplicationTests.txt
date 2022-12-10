@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: course_eLearning.course_eLearning.CourseELearningApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.69 s - in course_eLearning.course_eLearning.CourseELearningApplicationTests
