@@ -14,9 +14,13 @@ import java.util.Collection;
 @Document(collection = "courses")
 public class Course {
     @Id
-    private Long courseID;
+    private String courseID;
     private String courseName;
-    private String professor;
+    private String professorID;
     private String courseDescription;
     private Collection<Comment> comments;
+    private Skill skill;
+    private Collection<Module> contents;
+    private Collection<String> courseProgresses;
+
 }
