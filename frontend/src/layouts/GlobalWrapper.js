@@ -3,7 +3,7 @@ import TopNav from "../components/TopNav";
 
 
 const GlobalWrapper = ({children}) => {
-    return ( <main className="container-padding" >
+    return ( <main className="min-h-screen container-padding" >
        <TopNav></TopNav>
         {children}
 
