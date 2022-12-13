@@ -1,6 +1,7 @@
 
 import { Route, Routes } from 'react-router-dom';
 import CourseBySkill from './pages/CourseBySkill';
+import CourseDetail from './pages/CourseDetail';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -14,6 +15,7 @@ function App() {
         <Route path='/skill' element={<CourseBySkill/>} ></Route>
         <Route path='/login' element={<Login/>} ></Route>
         <Route path='/register' element={<SignUp/>} ></Route>
+        <Route path='/detail' element={<CourseDetail/>} ></Route>
 
       
     </Routes>
