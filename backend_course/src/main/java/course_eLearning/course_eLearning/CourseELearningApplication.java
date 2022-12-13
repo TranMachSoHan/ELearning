@@ -17,15 +17,6 @@ public class CourseELearningApplication {
 	@Autowired
 	private CourseRepository courseRepository;
 
-	@PostMapping
-	public Course saveCourse(@RequestBody Course course){
-		return courseRepository.save(course);
-	}
-
-	@GetMapping
-	public List<Course> getCourses(){
-		return courseRepository.findAll();
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(CourseELearningApplication.class, args);

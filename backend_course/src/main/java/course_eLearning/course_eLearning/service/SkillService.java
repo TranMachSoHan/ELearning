@@ -1,4 +1,5 @@
 package course_eLearning.course_eLearning.service;
 
-public class SkillService {
+public interface SkillService {
+
 }

@@ -1,4 +1,5 @@
-package course_eLearning.course_eLearning.service.serviceImpl;
+package course_eLearning.course_eLearning.service;
 
-public class CommentService {
+public interface CommentService {
+
 }
