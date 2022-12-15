@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -18,9 +19,19 @@ public class Course {
     private String courseName;
     private String professorID;
     private String courseDescription;
-    private Collection<Comment> comments;
+    private List<Comment> comments;
     private Skill skill;
-    private Collection<Module> contents;
-    private Collection<String> courseProgresses;
+    private String star;
+    private List<Module> contents;
+    private List<String> courseProgresses;
 
+    public Course(String courseName, String professorID, String courseDescription, List<Comment> comments, Skill skill, String star, List<Module> contents) {
+        this.courseName = courseName;
+        this.professorID = professorID;
+        this.courseDescription = courseDescription;
+        this.comments = comments;
+        this.skill = skill;
+        this.star = star;
+        this.contents = contents;
+    }
 }

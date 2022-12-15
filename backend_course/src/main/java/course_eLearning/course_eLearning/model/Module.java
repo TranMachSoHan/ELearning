@@ -24,4 +24,13 @@ public class Module {
     private Collection<Quiz> quizList;
     private boolean isFinished;
     private File supportedFile;
+
+    public Module(String title, boolean canViewed, Collection<Video> videoList, Collection<Quiz> quizList, boolean isFinished, File supportedFile) {
+        this.title = title;
+        this.canViewed = canViewed;
+        this.videoList = videoList;
+        this.quizList = quizList;
+        this.isFinished = isFinished;
+        this.supportedFile = supportedFile;
+    }
 }

@@ -1,5 +1,7 @@
 package course_eLearning.course_eLearning.model;
 
-public class Skill {
-    private String skillName;
+public enum Skill {
+    PYTHON,
+    JAVA,
+    C
 }
