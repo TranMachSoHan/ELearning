@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/course")
+@CrossOrigin(origins = "http://example.com", maxAge = 3600)
 public class CourseController {
     @Autowired
     CourseService courseService;

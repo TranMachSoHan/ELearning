@@ -10,6 +10,9 @@
         <module name="course_eLearning" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="backend_course" target="17" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
