@@ -44,8 +44,6 @@ public class CourseSereviceImpl implements CourseService {
     public Page<Course> pageableCoursesBySkill(int pageNum, int pageSize, String skill) {
 
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-
-
         return courseRepository.findAllBySkill(skill, pageable);
     }
 

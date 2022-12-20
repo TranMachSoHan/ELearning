@@ -10,6 +10,7 @@ import course_eLearning.course_eLearning.util.ModelMapperConfig;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -58,6 +59,9 @@ public class CourseController {
 
     @GetMapping("/all")
     public ResponseEntity<List<CourseListDTO>> getAllCourses(){
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
         List<Course> courses = courseService.getCourses();
         List<CourseListDTO> courseListDTOS = courses.stream().map(ModelMapperConfig::convertToCourseListDto).collect(Collectors.toList());
 
@@ -73,9 +77,18 @@ public class CourseController {
     @GetMapping("/id/{courseId}")
     public ResponseEntity<CourseDetailDTO> getCourseById(@PathVariable("courseId") String course_id){
         Course course = courseService.getCourseById(course_id);
-        System.out.println(course.getCourseID());
-        CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course);
 
-        return ResponseEntity.ok(courseDetailDTO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json; charset=utf-8");
+
+
+        if(course == null){
+            return new ResponseEntity<>(null, headers, HttpStatus.OK);
+        }
+        else{
+            CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course);
+            return new ResponseEntity<>(courseDetailDTO, headers, HttpStatus.OK);
+        }
+
     }
 }

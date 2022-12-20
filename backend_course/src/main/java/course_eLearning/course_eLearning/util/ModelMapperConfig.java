@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,9 +45,12 @@ public class ModelMapperConfig {
         CourseDetailDTO courseDetailDTO = modelMapper.map(course, CourseDetailDTO.class);
 
         List<Module> modules = course.getModules();
-        List<ModuleListDTO> moduleListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleListDTO).collect(Collectors.toList());
-
-        courseDetailDTO.setModules(moduleListDTOS);
+        if(modules != null){
+            List<ModuleListDTO> moduleListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleListDTO).collect(Collectors.toList());
+            courseDetailDTO.setModules(moduleListDTOS);
+        }else {
+            courseDetailDTO.setModules(new ArrayList<>());
+        }
 
         return courseDetailDTO;
     }
