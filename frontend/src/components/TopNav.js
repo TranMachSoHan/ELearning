@@ -41,8 +41,8 @@ const TopNav = () => {
             </li>
 
             <li className="flex items-center gap-1.5">
-                <Button text={'Log In'} isPrimary={false} size='small'></Button>
-                <Button  text={'Sign Up'} isPrimary={true} size='small'></Button>
+                <Button text={'Log In'} onClick={()=> {navigate('/login')}} isPrimary={false} size='small'></Button>
+                <Button  text={'Sign Up'} onClick={()=> {navigate('/register')}} isPrimary={true} size='small'></Button>
             </li>
 
         </ul>
