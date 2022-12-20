@@ -1,27 +1,28 @@
 package course_eLearning.course_eLearning.dto;
 
 import course_eLearning.course_eLearning.model.Course;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import course_eLearning.course_eLearning.util.ModelMapperConfig;
+import lombok.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 
-@Getter
-@Setter
+import java.util.HashMap;
+import java.util.HashSet;
+
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class CourseListDTO {
     private String courseID;
     private String courseName;
-    private String professorID;
+    private ProfessorDTO professor;
     private String courseDescription;
 
-    private static final ModelMapper modelMapper = new ModelMapper();
+    private final String USER_API_URL = "http://localhost:8081/api/proffesor";
 
-    public static CourseListDTO convertToCourseListDto(Course course){
-        CourseListDTO courseListDTO = modelMapper.map(course, CourseListDTO.class);
-        return courseListDTO;
+    public void setProfessor(String professorId){
+        this.professor = new ProfessorDTO(professorId);
     }
 }

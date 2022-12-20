@@ -22,16 +22,16 @@ public class Course {
     private List<Comment> comments;
     private Skill skill;
     private String star;
-    private List<Module> contents;
+    private List<Module> modules;
     private List<String> courseProgresses;
 
-    public Course(String courseName, String professorID, String courseDescription, List<Comment> comments, Skill skill, String star, List<Module> contents) {
+    public Course(String courseName, String professorID, String courseDescription, List<Comment> comments, Skill skill, String star, List<Module> modules) {
         this.courseName = courseName;
         this.professorID = professorID;
         this.courseDescription = courseDescription;
         this.comments = comments;
         this.skill = skill;
         this.star = star;
-        this.contents = contents;
+        this.modules = modules;
     }
 }

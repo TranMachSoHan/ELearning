@@ -55,10 +55,16 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
+    public Course getCourseById(String courseId) {
+        return courseRepository.findById(courseId).orElse(null);
+    }
+
+    @Override
     public Page<Course> getAllCourseByName(int pageNum, int pageSize, String courseName) {
         Pageable pageable = PageRequest.of(pageNum  - 1, pageSize);
         courseRepository.findAll(pageable);
         return null;
     }
+
 
 }

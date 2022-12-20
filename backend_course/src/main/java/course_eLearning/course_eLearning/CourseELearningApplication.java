@@ -8,6 +8,7 @@ import course_eLearning.course_eLearning.model.Skill;
 import course_eLearning.course_eLearning.repository.CommentRepository;
 import course_eLearning.course_eLearning.repository.CourseRepository;
 import course_eLearning.course_eLearning.repository.ModuleRepository;
+import course_eLearning.course_eLearning.util.ModelMapperConfig;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -29,7 +30,6 @@ public class CourseELearningApplication implements CommandLineRunner {
 
 	@Autowired
 	private CommentRepository commentRepository;
-
 
 	public static void main(String[] args) {
 		SpringApplication.run(CourseELearningApplication.class, args);
@@ -75,7 +75,6 @@ public class CourseELearningApplication implements CommandLineRunner {
 		Course machineLearningCourse = new Course("Machine Learning", "prof1", "description", comments1, Skill.PYTHON, "1", contents1);
 		Course dataAnalysisCourse = new Course("Data Analysis", "prof1", "description", comments1, Skill.PYTHON, "1", contents1);
 		courseRepository.saveAll(Arrays.asList(dataScienceCourse, machineLearningCourse, dataAnalysisCourse));
-
 
 	}
 }
