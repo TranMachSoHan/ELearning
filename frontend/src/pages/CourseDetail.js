@@ -5,6 +5,7 @@ import SectionTitle from "../components/SectionTitle";
 import { Link } from "react-router-dom";
 import Comment from "../components/Comment";
 import { Accordion } from "flowbite-react";
+import CourseContent from "../components/CourseContent";
 
 const commentData = [
     {
@@ -40,14 +41,14 @@ const modules = [
 ]
 const CourseDetail = () => {
     return ( <section className="pt-8">
-        <div className="grid relative">
-            <div className='col-span-1  block after:absolute after:inset-0 after:bg-primary-50/80 after:z-0  relative col-start-1 row-start-1 row-span-1'>
+        <div className="relative grid">
+            <div className='relative block col-span-1 col-start-1 row-span-1 row-start-1 after:absolute after:inset-0 after:bg-primary-50/80 after:z-0'>
                 <img src={CourseThumb} className='h-[600px] w-full object-cover ' alt="" />
         
             </div>
             <div className="col-span-1 z-[1]  self-center ml-[72px]  relative col-start-1 row-start-1 row-span-1">
-                <h1 className="text-headline-48 font-bold text-primary-500">Python for Absolute Beginners</h1>
-                <p className="text-lead-24 py-4">Created by Hoang Minh Quan - 21,434 students enrolled</p>
+                <h1 className="font-bold text-headline-48 text-primary-500">Python for Absolute Beginners</h1>
+                <p className="py-4 text-lead-24">Created by Hoang Minh Quan - 21,434 students enrolled</p>
                 <div className="flex items-center gap-5">
                     <Button size="large" text={'Start Now!'}></Button>
                     <Button isPrimary={false} size='large' text={'Save Later'}></Button>
@@ -64,12 +65,13 @@ const CourseDetail = () => {
             
             <Accordion>
                     {modules.map((m) =>  <Accordion.Panel key={m}>
-                        <Accordion.Title>
+                        <Accordion.Title className="text-button-21">
                         {m}
                         </Accordion.Title>
                         <Accordion.Content>
                         <p className="mb-2 text-gray-500 ">
-                            course content goes here
+                            <CourseContent contentTitle={'String'} duration='6:05'/>
+                            <CourseContent contentTitle={'Variables'} duration='6:05'/>
                         </p>
                         
                         </Accordion.Content>
@@ -81,12 +83,12 @@ const CourseDetail = () => {
             <div className="flex items-center gap-8 max-w-[80%]">
                 <img src={Avatar} alt="" className="block aspect-square rounded-full object-cover w-[168px]" />
                 <div>
-                    <h3 className="text-headline-26 font-bold">Hoang Minh Quan</h3>
-                    <p className="font-light text-small-16 pt-1 pb-3">24 courses</p>
+                    <h3 className="font-bold text-headline-26">Hoang Minh Quan</h3>
+                    <p className="pt-1 pb-3 font-light text-small-16">24 courses</p>
 
                     <p>Lorem ipsum dolor sit amet consectetur. Ornare augue tristique posuere laoreet eget pulvinar egestas gravida maecenas. Vel neque quis ac magna.</p>
 
-                    <Link href="/" className="text-primary-500 underline">View instructor profile</Link>
+                    <Link href="/" className="underline text-primary-500">View instructor profile</Link>
                 </div>
             </div>
         </div>
@@ -98,7 +100,7 @@ const CourseDetail = () => {
             </div>
         </div>
 
-        <input type="text" placeholder="Leave a comment" className="block border py-2 px-4 w-1/2 border-grey-300" />
+        <input type="text" placeholder="Leave a comment" className="block w-1/2 px-4 py-2 border border-grey-300" />
     </section> );
 }
  
