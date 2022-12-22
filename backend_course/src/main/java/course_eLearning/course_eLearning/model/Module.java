@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Collection;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,13 +20,13 @@ public class Module {
     private String title;
     private boolean canViewed;
     @DBRef
-    private Collection<Video> videoList;
+    private List<Video> videoList;
     @DBRef
-    private Collection<Quiz> quizList;
+    private List<Quiz> quizList;
     private boolean isFinished;
     private File supportedFile;
 
-    public Module(String title, boolean canViewed, Collection<Video> videoList, Collection<Quiz> quizList, boolean isFinished, File supportedFile) {
+    public Module(String title, boolean canViewed, List<Video> videoList, List<Quiz> quizList, boolean isFinished, File supportedFile) {
         this.title = title;
         this.canViewed = canViewed;
         this.videoList = videoList;
