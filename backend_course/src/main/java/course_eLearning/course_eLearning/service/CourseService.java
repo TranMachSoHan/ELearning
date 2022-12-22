@@ -6,7 +6,9 @@ import course_eLearning.course_eLearning.model.Skill;
 import org.springframework.data.domain.Page;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface CourseService{
     public abstract Course createCourse(Course course);

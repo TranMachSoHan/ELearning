@@ -1,23 +1,22 @@
 package course_eLearning.course_eLearning.service.serviceImpl;
 
-import course_eLearning.course_eLearning.dto.CourseListDTO;
 import course_eLearning.course_eLearning.model.Course;
+import course_eLearning.course_eLearning.model.Skill;
 import course_eLearning.course_eLearning.repository.CourseRepository;
 import course_eLearning.course_eLearning.service.CourseService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseSereviceImpl implements CourseService {
     @Autowired
-    CourseRepository courseRepository;
-
+    private CourseRepository courseRepository;
 
     @Override
     public Course createCourse(Course course) {
