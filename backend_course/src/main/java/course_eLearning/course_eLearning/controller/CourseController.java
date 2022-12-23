@@ -70,7 +70,9 @@ public class CourseController {
         List<Skill> skills = skillService.getAllSkills();
         Map<String, List<CourseListDTO>> courseGroupedBySkill = new HashMap<>();
         for (Skill skill: skills){
-            List<Course> courses = courseService.getCoursesBySkill(skill.name());
+            List<Course> courses = courseService.getCoursesBySkill(skill.name()).stream()
+                    .limit(3)
+                    .collect(Collectors.toList());
             List<CourseListDTO> courseListDTOS = courses.stream().map(ModelMapperConfig::convertToCourseListDto).collect(Collectors.toList());
             courseGroupedBySkill.put(skill.toString(),courseListDTOS );
         }
