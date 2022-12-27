@@ -49,6 +49,7 @@ public class ModelMapperConfig {
         if(modules != null){
             List<ModuleListDTO> moduleListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleListDTO).collect(Collectors.toList());
             courseDetailDTO.setModules(moduleListDTOS);
+            courseDetailDTO.setComments(course.getComments());
         }else {
             courseDetailDTO.setModules(new ArrayList<>());
         }

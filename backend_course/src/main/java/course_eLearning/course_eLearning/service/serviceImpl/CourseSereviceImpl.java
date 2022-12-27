@@ -1,6 +1,8 @@
 package course_eLearning.course_eLearning.service.serviceImpl;
 
 import course_eLearning.course_eLearning.model.Course;
+import course_eLearning.course_eLearning.model.CourseProgress;
+import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.repository.CourseRepository;
 import course_eLearning.course_eLearning.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,11 @@ public class CourseSereviceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private CourseProgressRepository courseProgressRepository;
+
     @Override
     public Course createCourse(Course course) {
-        System.out.println(course.getCourseName());
         Course newCourse = courseRepository.save(course);
         return newCourse;
     }
@@ -47,12 +51,13 @@ public class CourseSereviceImpl implements CourseService {
     public Page<Course> pageableCoursesBySkill(int pageNum, int pageSize, String skill) {
 
         Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
-        return courseRepository.findAllBySkill(skill, pageable);
+        return courseRepository.findAllBySkill(skill.toUpperCase(), pageable);
     }
 
     @Override
     public List<Course> getCoursesBySkill(String skill) {
-        return courseRepository.findBySkill(skill);
+        // Handle upper case
+        return courseRepository.findBySkill(skill.toUpperCase());
     }
 
     @Override
@@ -65,6 +70,26 @@ public class CourseSereviceImpl implements CourseService {
         Pageable pageable = PageRequest.of(pageNum  - 1, pageSize);
         courseRepository.findAll(pageable);
         return null;
+    }
+
+    @Override
+    public Course enrollCourse(String courseId, String studentId) {
+        Optional<Course> courseOptional = courseRepository.findById(courseId);
+        if(courseOptional.isPresent()){
+            Course course = courseOptional.get();
+
+            // Save course progress
+            CourseProgress courseProgress = new CourseProgress(course, studentId);
+            courseProgress = courseProgressRepository.save(courseProgress);
+
+            course.addCourseProgress(courseProgress.getCourseProgressID());
+            courseRepository.save(course);
+
+            return course;
+        }
+        else{
+            return null;
+        }
     }
 
 
