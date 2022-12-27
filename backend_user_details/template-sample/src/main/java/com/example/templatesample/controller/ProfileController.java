@@ -18,6 +18,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 
 @RestController
@@ -31,10 +33,6 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    @Autowired
-    public AuthenticationManager authenticationManager;
-
-
     @GetMapping("/all-profiles")
     public List<Profile> getAllProfiles() {
         return profileService.getAll();
@@ -47,32 +45,6 @@ public class ProfileController {
     public List<Student> getAllStudents() {return profileService.getAllStudents();}
 
 
-    @PostMapping("/sign-up/professor")
-    public ResponseEntity<String> createProfessor(@RequestBody Professor professor) {
-        return profileService.createProfessor(professor);
 
-    }
-
-    @PostMapping("/sign-up/student")
-    public ResponseEntity<String> createStudent(@RequestBody Student student) {
-        return profileService.createStudent(student);
-
-    }
-
-    @PostMapping("/sign-in")
-    public ResponseEntity<Object> signIn(@RequestBody Profile profile) throws Exception {
-        Authentication authentication;
-        try {
-            authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(profile.getUserName(), profile.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } catch (BadCredentialsException e) {
-            throw new Exception("Invalid");
-            //print
-        }
-        return new ResponseEntity<>(profileService.getProfessorOrStudent(profile),HttpStatus.OK);
-
-
-    }
 
 }

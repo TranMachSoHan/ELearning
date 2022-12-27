@@ -3,6 +3,7 @@ package com.example.templatesample.service;
 import com.example.templatesample.model.Professor;
 import com.example.templatesample.model.Profile;
 import com.example.templatesample.model.Student;
+import com.example.templatesample.model.enums.AuthenticationProvider;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
@@ -18,6 +19,13 @@ public interface ProfileService {
     List<Professor> getAllProfessors();
     List<Student> getAllStudents();
 
-    ResponseEntity<Object> getProfessorOrStudent(Profile profile);
+    Optional<Object> getProfessorOrStudent(Profile profile);
 
+    Profile getByEmail(String email);
+
+    void createStudentAfterGoogleLogin(String name, String email, AuthenticationProvider authenticationProvider);
+
+    void updateStudentAfterGoogleLogin(String name, AuthenticationProvider authenticationProvider, Student student);
+
+    Student getStudentByEmail(String email);
 }

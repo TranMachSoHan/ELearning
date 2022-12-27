@@ -12,7 +12,6 @@ import java.util.List;
 
 @Repository
 public interface ProfileRepository extends MongoRepository<Profile, String> {
-    Profile findByUserName(String username);
     Profile findByEmail(String email);
 
     List<Profile> findAllByUserRole(Role userRole);
@@ -23,11 +22,11 @@ public interface ProfileRepository extends MongoRepository<Profile, String> {
     @Query("{'_class': 'com.example.templatesample.model.Student'}")
     List<Student> findAllStudents();
 
-    @Query("{'_class': 'com.example.templatesample.model.Professor','userName': ?0}")
-    Professor findProfessorById(String profileID);
+    @Query("{'_class': 'com.example.templatesample.model.Professor','email': ?0}")
+    Professor findProfessorByEmail(String email);
 
-    @Query("{'_class': 'com.example.templatesample.model.Student','userName': ?0}")
-    Student findStudentById(String profileID);
+    @Query("{'_class': 'com.example.templatesample.model.Student','email': ?0}")
+    Student findStudentByEmail(String email);
 
 
 }
