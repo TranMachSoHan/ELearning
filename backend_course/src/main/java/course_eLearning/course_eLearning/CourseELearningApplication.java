@@ -6,6 +6,7 @@ import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.model.Skill;
 import course_eLearning.course_eLearning.repository.CommentRepository;
+import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.repository.CourseRepository;
 import course_eLearning.course_eLearning.repository.ModuleRepository;
 import course_eLearning.course_eLearning.util.ModelMapperConfig;
@@ -31,15 +32,19 @@ public class CourseELearningApplication implements CommandLineRunner {
 	@Autowired
 	private CommentRepository commentRepository;
 
+	@Autowired
+	private CourseProgressRepository courseProgressRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(CourseELearningApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
-		commentRepository.deleteAll();
 		courseRepository.deleteAll();
 		moduleRepository.deleteAll();
+		commentRepository.deleteAll();
+		courseProgressRepository.deleteAll();
 
 		//		--------------Create comments ----------------------------------------
 		Comment comment1 = new Comment("1", "details 1", new Date(), "1");

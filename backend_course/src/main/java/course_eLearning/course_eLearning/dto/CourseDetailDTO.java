@@ -1,7 +1,6 @@
 package course_eLearning.course_eLearning.dto;
 
-import course_eLearning.course_eLearning.model.Module;
-import course_eLearning.course_eLearning.model.Video;
+import course_eLearning.course_eLearning.model.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +19,6 @@ public class CourseDetailDTO {
     private String professorID;
     private String courseDescription;
     private List<ModuleListDTO> modules;
-
+    private List<Comment> comments;
 }
 

@@ -1,12 +1,12 @@
 package course_eLearning.course_eLearning.dto;
 
-import course_eLearning.course_eLearning.model.Video;
+import course_eLearning.course_eLearning.model
+        .Video;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
