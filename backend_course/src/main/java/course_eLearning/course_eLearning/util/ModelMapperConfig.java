@@ -5,6 +5,7 @@ import course_eLearning.course_eLearning.dto.CourseListDTO;
 import course_eLearning.course_eLearning.dto.ModuleListDTO;
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.model.Video;
 import course_eLearning.course_eLearning.service.ModuleService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -57,7 +58,8 @@ public class ModelMapperConfig {
 
     public static ModuleListDTO convertToModuleListDTO(Module module){
         ModuleListDTO moduleListDTO = modelMapper.map(module, ModuleListDTO.class);
-        moduleListDTO.setVideoList(module.getVideoList());
+        List<Video> videoList= module.getVideoList();
+        moduleListDTO.setVideoList(videoList);
         return moduleListDTO;
     }
 

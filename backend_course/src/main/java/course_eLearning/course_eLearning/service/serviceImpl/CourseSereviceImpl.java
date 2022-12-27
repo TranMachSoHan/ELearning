@@ -1,7 +1,6 @@
 package course_eLearning.course_eLearning.service.serviceImpl;
 
 import course_eLearning.course_eLearning.model.Course;
-import course_eLearning.course_eLearning.model.Skill;
 import course_eLearning.course_eLearning.repository.CourseRepository;
 import course_eLearning.course_eLearning.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class CourseSereviceImpl implements CourseService {
@@ -20,13 +18,19 @@ public class CourseSereviceImpl implements CourseService {
 
     @Override
     public Course createCourse(Course course) {
+        System.out.println(course.getCourseName());
         Course newCourse = courseRepository.save(course);
         return newCourse;
     }
 
     @Override
-    public void updateCourse(String id, Course course) {
-
+    public Course updateCourse(String id, Course updatedCourse) {
+        Optional<Course> courseOptional = courseRepository.findById(id);
+        if (courseOptional.isPresent()){
+            Course course = courseOptional.get();
+            return course;
+        }
+        return null;
     }
 
     @Override

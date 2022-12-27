@@ -1,7 +1,5 @@
 package course_eLearning.course_eLearning.dto;
 
-import course_eLearning.course_eLearning.model.Module;
-import course_eLearning.course_eLearning.model.Video;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
