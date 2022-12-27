@@ -1,5 +1,8 @@
 import SectionTitle from "../components/SectionTitle";
 import TabContent from "../components/TabContent";
+import {useEffect, useState} from 'react'
+import { getAllCoursesBySkill } from "../api/useCourseAPI";
+import { useParams } from "react-router-dom";
 
 const data = {
     skill: "Python",
@@ -22,11 +25,32 @@ const data = {
     ]
 }
 const CourseBySkill = () => {
+    let { skillName } = useParams();
+    
+
+    const [listCourses, setLitCourses] = useState(null)
+    
+    useEffect(() => {
+
+        const fetchData = async () => {
+           let data = await getAllCoursesBySkill(skillName.toLocaleUpperCase())
+           console.log(data)
+
+           setLitCourses(data) 
+        }
+
+        fetchData();
+        
+
+
+    }, [skillName])
+
+
     return ( <main className="pt-20">
         <SectionTitle title={`${data.skill} Courses`} ></SectionTitle>
         <section className="px-12 py-10 mt-3 border border-grey-900">
             <div className="space-y-7">
-               {data.listCourses.map(({courseName, courseDes, instructor}) => <TabContent key={courseName} courseName={courseName} courseDes={courseDes} instructor={instructor}/>)}
+               {listCourses?.map(({courseName, courseDes, professor : {professorName}}) => <TabContent key={courseName} courseName={courseName} courseDes={courseDes} instructor={professorName}/>)}
                
             </div>
         </section>

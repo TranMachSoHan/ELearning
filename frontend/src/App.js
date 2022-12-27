@@ -1,5 +1,5 @@
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Switch } from 'react-router-dom';
 import CourseBySkill from './pages/CourseBySkill';
 import CourseDetail from './pages/CourseDetail';
 
@@ -19,7 +19,8 @@ function App() {
 
         <Route element={<StudentLayout/>}>
           <Route path='/' element={<Home/>} ></Route>
-          <Route path='/skill' element={<CourseBySkill/>} ></Route>
+          <Route path='/skill/:skillName' element={<CourseBySkill/>} ></Route>
+
           <Route path='/login' element={<Login/>} ></Route>
           <Route path='/register' element={<SignUp/>} ></Route>
           <Route path='/courseDetail' element={<CourseDetail/>} ></Route>
