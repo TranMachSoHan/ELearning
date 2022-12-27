@@ -25,10 +25,10 @@ public class CourseProgress {
     private int numOfModuleFinished ;
     private List<Submission> submissions ;
 
-    public CourseProgress(Course course, String student) {
+    public CourseProgress(Course course, String student, boolean isEnrolled) {
         this.course = course;
         this.student = student;
-        this.finishedPercentage = 1;
+        this.finishedPercentage = isEnrolled ? 1 : 0;
         this.numOfModuleFinished = 0;
         this.submissions = new ArrayList<>();
     }

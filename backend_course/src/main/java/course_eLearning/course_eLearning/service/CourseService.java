@@ -19,5 +19,5 @@ public interface CourseService{
     public abstract List<Course> getCoursesBySkill(String skill);
     public abstract Course getCourseById(String courseId);
     public abstract Page<Course> getAllCourseByName(int pageNum, int pageSize, String courseName);
-    public abstract Course enrollCourse(String courseId, String studentId);
+    public abstract Course enrollCourse(String course_id, String student_id);
 }
