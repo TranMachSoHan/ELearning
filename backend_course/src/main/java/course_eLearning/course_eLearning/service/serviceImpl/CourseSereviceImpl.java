@@ -73,13 +73,13 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
-    public Course enrollCourse(String courseId, String studentId) {
-        Optional<Course> courseOptional = courseRepository.findById(courseId);
+    public Course enrollCourse(String course_id, String student_id) {
+        Optional<Course> courseOptional = courseRepository.findById(course_id);
         if(courseOptional.isPresent()){
             Course course = courseOptional.get();
 
             // Save course progress
-            CourseProgress courseProgress = new CourseProgress(course, studentId);
+            CourseProgress courseProgress = new CourseProgress(course, student_id, true);
             courseProgress = courseProgressRepository.save(courseProgress);
 
             course.addCourseProgress(courseProgress.getCourseProgressID());
