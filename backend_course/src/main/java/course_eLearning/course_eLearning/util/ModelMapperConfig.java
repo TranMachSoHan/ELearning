@@ -59,8 +59,7 @@ public class ModelMapperConfig {
 
     public static ModuleListDTO convertToModuleListDTO(Module module){
         ModuleListDTO moduleListDTO = modelMapper.map(module, ModuleListDTO.class);
-        List<Video> videoList= module.getVideoList();
-        moduleListDTO.setVideoList(videoList);
+        moduleListDTO.setLessonList(module.getLessons());
         return moduleListDTO;
     }
 

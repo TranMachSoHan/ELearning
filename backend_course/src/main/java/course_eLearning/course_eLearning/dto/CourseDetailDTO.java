@@ -16,6 +16,7 @@ public class CourseDetailDTO {
 
     private String courseID;
     private String courseName;
+    private String star;
     private String professorID;
     private String courseDescription;
     private List<ModuleListDTO> modules;

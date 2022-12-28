@@ -1,5 +1,6 @@
 package course_eLearning.course_eLearning.dto;
 
+import course_eLearning.course_eLearning.model.Lesson;
 import course_eLearning.course_eLearning.model
         .Video;
 import lombok.AllArgsConstructor;
@@ -17,18 +18,17 @@ public class ModuleListDTO {
     private String moduleID;
     private String title;
     private boolean canViewed;
-    private List<VideoPreviewDTO> videoList = new ArrayList<>();
+    private List<LessonListDTO> lessonList;
 
-    public void setVideoList(List<Video> videoList) {
-        if(videoList != null ){
-            this.videoList = videoList.stream().map(video -> new VideoPreviewDTO(video.getTitle(), video.getDuration()))
+    public void setLessonList(List<Lesson> lessonList){
+        if(lessonList != null){
+            this.lessonList = lessonList.stream()
+                    .map( lesson -> {
+                        double duration = lesson.getVideo() != null ? lesson.getVideo().getDuration() : 0;
+                        return new LessonListDTO(lesson.getLessonID(),lesson.getTitle(),lesson.getType(),duration);
+                    })
                     .collect(Collectors.toList());
         }
     }
 
-    private class VideoPreviewDTO{
-        protected VideoPreviewDTO(String title, double duration){
-        }
-
-    }
 }

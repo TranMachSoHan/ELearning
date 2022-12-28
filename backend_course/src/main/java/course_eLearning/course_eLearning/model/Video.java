@@ -13,8 +13,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Video {
     @Id
     private String videoID;
-    private String title;
     private String url;
-    private double duration;
-    private boolean isWatched;
+    private double duration ;
+
+    public Video(String url, double duration) {
+        this.url = url;
+        this.duration = duration;
+    }
 }

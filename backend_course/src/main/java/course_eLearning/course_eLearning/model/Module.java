@@ -20,18 +20,13 @@ public class Module {
     private String title;
     private boolean canViewed;
     @DBRef
-    private List<Video> videoList;
-    @DBRef
-    private List<Quiz> quizList;
-    private boolean isFinished;
+    private List<Lesson> lessons;
     private File supportedFile;
 
-    public Module(String title, boolean canViewed, List<Video> videoList, List<Quiz> quizList, boolean isFinished, File supportedFile) {
+    public Module(String title, boolean canViewed, List<Lesson> lessons, File supportedFile) {
         this.title = title;
         this.canViewed = canViewed;
-        this.videoList = videoList;
-        this.quizList = quizList;
-        this.isFinished = isFinished;
+        this.lessons = lessons;
         this.supportedFile = supportedFile;
     }
 }
