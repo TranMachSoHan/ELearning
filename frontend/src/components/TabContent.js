@@ -5,7 +5,7 @@ const TabContent = ({courseName, courseDes, instructor, courseID}) => {
         <img src={CourseDemoThumb} alt="" className="block w-[268px] aspect-square" />
 
         <div>
-            <NavLink to={`/courseDetail/${courseID}`}><h3 className="font-bold text-headline-31 hover:text-primary-500">{courseName}</h3></NavLink> 
+            <NavLink to={`/courseDetail/${courseID}`}><h3 className="font-bold capitalize text-headline-31 hover:text-primary-500">{courseName}</h3></NavLink> 
             <p className="pt-3 pb-6">{courseDes}</p>
             <p className="font-light text-grey-900">By: {instructor}</p>
         </div>

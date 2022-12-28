@@ -29,3 +29,12 @@ export const getCourseById = async (id) => {
     } 
     
 }
+export const getCourseBySkillGroups = async () => {
+    try {
+        const res = await Base.get(`/course/getAllGroupingBySkill`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}

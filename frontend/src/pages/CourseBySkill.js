@@ -36,7 +36,7 @@ const CourseBySkill = () => {
         const fetchData = async () => {
             try {
                 
-                let data = await paginateCoursesBySkill(currentPage, PAGE_SIZE, skillName.toLocaleUpperCase())
+                let data = await paginateCoursesBySkill(currentPage, PAGE_SIZE, skillName.toUpperCase())
                 setTotalPages(data.totalPages)
                 setListCoursesShown(data.courses) 
             } catch (error) {
@@ -59,7 +59,7 @@ const CourseBySkill = () => {
 
 
     return ( <main className="pt-20">
-        <SectionTitle title={`${skillName} Courses`} ></SectionTitle>
+        <SectionTitle title={`${skillName.toLowerCase()} Courses`} ></SectionTitle>
         <section className="px-12 py-10 mt-3 border border-grey-900">
             <div className="space-y-7">
                {listCoursesShown?.map(({courseName, professor : {professorName}, courseDescription, courseID}) => <TabContent key={courseID} courseName={courseName} courseDes={courseDescription} courseID={courseID} instructor={professorName}/>)}
