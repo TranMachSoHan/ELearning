@@ -103,9 +103,9 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
 
     @Override
     public Optional<Object> getProfessorOrStudent(Profile profile) {
-        Professor professor = profileRepository.findProfessorByEmail(profile.getEmail());
-        Student student = profileRepository.findStudentByEmail(profile.getEmail());
-        if(professor == null) {
+        Optional<Professor> professor = profileRepository.findProfessorByEmail(profile.getEmail());
+        Optional<Student> student = profileRepository.findStudentByEmail(profile.getEmail());
+        if(professor.isEmpty()) {
             return Optional.ofNullable(student);
         }
         return Optional.of(professor);
@@ -136,7 +136,7 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
 
 
     @Override
-    public Student getStudentByEmail(String email) {
+    public Optional<Student> getStudentByEmail(String email) {
         return profileRepository.findStudentByEmail(email);
     }
 

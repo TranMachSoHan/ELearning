@@ -1,6 +1,5 @@
-package com.example.templatesample.jwt;
+package com.example.templatesample.security;
 
-import com.example.templatesample.service.ProfileService;
 import com.example.templatesample.service.impl.ProfileServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

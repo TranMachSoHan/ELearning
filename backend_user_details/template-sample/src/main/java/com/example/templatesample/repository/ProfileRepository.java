@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ProfileRepository extends MongoRepository<Profile, String> {
@@ -23,10 +24,10 @@ public interface ProfileRepository extends MongoRepository<Profile, String> {
     List<Student> findAllStudents();
 
     @Query("{'_class': 'com.example.templatesample.model.Professor','email': ?0}")
-    Professor findProfessorByEmail(String email);
+    Optional<Professor> findProfessorByEmail(String email);
 
     @Query("{'_class': 'com.example.templatesample.model.Student','email': ?0}")
-    Student findStudentByEmail(String email);
+    Optional<Student> findStudentByEmail(String email);
 
 
 }

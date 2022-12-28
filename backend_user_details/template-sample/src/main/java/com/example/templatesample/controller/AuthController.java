@@ -1,9 +1,8 @@
 package com.example.templatesample.controller;
 
 
-import com.example.templatesample.jwt.JwtUtils;
+import com.example.templatesample.security.JwtUtils;
 import com.example.templatesample.model.Professor;
-import com.example.templatesample.model.Profile;
 import com.example.templatesample.model.ProfileDetails;
 import com.example.templatesample.model.Student;
 import com.example.templatesample.payload.JwtResponse;
@@ -12,7 +11,6 @@ import com.example.templatesample.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController

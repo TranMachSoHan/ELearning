@@ -1,9 +1,9 @@
 package com.example.templatesample.config;
 
-import com.example.templatesample.jwt.AuthEntryPointJwt;
-import com.example.templatesample.jwt.AuthTokenFilter;
-import com.example.templatesample.model.oauth2.OAuth2LoginSuccessHandler;
-import com.example.templatesample.service.impl.CustomOAuth2UserService;
+import com.example.templatesample.security.AuthEntryPointJwt;
+import com.example.templatesample.security.AuthTokenFilter;
+import com.example.templatesample.security.oauth2.OAuth2LoginSuccessHandler;
+import com.example.templatesample.security.oauth2.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

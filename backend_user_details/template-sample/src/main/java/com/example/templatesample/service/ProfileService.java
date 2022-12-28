@@ -27,5 +27,5 @@ public interface ProfileService {
 
     void updateStudentAfterGoogleLogin(String name, AuthenticationProvider authenticationProvider, Student student);
 
-    Student getStudentByEmail(String email);
+    Optional<Student> getStudentByEmail(String email);
 }
