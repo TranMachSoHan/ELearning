@@ -50,7 +50,7 @@ const CourseBySkill = () => {
         <SectionTitle title={`${data.skill} Courses`} ></SectionTitle>
         <section className="px-12 py-10 mt-3 border border-grey-900">
             <div className="space-y-7">
-               {listCourses?.map(({courseName, courseDes, professor : {professorName}}) => <TabContent key={courseName} courseName={courseName} courseDes={courseDes} instructor={professorName}/>)}
+               {listCourses?.map(({courseName, professor : {professorName}, courseDescription, courseID}) => <TabContent key={courseID} courseName={courseName} courseDes={courseDescription} courseID={courseID} instructor={professorName}/>)}
                
             </div>
         </section>
