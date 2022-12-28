@@ -10,6 +10,16 @@ export const getAllCoursesBySkill = async (skill) => {
     
 }
 
+export const paginateCoursesBySkill = async (pageNum, pageSize, skill) => {
+    try {
+        const res = await Base.get(`/course/pageableBySkill?pageNum=${pageNum}&pageSize=${pageSize}&skill=${skill}`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}
+
 export const getCourseById = async (id) => {
     try {
         const res = await Base.get(`/course/id/${id}`)

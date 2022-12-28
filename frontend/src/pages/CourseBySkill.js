@@ -1,9 +1,9 @@
 import SectionTitle from "../components/SectionTitle";
 import TabContent from "../components/TabContent";
 import {useEffect, useState} from 'react'
-import { getAllCoursesBySkill } from "../api/useCourseAPI";
+import { paginateCoursesBySkill } from "../api/useCourseAPI";
 import { useParams } from "react-router-dom";
-
+import {Pagination} from 'flowbite-react'
 const data = {
     skill: "Python",
     listCourses: [
@@ -26,33 +26,56 @@ const data = {
 }
 const CourseBySkill = () => {
     let { skillName } = useParams();
-    
-
-    const [listCourses, setLitCourses] = useState(null)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(10)
+    const PAGE_SIZE = 4
+    const [listCoursesShown, setListCoursesShown] = useState(null)
     
     useEffect(() => {
 
         const fetchData = async () => {
-           let data = await getAllCoursesBySkill(skillName.toLocaleUpperCase())
-           console.log(data)
-
-           setLitCourses(data) 
+            try {
+                
+                let data = await paginateCoursesBySkill(currentPage, PAGE_SIZE, skillName.toLocaleUpperCase())
+                setTotalPages(data.totalPages)
+                setListCoursesShown(data.courses) 
+            } catch (error) {
+                console.log(error)
+            }
+           
         }
 
         fetchData();
         
 
 
-    }, [skillName])
+    }, [currentPage, skillName])
+
+   
+    const onPageChange = async (e) => {
+        setCurrentPage(e)
+
+    }
 
 
     return ( <main className="pt-20">
-        <SectionTitle title={`${data.skill} Courses`} ></SectionTitle>
+        <SectionTitle title={`${skillName} Courses`} ></SectionTitle>
         <section className="px-12 py-10 mt-3 border border-grey-900">
             <div className="space-y-7">
-               {listCourses?.map(({courseName, professor : {professorName}, courseDescription, courseID}) => <TabContent key={courseID} courseName={courseName} courseDes={courseDescription} courseID={courseID} instructor={professorName}/>)}
+               {listCoursesShown?.map(({courseName, professor : {professorName}, courseDescription, courseID}) => <TabContent key={courseID} courseName={courseName} courseDes={courseDescription} courseID={courseID} instructor={professorName}/>)}
                
             </div>
+
+            <div className="flex justify-end">
+                <Pagination 
+                className="mt-7 "
+                currentPage={currentPage}
+                onPageChange={onPageChange}
+                showIcons={true}
+                totalPages={totalPages}
+                />
+            </div>
+            
         </section>
     </main> );
 }
