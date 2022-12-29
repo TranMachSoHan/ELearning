@@ -176,12 +176,12 @@ const CourseCategoryTabs = () => {
             <div className="space-y-7">
                {courseData.map(({isActive, listCourses}) => {
                     if (isActive){
-                        return listCourses.map(({courseName, courseDescription, courseID, professor}) => <TabContent courseName={courseName} courseDes={courseDescription} instructor={professor?.professorName} key={courseID}/>)
+                        return listCourses.map(({courseName, courseDescription, courseID, professor}) => <TabContent courseID={courseID} courseName={courseName} courseDes={courseDescription} instructor={professor?.professorName} key={courseID}/>)
                     }
                })}
                <div className="flex justify-center">
 
-                    <Button isPrimary={true} size='large' onClick={toCoursePath} text={`See More Courses`}></Button>
+                    <Button isPrimary={true} size='large' className={'capitalize'} onClick={toCoursePath} text={`See More ${activeSkillName?.toLowerCase()} Courses`}></Button>
                </div>
             </div>
         </div>

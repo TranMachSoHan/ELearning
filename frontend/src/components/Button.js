@@ -1,7 +1,7 @@
 const Button =({type ='button', className, onClick, text, isPrimary = true, size='small', loadingText='Hang on...', isLoading=false}) => {
     return ( <button 
             type={type}
-            className={'font-bold rounded flex justify-center items-center duration-300 hover:drop-shadow-xl hover:transform hover:-translate-y-1 ' + (isPrimary ? 'bg-primary-500 text-primary-50 hover:bg-primary-900 ': 'border border-primary-500 text-primary-500 hover:bg-primary-900 hover:text-primary-50 hover:drop-shadow-xl	 ') 
+            className={'font-bold  rounded flex justify-center items-center duration-300 hover:drop-shadow-xl hover:transform hover:-translate-y-1 ' + (isPrimary ? 'bg-primary-500 text-primary-50 hover:bg-primary-900 ': 'border border-primary-500 text-primary-500 hover:bg-primary-900 hover:text-primary-50 hover:drop-shadow-xl	 ') 
             + (size === 'small' ? 'px-6 py-0.5 ' : size === 'large' ? 'px-6 py-3 text-xl ':'') + (isLoading ? 'opacity-50 pointer-events-none': '') 
              + className}
             onMouseDown={onClick}>

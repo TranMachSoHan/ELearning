@@ -11,6 +11,7 @@ import StudentDetail from './pages/StudentDetail';
 import TeacherDashboard from './pages/TeacherDashboard';
 import StudentLayout from './layouts/StudentLayout'
 import TeacherLayout from './layouts/TeacherLayout'
+import CourseEdit from './pages/CourseEdit';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         
         <Route element={<TeacherLayout/>}>
           <Route path='/teacher' element={<TeacherDashboard/>}></Route>
+          <Route path='/edit-course' element={<CourseEdit/>}></Route>
         </Route>
 
       

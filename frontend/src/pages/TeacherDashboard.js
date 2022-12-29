@@ -2,9 +2,17 @@ import Button from "../components/Button";
 import SectionTitle from "../components/SectionTitle";
 import TeacherCourseCard from "../components/TeacherCourseCard";
 import TeacherNav from "../components/TeacherNav";
+import {Modal} from 'flowbite-react'
 import CourseThumb from '../assets/course-demo-thumb.jpg'
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
 const TeacherDashboard = () => {
+    const [openModal, setOpenModal] = useState(false)
+
+    const onClose = () => {
+        setOpenModal(false)
+    }
     return ( <section className="">
         <SectionTitle title={'Instructor Dashboard'}></SectionTitle>
 
@@ -19,7 +27,39 @@ const TeacherDashboard = () => {
                 <input type="text" placeholder="Find a course" className="block w-[500px]"/>
             </div>
 
-            <Button text={'Create Course'} size='large' isPrimary={true}></Button>
+            <Button text={'Create Course'} size='large' onClick={() => {setOpenModal(true)}} isPrimary={true}></Button>
+
+            <Modal
+                show={openModal}
+                size="3xl"
+                popup={true}
+                onClose={onClose}
+            >
+                <Modal.Header />
+                <Modal.Body>
+                <div className="px-6 pb-4 space-y-6 sm:pb-6 lg:px-8 xl:pb-8">
+                    <h2 className="font-bold text-gray-900 text-headline-31 ">
+                    Course's Basic Information
+                    </h2>
+                    
+                    <form className="space-y-5">
+                         <div className='space-y-2'>
+                            <label htmlFor="courseName" >Course Name</label>
+                            <input type="text" name="courseName" id="courseName" className='block w-full p-2 border border-black' placeholder='Python for Beginners' />
+                        </div>
+
+                        <div className='space-y-2'>
+                            <label htmlFor="courseDescription" >Course Description</label>
+                            <textarea  name="courseDescription" id="courseDescription" className='block w-full p-2 border border-black' rows="5"  />
+                        </div>
+
+                        <Button isPrimary={true} size="large" className={'mb-2'} text={"Save Draft"}></Button>
+                        <NavLink to={"/edit-course"} className='underline text-primary-500 hover:text-primary-900'>Continue to add modules</NavLink>
+                    </form>
+                    
+                </div>
+                </Modal.Body>
+            </Modal>
         </div>
 
         <div className="space-y-6">

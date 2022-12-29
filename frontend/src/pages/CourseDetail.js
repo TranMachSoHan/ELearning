@@ -81,8 +81,8 @@ const CourseDetail = () => {
             <SectionTitle title={'Modules'}></SectionTitle>
             
             <Accordion>
-                    {detail?.modules?.map((m) =>  <Accordion.Panel key={m.moduleID}>
-                        <Accordion.Title className="text-button-21">
+                    {detail?.modules?.map((m) =>  <Accordion.Panel  key={m.moduleID}>
+                        <Accordion.Title className={(m.canViewed ? "": "pointer-events-none opacity-50" )+ " text-button-21"}>
                         {m.title}
                         </Accordion.Title>
                         <Accordion.Content>
@@ -113,7 +113,7 @@ const CourseDetail = () => {
         <div className="pt-12 pb-10 space-y-3">
             <SectionTitle title={'Comments'}></SectionTitle>
             <div className="grid grid-cols-2 gap-9">
-                {commentData.map(cmt => <Comment key={cmt.name} name={cmt.name} commentDate={cmt.commentDate} content={cmt.content} imgSrc={cmt.imgSrc} ></Comment>) }
+                {detail?.comments?.map(cmt => <Comment key={cmt.id} name={cmt.id} commentDate={cmt.time} content={cmt.details} imgSrc={Avatar} ></Comment>) }
             </div>
         </div>
 
