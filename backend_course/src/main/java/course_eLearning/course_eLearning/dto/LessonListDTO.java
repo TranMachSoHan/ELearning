@@ -1,6 +1,6 @@
 package course_eLearning.course_eLearning.dto;
 
-import course_eLearning.course_eLearning.model.LessonType;
+import course_eLearning.course_eLearning.model.helper.LessonType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

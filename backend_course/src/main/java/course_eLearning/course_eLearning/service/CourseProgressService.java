@@ -8,5 +8,7 @@ import java.util.List;
 public interface CourseProgressService {
     public List<CourseProgress> getAll();
 
+    public CourseProgress getById(String course_progress_id);
+
     public List<CourseProgress> getInProgress(String student_id);
 }

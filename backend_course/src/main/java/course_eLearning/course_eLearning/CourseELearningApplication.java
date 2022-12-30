@@ -2,6 +2,7 @@ package course_eLearning.course_eLearning;
 
 import course_eLearning.course_eLearning.model.*;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.model.helper.LessonType;
 import course_eLearning.course_eLearning.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -67,10 +68,10 @@ public class CourseELearningApplication implements CommandLineRunner {
 		Video video2_1_3 = videoRepository.save(new Video("video url", 4500));
 
 		// Tao article
-		Article article1 = new Article("Sub header 1",
+		Lesson.Article article1 = new Lesson.Article("Sub header 1",
 				Arrays.asList("lorem ipsum", "lorem ipsum"),
 				Collections.singletonList("Image url 1"));
-		Article article2 = new Article("Sub header 1",
+		Lesson.Article article2 = new Lesson.Article("Sub header 1",
 				Arrays.asList("lorem ipsum", "lorem ipsum"),null);
 
 		// Tao lesson

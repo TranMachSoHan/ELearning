@@ -92,6 +92,7 @@ public class CourseController {
         return new ResponseEntity<>(courseListDTOS, headers, HttpStatus.OK);
     }
 
+
     @PostMapping("/create")
     public ResponseEntity<Course> createCourse(@RequestBody CoursePostDTO coursePostDTO){
         Course course = mapper.map(coursePostDTO, Course.class);
@@ -105,8 +106,8 @@ public class CourseController {
         return ResponseEntity.ok(courseService.createCourse(course));
     }
 
-    @GetMapping("/id/{courseId}")
-    public ResponseEntity<CourseDetailDTO> getCourseById(@PathVariable("courseId") String course_id){
+    @GetMapping("/overview/id/{courseId}")
+    public ResponseEntity<CourseDetailDTO> getCourseOverviewById(@PathVariable("courseId") String course_id){
         Course course = courseService.getCourseById(course_id);
 
         HttpHeaders headers = new HttpHeaders();
@@ -120,6 +121,8 @@ public class CourseController {
             return new ResponseEntity<>(courseDetailDTO, headers, HttpStatus.OK);
         }
     }
+
+
 
     @PostMapping("/id/{courseId}/enroll")
     public ResponseEntity<Course> enrollCourse(
