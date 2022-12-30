@@ -4,12 +4,12 @@ import SectionTitle from "../components/SectionTitle";
 
 const SignUp = () => {
 
-    const [registerType, setRegisterType] = useState('null');
+    const [registerType, setRegisterType] = useState(null);
     return ( <section className="min-h-[700px] pt-24">
 
         <SectionTitle title='Sign Up'></SectionTitle>
 
-        <form className='w-1/4 pt-20 mx-auto space-y-6'>
+        <form className='w-1/2 pt-20 mx-auto space-y-6'>
             <div className='space-y-2'>
                 <label htmlFor="name" >Name</label>
                 <input type="text" name="name" id="name" className='block w-full p-2 border border-black' placeholder='John Doe' />
@@ -62,7 +62,14 @@ const SignUp = () => {
                     </div>
                 </>
                 
-                : null
+                :   registerType === 'instructor' ? 
+                <>
+                    <div className='space-y-2'>
+                        <label htmlFor="brief" >Brief Introduction About Yourself (background, experience, ...etc)</label>
+                        <textarea  name="brief" id="brief" className='block w-full p-2 border border-black' rows="10"  />
+                    </div>
+                
+                </> : null
             }
 
             <Button text={'Sign Up'} isPrimary={true}></Button>

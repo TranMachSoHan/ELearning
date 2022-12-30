@@ -8,14 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="course_eLearning" />
+        <module name="backend_course" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="backend_course" target="17" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="backend_course" options="-parameters" />
       <module name="course_eLearning" options="-parameters" />
     </option>
   </component>

@@ -1,28 +1,46 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, useNavigate, useLocation } from "react-router-dom";
 import Button from "./Button";
 const skillList =[
     'Python',
-    'Excel',
-    'C++',
-    'Android Development',
-    'Google Analytics'
+    'ReactJs',
+    'C',
+    'Java',
+    'NodeJs'
 ]
 const TopNav = () => {
+    const [open, setOpen] = useState(false);
+    const location = useLocation();
     const navigate = useNavigate();
+
+    const [subMenuText, setSubMenuText] = useState("Skills")
+    
+    useEffect(() => {
+        
+        let pathArgs =location.pathname.split('/')
+        if (pathArgs[1] === 'skill'){
+            setSubMenuText(pathArgs[2])
+        }else{
+            setSubMenuText("Skills")
+        }
+        
+    }, [location.pathname])
+
+    
     return ( <nav className="flex items-center justify-between pt-14">
         {/* Logo */}
         <h4 className="font-black text-black cursor-pointer text-headline-21 lg:text-headline-31" onClick={() => {navigate('/')}}>Rademy</h4>
         
         {/* Navigation List Begins */}
         <ul className="hidden lg:flex items-center justify-between  xl:max-w-[83.33%] flex-grow">
-            <li className="flex gap-1.5 items-center">
-                <span>Skills</span> <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <li className="flex capitalize gap-1.5 items-center relative cursor-pointer " onMouseEnter={() => {setOpen(true)}} onMouseLeave={() => {setOpen(false)}}>
+                <span>{subMenuText.toLowerCase()}</span> <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path fillRule="evenodd" clipRule="evenodd" d="M5.54289 8.29289C5.90338 7.93241 6.47061 7.90468 6.8629 8.2097L6.95711 8.29289L12.25 13.585L17.5429 8.29289C17.9034 7.93241 18.4706 7.90468 18.8629 8.2097L18.9571 8.29289C19.3176 8.65338 19.3453 9.22061 19.0403 9.6129L18.9571 9.70711L12.9571 15.7071C12.5966 16.0676 12.0294 16.0953 11.6371 15.7903L11.5429 15.7071L5.54289 9.70711C5.15237 9.31658 5.15237 8.68342 5.54289 8.29289Z" fill="#171717"/>
                 </svg>
 
-                <ul className="hidden">
+                <ul className={"absolute z-10 right-0 -bottom-0 transform translate-y-full py-4 space-y-2 bg-white drop-shadow-lg " + (open ? 'block' : 'hidden')}>
                     {skillList.map((skill) => <li>
-                        <NavLink>{skill}</NavLink>
+                        <NavLink to={`skill/${skill}`}  className="block px-6 py-1 hover:bg-primary-500 hover:text-white">{skill}</NavLink>
                     </li> )}
                 </ul>
             </li>

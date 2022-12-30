@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../components/Button";
 import SectionTitle from "../components/SectionTitle";
 import TabContent from "../components/TabContent";
 import TabItem from "../components/TabItem";
+import {getCourseBySkillGroups} from "../api/useCourseAPI";
+import { useNavigate } from "react-router-dom";
 
 const data = [
     {   
@@ -27,7 +29,7 @@ const data = [
         ]
     },
     {   
-        skill: 'Excel',
+        skill: 'ReactJs',
         isActive: false,
         listCourses: [
             {
@@ -48,7 +50,7 @@ const data = [
         ]
     },
     {   
-        skill: 'C++',
+        skill: 'C',
          isActive: false,
         listCourses: [
             {
@@ -69,7 +71,7 @@ const data = [
         ]
     },
     {   
-        skill: 'Android Development',
+        skill: 'NodeJs',
          isActive: false,
         listCourses: [
             {
@@ -90,7 +92,7 @@ const data = [
         ]
     },
     {   
-        skill: 'Google Analytics',
+        skill: 'Java',
          isActive: false,
         listCourses: [
             {
@@ -115,9 +117,36 @@ const data = [
 
 const CourseCategoryTabs = () => {
     const [courseData, setCourseData] =useState(data);
+    const [activeSkillName, setActiveSkillName] =useState();
+    const navigate = useNavigate();
+    
+    useEffect(()=>{
+        const fetchData = async () => {
+             let data = await getCourseBySkillGroups()
+             
+             let courseToShow = []
+             for (const[index, [key, value]] of Object.entries(data).entries()) {
+                console.log(key)
+                courseToShow.push({
+                    skill: key,
+                    isActive: index === 0 ? true : false,
+                    listCourses: value 
+                })
+             }
+
+
+             setCourseData(courseToShow)
+           
+        }
+        fetchData()
+    },[])
+
+    useEffect(() => {
+        setActiveSkillName(courseData.find(c => c.isActive === true).skill)
+    }, [courseData])
+    
     const tabClick = (tabName) => {
-        console.log(tabName);
-       
+        
         setCourseData((preCourseData) => {
             return preCourseData.map((course) => {
                 if (course.skill === tabName){
@@ -129,6 +158,10 @@ const CourseCategoryTabs = () => {
             })
         })
 
+    }
+
+    const toCoursePath = () => {
+        navigate(`skill/${activeSkillName}`)
     }
     
     return ( <section className="">
@@ -143,12 +176,12 @@ const CourseCategoryTabs = () => {
             <div className="space-y-7">
                {courseData.map(({isActive, listCourses}) => {
                     if (isActive){
-                        return listCourses.map(({courseName, courseDes, instructor}) => <TabContent courseName={courseName} courseDes={courseDes} instructor={instructor}/>)
+                        return listCourses.map(({courseName, courseDescription, courseID, professor}) => <TabContent courseID={courseID} courseName={courseName} courseDes={courseDescription} instructor={professor?.professorName} key={courseID}/>)
                     }
                })}
                <div className="flex justify-center">
 
-                    <Button isPrimary={true} size='large' text={`See More Courses`}></Button>
+                    <Button isPrimary={true} size='large' className={'capitalize'} onClick={toCoursePath} text={`See More ${activeSkillName?.toLowerCase()} Courses`}></Button>
                </div>
             </div>
         </div>
