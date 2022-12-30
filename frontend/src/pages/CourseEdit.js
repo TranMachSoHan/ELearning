@@ -6,28 +6,42 @@ import SectionTitle from "../components/SectionTitle";
 
 const CourseEdit = () => {
 
-     const [contentType, setContentType] = useState(null);
+    const [lessonType, setLessonType] = useState(null);
 
     const [openEditCourseName, setOpenEditCourseName] = useState(false)
     const [openEditCourseDescription, setOpenEditCourseDescription] = useState(false)
-
-    const [uploadedFiles, setUploadedFiles] = useState([])
-
+    const [openLessonForm, setOpenLessonForm] = useState(false)
+    const [uploadedFile, setUploadedFile] = useState([])
+    const [lessonList, setLessonList] = useState([])
+    const [lessonName, setLessonName] = useState("")
+    const [lessonDuration, setLessonDuration] = useState("")
+    const [lessonArticle, setLessonArticle] = useState("")
 
     const [openModal, setOpenModal] = useState(false)
 
     const onClose = () => {
         setOpenModal(false)
     }
-    const handleUploadFiles = files => {
-        const uploaded = [...uploadedFiles, ...files];
+    
+    const handleSubmitLesson = () => {
+        let newLesson = {
+            'lessonName': lessonName,
+            [lessonType === 'video' &&'lessonDuration']: lessonDuration,
+            'lessonType': lessonType,
+            'lessonContent': lessonType === 'article' ? lessonArticle : lessonType === 'video' ? uploadedFile : null 
+         }
 
-        setUploadedFiles(uploaded);
-        
+         setLessonList ((preList) => {
+           return [...preList, newLesson]
+            
+         })
+
+         setOpenLessonForm(false)
     }
     const handleFileEvent =  (e) => {
         const chosenFiles = Array.prototype.slice.call(e.target.files)
-        handleUploadFiles(chosenFiles);
+
+        setUploadedFile(chosenFiles[0]);
     }
     return ( <section>
         <SectionTitle title={'Edit Course'}></SectionTitle>
@@ -59,64 +73,113 @@ const CourseEdit = () => {
 
                     <Modal
                         show={openModal}
-                        size="3xl"
+                        size="4xl"
                         popup={true}
                         onClose={onClose}
                     >
                         <Modal.Header />
                         <Modal.Body>
                         <div className="px-6 pb-4 space-y-6 sm:pb-6 lg:px-8 xl:pb-8">
-                            <h2 className="font-bold text-gray-900 text-headline-31 ">
-                                Add Module Content
+                            <h2 className="font-bold text-primary-500 text-headline-31 ">
+                                New Module 
                             </h2>
                             
                             <form className="space-y-5">
                                 <div className='space-y-2'>
-                                    <label htmlFor="moduleName" >Module Name</label>
-                                    <input type="text" name="moduleName" id="moduleName" className='block w-full p-2 border border-black' placeholder='Python for Beginners' />
+                                    <label htmlFor="moduleName" className="font-medium" >Module Name</label>
+                                    <input type="text" name="moduleName" id="moduleName" className='block w-full p-2 border border-black' placeholder='Setting Up Python' />
                                 </div>
 
                                 <div className='space-y-2'>
-                                    <p >Module Content Type</p>
+                                    <label  className="block font-medium" >List Lesson</label>
+                                    <div>
+                                        {lessonList.map(l => 
+                                        
+                                            <div className="flex items-center justify-between">
+                                                <div className="flex items-center gap-1">
+                                                    <span>{l.lessonName}</span>
+                                                   <span className="italic font-light text-small-16">{l.lessonType}</span> 
 
-                                     <label className="block" htmlFor="reading"><input type="radio" selected id="reading" name="contentType" onChange={(e) => {setContentType(e.target.value)}} value={'reading'}/> Reading</label>
-                                    <label className="block" htmlFor="video"><input type="radio" id="video" name="contentType" onChange={(e) => {setContentType(e.target.value)}} value={'video'}/> Video</label>
-                        
+                                                </div>
+
+                                                <p>{l.lessonDuration && (l.lessonDuration + 's')}</p>
+                                            </div>
+                                        )}
+                                    </div>
                                 </div>
 
+                                {/* Add Lesson Section */}
 
                                 {
-                                    contentType === 'reading' ? 
-                                    <div className='space-y-2'>
-                                        <label htmlFor="courseDescription" >Reading Content</label>
-                                        <textarea  name="courseDescription" id="courseDescription" className='block w-full p-2 border border-black' rows="5"  />
-                                    </div>
-                                    : contentType === 'video' ?
-                                    
-                                    <div className='space-y-2'>
-                                        <label htmlFor="courseVideoUpload">Upload Videos </label>
-                                        <input id='fileUpload' type='file' multiple
-                                       
-                                        onChange={handleFileEvent}
+                                    openLessonForm ? 
+                                    <div className="px-6 py-3 space-y-2 border border-grey-500">
+
+                                        <h4 className="font-medium text-lead-24">Add a Lesson</h4>
                                         
-                                        />
-
-                                        <div className="space-y-1 italic font-light text-body-18">
-                                            {uploadedFiles.map(file => (
-                                                <div >
-                                                    {file.name}
-                                                </div>
-                                            ))}
+                                        <div className='space-y-1'>
+                                            <label htmlFor="lessonName" >Lesson Name</label>
+                                            <input type="text" name="lessonName" onChange={(e) => {setLessonName(e.target.value)}} id="lessonName" className='block w-full p-2 border border-black' placeholder='Lesson 1' />
                                         </div>
-                                       
-                                    </div>
-                                    : null
 
-                                }
 
+                                        <div className='space-y-1'>
+                                            <p >Lesson Content Type</p>
+
+                                            <label className="block" htmlFor="article"><input type="radio" selected id="article" name="lessonType" onChange={(e) => {setLessonType(e.target.value)}} value={'article'}/> Article</label>
+                                            <label className="block" htmlFor="video"><input type="radio" id="video" name="lessonType" onChange={(e) => {setLessonType(e.target.value)}} value={'video'}/> Video</label>
                                 
+                                        </div>
 
-                                <Button isPrimary={true} size="large" className={'mb-2'} text={"Add"}></Button>
+
+                                        {
+                                            lessonType === 'article' ? 
+                                            <div className='space-y-1'>
+                                                <label htmlFor="article" >Article Content</label>
+                                                <textarea  name="article" onChange={(e) => {setLessonArticle(e.target.value)}} id="article" className='block w-full p-2 border border-black' rows="5"  />
+                                            </div>
+                                            : lessonType === 'video' ?
+                                            <>
+                                                <div className='space-y-1'>
+                                                    <label htmlFor="courseVideoUpload">Upload A Video </label>
+                                                    <input id='fileUpload' type='file'
+                                                
+                                                    onChange={handleFileEvent}
+                                                    
+                                                    />
+
+                                                    <div className="space-y-1 italic font-light text-success-500 text-body-18">
+                                                        {uploadedFile.name}
+                                                    </div>
+                                            
+                                                </div>
+
+
+                                                <div className='space-y-1'>
+                                                    <label htmlFor="lessonDuration" >Lesson Duration (in seconds)</label>
+                                                    <input type="text" name="lessonDuration" onChange={(e) => {setLessonDuration(e.target.value)}} id="lessonDuration" className='block w-full p-2 border border-black' placeholder='120' />
+                                                </div>
+
+                                            </>
+                                            
+                                            : null
+
+                                        }
+
+                                        <div className="flex items-center gap-6 pt-6">
+                                            <Button isPrimary={false} onClick={handleSubmitLesson}  size='small' text={'Add Lesson'}></Button>
+                                            <p onClick={() => {setOpenLessonForm(false)}} className="font-medium cursor-pointer text-error-500 ">Discard</p>
+                                            
+                                        </div>
+                                    </div>
+                                    :
+                                    <p className="underline cursor-pointer text-primary-500" onClick={() => {setOpenLessonForm(true)}}>Add A Lesson</p>
+                                }
+                                
+           
+                                <div className="flex justify-end pt-4">
+                                    <Button isPrimary={true} size="large"  text={"Add Module"}></Button>
+                                </div>
+                                
                                 
                             </form>
                             
