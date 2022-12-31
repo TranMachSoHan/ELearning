@@ -15,8 +15,7 @@ const OAuth2RedirectHandler = () => {
 
   const token = getUrlParameter("token");
   const error = getUrlParameter("error");
-  console.log(token);
-  console.log(error);
+
   if (token) {
     localStorage.setItem(ACCESS_TOKEN, token);
     return (
@@ -28,6 +27,8 @@ const OAuth2RedirectHandler = () => {
       />
     );
   } else {
+    console.log(token);
+    console.log(error);
     return (
       <Navigate
         to={{
