@@ -1,5 +1,6 @@
 package com.example.templatesample.service;
 
+import com.example.templatesample.dto.PaymentDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.model.Payment;
@@ -18,7 +19,7 @@ public interface ProfileService {
 
     Student createStudent(Student student);
 
-    Student updatePaymentStudent(Student student, Payment payment);
+    ResponseEntity<Student> addPaymentStudent(String id, PaymentDTO paymentDTO);
 
     ResponseEntity<Professor> updateProfessor(ProfessorUpdateDTO professor, String id);
     ResponseEntity<Student> updateStudent(StudentUpdateDTO student, String id);

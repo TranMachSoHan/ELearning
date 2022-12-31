@@ -1,5 +1,6 @@
 package com.example.templatesample.service.impl;
 
+import com.example.templatesample.dto.PaymentDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.exception.BadRequestException;
@@ -65,10 +66,18 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
     }
 
     @Override
-    public Student updatePaymentStudent(Student student, Payment payment) {
-        return null;
+    public ResponseEntity<Student> addPaymentStudent(String id, PaymentDTO paymentDTO) {
+        Optional<Student> studentData = studentRepository.findById(id);
+        if(studentData.isPresent()) {
+            Student _student = studentData.get();
+            Payment payment = new Payment(paymentDTO.getBank(), paymentDTO.getAccountNumber(), _student.getProfileID());
+            _student.setPayment(payment);
+            studentRepository.save(_student);
+            return new ResponseEntity<>(profileRepository.save(_student), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-
     @Override
     public ResponseEntity<Professor> updateProfessor(ProfessorUpdateDTO professor, String id) {
         Optional<Professor> professorData = professorRepository.findById(id);

@@ -19,6 +19,13 @@ public class Payment {
     private String bank;
     private String accountNumber;
     private Date dateIssued;
-    private Long studentID;
+    private String studentID;
+
+    public Payment(String bank, String accountNumber, String studentID) {
+        this.bank = bank;
+        this.accountNumber = accountNumber;
+        this.dateIssued = new Date();
+        this.studentID = studentID;
+    }
 
 }
