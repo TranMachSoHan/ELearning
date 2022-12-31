@@ -28,6 +28,4 @@ public class Profile {
     public Integer age;
     public String education;
     public String avatar;
-
-    public AuthenticationProvider authenticationProvider;
 }

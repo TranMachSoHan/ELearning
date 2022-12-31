@@ -12,10 +12,11 @@ import java.util.List;
 @Document(collection = "professor")
 @SuperBuilder
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Professor extends Profile {
-    private Integer yearsOfExperience;
+    private String description;
 
     public void updateProfessor(Professor newProfessor) {
         this.profileID = newProfessor.getProfileID();
@@ -24,10 +25,10 @@ public class Professor extends Profile {
         this.age = newProfessor.getAge();
         this.education = newProfessor.education;
         this.avatar = newProfessor.getAvatar();
-        this.yearsOfExperience = newProfessor.yearsOfExperience;
+        this.description = newProfessor.description;
     }
 
-    public Professor(String email, String password, Role userRole, String name, Integer age, String education, String avatar, Integer yearsOfExperience) {
+    public Professor(String email, String password, Role userRole, String name, Integer age, String education, String avatar, String description) {
         this.email = email;
         this.password = password;
         this.userRole = userRole;
@@ -35,7 +36,7 @@ public class Professor extends Profile {
         this.age = age;
         this.education = education;
         this.avatar = avatar;
-        this.yearsOfExperience = yearsOfExperience;
+        this.description = description;
     }
 
 }

@@ -1,9 +1,9 @@
 package com.example.templatesample.service.impl;
 
-import com.example.templatesample.model.Professor;
-import com.example.templatesample.model.Profile;
-import com.example.templatesample.model.ProfileDetails;
-import com.example.templatesample.model.Student;
+import com.example.templatesample.dto.ProfessorUpdateDTO;
+import com.example.templatesample.dto.StudentUpdateDTO;
+import com.example.templatesample.exception.BadRequestException;
+import com.example.templatesample.model.*;
 import com.example.templatesample.model.enums.AuthenticationProvider;
 import com.example.templatesample.model.enums.Role;
 import com.example.templatesample.repository.ProfessorRepository;
@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -41,49 +40,69 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-//    @Override
-//    public ResponseEntity<String> create(Profile profile) {
-//        Profile profileSameUsername = profileRepository.findByUserName(profile.getUserName());
-//        if(profileSameUsername != null && profile.getProfileID() != profileSameUsername.getProfileID()) {
-//            logger.error(String.format("Duplicate username %s",profile.getUserName()));
-//            throw new RuntimeException("Duplicate username");
-//        }
-//
-//        Profile profileSameEmail = profileRepository.findByEmail(profile.getEmail());
-//        if(profileSameEmail != null && profile.getProfileID() != profileSameEmail.getProfileID()) {
-//            logger.error(String.format("Duplicate email %s",profile.getEmail()));
-//            throw new RuntimeException("Duplicate email");
-//        }
-//
-//        profile.setPassword(bCryptPasswordEncoder.encode(profile.getPassword()));
-//        return new ResponseEntity<>("Successfully create profile " + profileRepository.save(profile).getProfileID(), HttpStatus.OK);
-//    }
-
     @Override
-    public ResponseEntity<String> createProfessor(Professor professor) {
+    public Professor createProfessor(Professor professor) {
         Profile profileSameEmail = profileRepository.findByEmail(professor.getEmail());
         if(profileSameEmail != null && professor.getProfileID() != profileSameEmail.getProfileID()) {
             logger.error(String.format("Duplicate email %s",professor.getEmail()));
-            throw new RuntimeException("Duplicate email");
+            throw new BadRequestException("Duplicate email");
         }
         professor.setPassword(bCryptPasswordEncoder.encode(professor.getPassword()));
-        professorRepository.save(professor);
-        return new ResponseEntity<>("Successfully create professor " + profileRepository.save(professor).getProfileID(), HttpStatus.OK);
+        profileRepository.save(professor);
+        return professorRepository.save(professor);
     }
 
     @Override
-    public ResponseEntity<String> createStudent(Student student) {
+    public Student createStudent(Student student) {
         Profile profileSameEmail = profileRepository.findByEmail(student.getEmail());
         if(profileSameEmail != null && student.getProfileID() != profileSameEmail.getProfileID()) {
             logger.error(String.format("Duplicate email %s",student.getEmail()));
-            throw new RuntimeException("Duplicate email");
+            throw new BadRequestException("Duplicate email");
         }
         student.setPassword(bCryptPasswordEncoder.encode(student.getPassword()));
         studentRepository.save(student);
-        return new ResponseEntity<>("Successfully create professor " + profileRepository.save(student).getProfileID(), HttpStatus.OK);
+        return profileRepository.save(student);
     }
 
+    @Override
+    public Student updatePaymentStudent(Student student, Payment payment) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<Professor> updateProfessor(ProfessorUpdateDTO professor, String id) {
+        Optional<Professor> professorData = professorRepository.findById(id);
+        if(professorData.isPresent()) {
+            Professor _professor = professorData.get();
+            _professor.setName(professor.getName());
+            _professor.setEducation(professor.getEducation());
+            _professor.setAge(professor.getAge());
+            _professor.setAvatar(professor.getAvatar());
+            _professor.setDescription(professor.getDescription());
+            professorRepository.save(_professor);
+            return new ResponseEntity<>(profileRepository.save(_professor), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Override
+    public ResponseEntity<Student> updateStudent(StudentUpdateDTO student, String id) {
+        Optional<Student> studentData = studentRepository.findById(id);
+        if(studentData.isPresent()) {
+            Student _student = studentData.get();
+            _student.setName(student.getName());
+            _student.setEducation(student.getEducation());
+            _student.setAge(student.getAge());
+            _student.setAvatar(student.getAvatar());
+            _student.setMajor(student.getMajor());
+            _student.setMinor(student.getMinor());
+            studentRepository.save(_student);
+            return new ResponseEntity<>(profileRepository.save(_student), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 
 
     @Override
@@ -115,25 +134,6 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
     public Profile getByEmail(String email) {
         return profileRepository.findByEmail(email);
     }
-
-    @Override
-    public void createStudentAfterGoogleLogin(String name, String email, AuthenticationProvider authenticationProvider) {
-        Student student = new Student();
-        student.setName(name);
-        student.setEmail(email);
-        student.setAuthenticationProvider(authenticationProvider);
-        student.setUserRole(Role.STUDENT);
-        profileRepository.save(student);
-        studentRepository.save(student);
-    }
-
-    @Override
-    public void updateStudentAfterGoogleLogin(String name, AuthenticationProvider authenticationProvider, Student student) {
-        student.setName(name);
-        student.setAuthenticationProvider(authenticationProvider);
-        profileRepository.save(student);
-    }
-
 
     @Override
     public Optional<Student> getStudentByEmail(String email) {

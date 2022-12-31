@@ -30,4 +30,6 @@ public interface ProfileRepository extends MongoRepository<Profile, String> {
     Optional<Student> findStudentByEmail(String email);
 
 
+
+
 }

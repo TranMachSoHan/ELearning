@@ -1,10 +1,13 @@
 package com.example.templatesample.security.oauth2;
 
 import com.example.templatesample.config.AppProperties;
+import com.example.templatesample.exception.BadRequestException;
 import com.example.templatesample.security.JwtUtils;
 import com.example.templatesample.service.ProfileService;
 import com.example.templatesample.utils.CookieUtils;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -19,54 +22,50 @@ import java.io.IOException;
 import java.net.URI;
 import java.util.Optional;
 
+import static com.example.templatesample.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
+
 @Component
-
 public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    @Autowired
-    private ProfileService profileService;
 
-    private JwtUtils jwtUtils;
-
-    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+    private JwtUtils tokenProvider;
 
     private AppProperties appProperties;
 
+    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
+
+    @Autowired
+    OAuth2LoginSuccessHandler(JwtUtils tokenProvider, AppProperties appProperties,
+                                       HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository) {
+        this.tokenProvider = tokenProvider;
+        this.appProperties = appProperties;
+        this.httpCookieOAuth2AuthorizationRequestRepository = httpCookieOAuth2AuthorizationRequestRepository;
+    }
+
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request,
-                                        HttpServletResponse response,
-                                        Authentication authentication) throws IOException, ServletException {
-        String targetUrl = determineTargetUrl(request,response,authentication);
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        String targetUrl = determineTargetUrl(request, response, authentication);
+
         if (response.isCommitted()) {
             logger.debug("Response has already been committed. Unable to redirect to " + targetUrl);
             return;
         }
+
         clearAuthenticationAttributes(request, response);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
-
-//        CustomOAuth2User customOAuth2User = (CustomOAuth2User) authentication.getPrincipal();
-//        String email = customOAuth2User.getEmail();
-//        String name = customOAuth2User.getName();
-//        Student student = profileService.getStudentByEmail(email);
-//        if(student == null) {
-//            //create new profile here
-//            profileService.createStudentAfterGoogleLogin(name, email, AuthenticationProvider.GOOGLE);
-//        } else {
-//            profileService.updateStudentAfterGoogleLogin(name, AuthenticationProvider.GOOGLE, student);
-//        }
-//        super.onAuthenticationSuccess(request, response, authentication);
     }
 
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        Optional<String> redirectUri = CookieUtils.getCookie(request, HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME)
+        Optional<String> redirectUri = CookieUtils.getCookie(request, REDIRECT_URI_PARAM_COOKIE_NAME)
                 .map(Cookie::getValue);
 
-        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
-            throw new RuntimeException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
-        }
+//        if(redirectUri.isPresent() && !isAuthorizedRedirectUri(redirectUri.get())) {
+//            throw new BadRequestException("Sorry! We've got an Unauthorized Redirect URI and can't proceed with the authentication");
+//        }
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
-        String token = jwtUtils.generateJwtToken(authentication);
+        String token = tokenProvider.createToken(authentication);
 
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)
