@@ -47,7 +47,10 @@ function App() {
         <Route path="/courseDetail" element={<CourseDetail />}></Route>
         <Route path="/studentDetail" element={<StudentDetail />}></Route>
         <Route path="/learning" element={<Learning />}></Route>
-        <Route path="/oauth2/redirect" element={OAuth2RedirectHandler}></Route>
+        <Route
+          path="/oauth2/redirect"
+          element={<OAuth2RedirectHandler />}
+        ></Route>
       </Route>
 
       <Route element={<TeacherLayout />}>

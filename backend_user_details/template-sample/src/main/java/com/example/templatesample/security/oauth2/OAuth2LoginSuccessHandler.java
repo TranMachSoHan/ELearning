@@ -66,7 +66,8 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
 
         String token = tokenProvider.createToken(authentication);
-
+        System.out.println("target " + targetUrl );
+        System.out.println("log in !!!!!!! with token " + token);
         return UriComponentsBuilder.fromUriString(targetUrl)
                 .queryParam("token", token)
                 .build().toUriString();

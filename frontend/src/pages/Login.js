@@ -1,17 +1,13 @@
 import SectionTitle from "../components/SectionTitle";
 import Button from "../components/Button";
 import { useRef, useState, useEffect, useContext } from "react";
-// import { setProfileSession } from "../utils/Common";
-// import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../context/AuthProvider";
 import { login } from "../Utils/APIUltils";
 import { GOOGLE_AUTH_URL, ACCESS_TOKEN } from "../constants/index";
 import { Alert } from "react-s-alert";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
   const userRef = useRef();
   const errorRef = useRef();
 
