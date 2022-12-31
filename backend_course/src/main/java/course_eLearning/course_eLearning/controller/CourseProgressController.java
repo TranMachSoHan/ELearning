@@ -22,7 +22,6 @@ import java.util.List;
 public class CourseProgressController {
     @Autowired
     private CourseProgressService progressService;
-    private ModelMapper mapper = new ModelMapper();
 
     @GetMapping("/all")
     public ResponseEntity<List<CourseProgress>> getAllCourseProgress(){
@@ -40,12 +39,13 @@ public class CourseProgressController {
             @PathVariable("courseProgressId") String course_progress_id
     ){
         CourseProgress courseProgress = progressService.getById(course_progress_id);
-        CourseProgressDetailDTO courseProgressDetailDTO = mapper.map(courseProgress, CourseProgressDetailDTO.class);
-        if(courseProgress == null){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        if(courseProgress != null){
+            CourseProgressDetailDTO courseProgressDetailDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(courseProgress);
+
+            return new ResponseEntity<>(courseProgressDetailDTO,  HttpStatus.OK);
         }
         else{
-            return new ResponseEntity<>(courseProgressDetailDTO,  HttpStatus.OK);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
 }

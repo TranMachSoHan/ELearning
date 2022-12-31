@@ -73,7 +73,7 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
-    public Course enrollCourse(String course_id, String student_id) {
+    public CourseProgress enrollCourse(String course_id, String student_id) {
         Optional<Course> courseOptional = courseRepository.findById(course_id);
         if(courseOptional.isPresent()){
             Course course = courseOptional.get();
@@ -85,7 +85,7 @@ public class CourseSereviceImpl implements CourseService {
             course.addCourseProgress(courseProgress.getCourseProgressID());
             courseRepository.save(course);
 
-            return course;
+            return courseProgress;
         }
         else{
             return null;

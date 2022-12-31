@@ -27,7 +27,7 @@ public class CourseProgress {
     private int numOfModuleFinished ;
     private List<Submission> submissions ;
 
-    private List<ModuleProgress> moduleProgresses;
+    private HashMap<String, ModuleProgress> moduleProgresses;
     private String lastLessonOpened;
 
     public CourseProgress(Course course, String student, boolean isEnrolled) {
@@ -36,14 +36,23 @@ public class CourseProgress {
         this.finishedPercentage = isEnrolled ? 1 : 0;
         this.numOfModuleFinished = 0;
         this.submissions = new ArrayList<>();
-        moduleProgresses = new ArrayList<>();
+        this.moduleProgresses = new HashMap<>();
+        enrollLesson();
+    }
+
+    private void enrollLesson(){
+        if(this.course.getModules() != null && this.course.getModules().size() != 0){
+            Module firstModule = this.course.getModules().get(0);
+            if(firstModule.getLessons() != null && firstModule.getLessons().size() != 0){
+                Lesson firstLesson = firstModule.getLessons().get(0);
+                lastLessonOpened = firstLesson.getLessonID();
+                setModuleProgresses(firstModule, null, firstLesson.getLessonID());
+            }
+        }
     }
 
     public void setModuleProgresses(Module module , String prevLesson, String newLesson) {
-        ModuleProgress foundModuleProgress = moduleProgresses.stream()
-                .filter(moduleProgress -> moduleProgress.getModuleID().equals(module.getModuleID()))
-                .findAny()
-                .orElse(null);
+        ModuleProgress foundModuleProgress = this.moduleProgresses.get(module.getModuleID());
         this.lastLessonOpened = newLesson;
         if(foundModuleProgress != null){
             // the previous lesson front end give is not null
@@ -61,19 +70,17 @@ public class CourseProgress {
 
         }
         else {
-            ModuleProgress moduleProgress = new ModuleProgress(module.getModuleID());
+            ModuleProgress moduleProgress = new ModuleProgress();
             moduleProgress.addLessonLearned(newLesson);
-            this.moduleProgresses.add(moduleProgress);
+            this.moduleProgresses.put(module.getModuleID(),moduleProgress);
         }
     }
 
     @Data
     public static class ModuleProgress{
-        String moduleID;
         HashMap<String, LessonStatus> lessonLearned;
 
-        public ModuleProgress(String moduleID) {
-            this.moduleID = moduleID;
+        public ModuleProgress() {
             this.lessonLearned = new HashMap<>();
         }
 

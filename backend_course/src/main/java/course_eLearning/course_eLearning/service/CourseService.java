@@ -2,6 +2,7 @@ package course_eLearning.course_eLearning.service;
 
 
 import course_eLearning.course_eLearning.model.Course;
+import course_eLearning.course_eLearning.model.CourseProgress;
 import course_eLearning.course_eLearning.model.Skill;
 import org.springframework.data.domain.Page;
 
@@ -19,5 +20,5 @@ public interface CourseService{
     public abstract List<Course> getCoursesBySkill(String skill);
     public abstract Course getCourseById(String courseId);
     public abstract Page<Course> getAllCourseByName(int pageNum, int pageSize, String courseName);
-    public abstract Course enrollCourse(String course_id, String student_id);
+    public abstract CourseProgress enrollCourse(String course_id, String student_id);
 }

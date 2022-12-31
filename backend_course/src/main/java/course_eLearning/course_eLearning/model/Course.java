@@ -24,8 +24,8 @@ public class Course {
     private List<Comment> comments = new ArrayList<>();
     private Skill skill = null;
     private String star = null;
-    private List<Module> modules = new ArrayList<>();
-    private List<String> courseProgresses= new ArrayList<>();
+    private List<Module> modules;
+    private List<String> courseProgresses;
 
     public Course(String courseName, String professorID, String courseDescription, List<Comment> comments, Skill skill, String star, List<Module> modules) {
         this.courseName = courseName;
@@ -35,6 +35,7 @@ public class Course {
         this.skill = skill;
         this.star = star;
         this.modules = modules;
+        this.courseProgresses = new ArrayList<>();
     }
 
     public Course(String courseName, String professorID,  String courseDescription){

@@ -4,9 +4,7 @@ import course_eLearning.course_eLearning.model.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Data
@@ -19,7 +17,7 @@ public class CourseDetailDTO {
     private String star;
     private String professorID;
     private String courseDescription;
-    private List<ModuleListDTO> modules;
+    private List<ModuleOverviewListDTO> modules;
     private List<Comment> comments;
 }
 
