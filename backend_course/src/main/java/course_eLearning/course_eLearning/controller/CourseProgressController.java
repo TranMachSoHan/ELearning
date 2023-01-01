@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/courseProgress")
-@CrossOrigin(origins = "http://example.com", maxAge = 3600)
+@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 public class CourseProgressController {
     @Autowired
     private CourseProgressService progressService;

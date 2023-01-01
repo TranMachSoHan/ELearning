@@ -18,8 +18,4 @@ public class ModuleController {
     @Autowired
     ModuleService moduleService;
 
-//    @GetMapping("/getModuleBy")
-//    public ResponseEntity<Map<String, Object>> pageableCourseBySkill(){
-//
-//    }
 }

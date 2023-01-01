@@ -22,15 +22,15 @@ public class Lesson {
     private LessonType type;
     @DBRef
     private Video video;
-    private List<Article> articles;
+    private Article article;
     @DBRef
     private List<Quiz> quizzes;
 
-    public Lesson(String title, LessonType type, Video video, List<Article> articles, List<Quiz> quizzes) {
+    public Lesson(String title, LessonType type, Video video, Article article, List<Quiz> quizzes) {
         this.title = title;
         this.type = type;
         this.video = video;
-        this.articles = articles;
+        this.article = article;
         this.quizzes = quizzes;
     }
 
@@ -38,9 +38,8 @@ public class Lesson {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Article {
-        String header;
-        List<String> paragraphs;
-        List<String> images;
+        String paragraph;
+        String image;
     }
 }
 

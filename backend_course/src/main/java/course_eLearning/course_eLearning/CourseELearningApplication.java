@@ -68,27 +68,24 @@ public class CourseELearningApplication implements CommandLineRunner {
 		Video video2_1_3 = videoRepository.save(new Video("video url", 4500));
 
 		// Tao article
-		Lesson.Article article1 = new Lesson.Article("Sub header 1",
-				Arrays.asList("lorem ipsum", "lorem ipsum"),
-				Collections.singletonList("Image url 1"));
-		Lesson.Article article2 = new Lesson.Article("Sub header 1",
-				Arrays.asList("lorem ipsum", "lorem ipsum"),null);
+		Lesson.Article article1 = new Lesson.Article("lorem ipsum","Image url 1");
+		Lesson.Article article2 = new Lesson.Article("lorem ipsum",null);
 
 		// Tao lesson
 		Lesson lesson1_1_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, video1_1_1, null, null));
-		Lesson lesson1_1_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, Arrays.asList(article1, article2), null));
+		Lesson lesson1_1_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article1, null));
 		Lesson lesson1_1_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, video1_1_3, null, null));
 		Lesson lesson1_1_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
 		Lesson lesson1_2_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, video1_2_1, null, null));
-		Lesson lesson1_2_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, Arrays.asList(article1, article2), null));
+		Lesson lesson1_2_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article2, null));
 		Lesson lesson1_2_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, video1_2_3, null, null));
 		Lesson lesson1_2_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
 		Lesson lesson2_1_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, video2_1_1, null, null));
-		Lesson lesson2_1_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, Arrays.asList(article1, article2), null));
+		Lesson lesson2_1_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article1, null));
 		Lesson lesson2_1_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, video2_1_3, null, null));
 		Lesson lesson2_1_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
 		Lesson lesson2_2_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, null, null, null));
-		Lesson lesson2_2_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, Arrays.asList(article1, article2), null));
+		Lesson lesson2_2_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article2, null));
 		Lesson lesson2_2_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, null, null, null));
 		Lesson lesson2_2_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
 

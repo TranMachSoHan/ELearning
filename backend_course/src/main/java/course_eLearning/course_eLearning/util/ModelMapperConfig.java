@@ -80,4 +80,10 @@ public class ModelMapperConfig {
         return moduleOverviewListDTO;
     }
 
+    public static LessonDetailDTO convertToLessonDetailDTO(Lesson lesson, Object material){
+        LessonDetailDTO lessonDetailDTO = modelMapper.map(lesson, LessonDetailDTO.class);
+        lessonDetailDTO.setMaterial(material);
+        return lessonDetailDTO;
+    }
+
 }
