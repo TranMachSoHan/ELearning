@@ -56,6 +56,7 @@ function App() {
       <Route element={<TeacherLayout />}>
         <Route path="/teacher" element={<TeacherDashboard />}></Route>
       </Route>
+
     </Routes>
   );
 }
