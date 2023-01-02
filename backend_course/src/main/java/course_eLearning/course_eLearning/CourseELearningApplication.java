@@ -1,14 +1,9 @@
 package course_eLearning.course_eLearning;
 
-import course_eLearning.course_eLearning.dto.CourseListDTO;
 import course_eLearning.course_eLearning.model.*;
 import course_eLearning.course_eLearning.model.Module;
-import course_eLearning.course_eLearning.repository.CommentRepository;
-import course_eLearning.course_eLearning.repository.CourseProgressRepository;
-import course_eLearning.course_eLearning.repository.CourseRepository;
-import course_eLearning.course_eLearning.repository.ModuleRepository;
-import course_eLearning.course_eLearning.util.ModelMapperConfig;
-import org.modelmapper.ModelMapper;
+import course_eLearning.course_eLearning.model.helper.LessonType;
+import course_eLearning.course_eLearning.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -24,15 +19,16 @@ public class CourseELearningApplication implements CommandLineRunner {
 
 	@Autowired
 	private CourseRepository courseRepository;
-
 	@Autowired
 	private ModuleRepository moduleRepository;
-
 	@Autowired
 	private CommentRepository commentRepository;
-
 	@Autowired
 	private CourseProgressRepository courseProgressRepository;
+	@Autowired
+	private VideoRepository videoRepository;
+	@Autowired
+	private LessonRepository lessonRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CourseELearningApplication.class, args);
@@ -63,48 +59,78 @@ public class CourseELearningApplication implements CommandLineRunner {
 		comment7_2 = commentRepository.save(comment7_2);
 		comment7_3 = commentRepository.save(comment7_3);
 
+		//Tao video
+		Video video1_1_1 = videoRepository.save(new Video("video url", 3600));
+		Video video1_1_3 = videoRepository.save(new Video("video url", 4500));
+		Video video1_2_1 = videoRepository.save(new Video("video url", 3600));
+		Video video1_2_3 = videoRepository.save(new Video("video url", 4500));
+		Video video2_1_1 = videoRepository.save(new Video("video url", 3600));
+		Video video2_1_3 = videoRepository.save(new Video("video url", 4500));
+
+		// Tao article
+		Lesson.Article article1 = new Lesson.Article("lorem ipsum","Image url 1");
+		Lesson.Article article2 = new Lesson.Article("lorem ipsum",null);
+
+		// Tao lesson
+		Lesson lesson1_1_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, video1_1_1, null, null));
+		Lesson lesson1_1_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article1, null));
+		Lesson lesson1_1_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, video1_1_3, null, null));
+		Lesson lesson1_1_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
+		Lesson lesson1_2_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, video1_2_1, null, null));
+		Lesson lesson1_2_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article2, null));
+		Lesson lesson1_2_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, video1_2_3, null, null));
+		Lesson lesson1_2_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
+		Lesson lesson2_1_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, video2_1_1, null, null));
+		Lesson lesson2_1_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article1, null));
+		Lesson lesson2_1_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, video2_1_3, null, null));
+		Lesson lesson2_1_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
+		Lesson lesson2_2_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, null, null, null));
+		Lesson lesson2_2_2 = lessonRepository.save(new Lesson("Reading", LessonType.ARTICLE, null, article2, null));
+		Lesson lesson2_2_3 = lessonRepository.save(new Lesson("Practice 1", LessonType.VIDEO, null, null, null));
+		Lesson lesson2_2_4 = lessonRepository.save(new Lesson("Quiz", LessonType.QUIZ, null, null, null));
+
 		// Create module
-		Module module1_1 = moduleRepository.save(new Module("title 1", true, null, null, true, null));
-		Module module1_2 = moduleRepository.save(new Module( "title 2", true, null, null, true, null));
-		Module module2_1 = moduleRepository.save(new Module("title 3", true, null, null, true, null));
-		Module module2_2 = moduleRepository.save(new Module( "title 4", true, null, null, true, null));
-		Module module2_3 = moduleRepository.save(new Module( "title 5", false, null, null, true, null));
-		Module module4_1 = moduleRepository.save(new Module( "title 6", true, null, null, true, null));
-		Module module4_2 = moduleRepository.save(new Module( "title 7", false, null, null, true, null));
-		Module module4_3 = moduleRepository.save(new Module( "title 8", false, null, null, true, null));
-		Module module4_4 = moduleRepository.save(new Module( "title 9", true, null, null, true, null));
-		Module module5_1 = moduleRepository.save(new Module( "title 9", true, null, null, true, null));
-		Module module5_2 = moduleRepository.save(new Module( "title 10", true, null, null, true, null));
-		Module module5_3 = moduleRepository.save(new Module( "title 11", false, null, null, true, null));
-		Module module5_4 = moduleRepository.save(new Module( "title 12", true, null, null, true, null));
-		Module module5_5 = moduleRepository.save(new Module( "title 13", true, null, null, true, null));
-		Module module6_1 = moduleRepository.save(new Module( "title 14", false, null, null, true, null));
-		Module module6_2 = moduleRepository.save(new Module( "title 15", true, null, null, true, null));
-		Module module6_3 = moduleRepository.save(new Module( "title 16", true, null, null, true, null));
-		Module module7_1 = moduleRepository.save(new Module( "title 17", false, null, null, true, null));
-		Module module7_2 = moduleRepository.save(new Module( "title 18", true, null, null, true, null));
-		Module module8_1 = moduleRepository.save(new Module( "title 19", true, null, null, true, null));
-		Module module9_1 =  moduleRepository.save(new Module( "title 20", true, null, null, true, null));
-		Module module9_2 =  moduleRepository.save(new Module( "title 21", true, null, null, true, null));
-		Module module10_1 = moduleRepository.save(new Module( "title 22", true, null, null, true, null));
-		Module module10_2 = moduleRepository.save(new Module( "title 23", true, null, null, true, null));
-		Module module12_1 = moduleRepository.save(new Module( "title 24", true, null, null, true, null));
-		Module module12_2 = moduleRepository.save(new Module( "title 25", true, null, null, true, null));
-		Module module13_1 = moduleRepository.save(new Module( "title 26", true, null, null, true, null));
-		Module module13_2 = moduleRepository.save(new Module( "title 27", true, null, null, true, null));
-		Module module15_1 = moduleRepository.save(new Module( "title 28", true, null, null, true, null));
-		Module module15_2 = moduleRepository.save(new Module( "title 29", true, null, null, true, null));
-		Module module16_1 = moduleRepository.save(new Module( "title 30", true, null, null, true, null));
-		Module module16_2 = moduleRepository.save(new Module( "title 31", true, null, null, true, null));
-		Module module17_1 = moduleRepository.save(new Module( "title 32", true, null, null, true, null));
-		Module module17_2 = moduleRepository.save(new Module( "title 33", true, null, null, true, null));
-		Module module20_1 = moduleRepository.save(new Module( "title 34", true, null, null, true, null));
-		Module module21_1 = moduleRepository.save(new Module( "title 35", true, null, null, true, null));
-		Module module21_2 = moduleRepository.save(new Module( "title 36", true, null, null, true, null));
-		Module module22_1 = moduleRepository.save(new Module( "title 37", true, null, null, true, null));
-		Module module22_2 = moduleRepository.save(new Module( "title 38", true, null, null, true, null));
-		Module module23_1 = moduleRepository.save(new Module( "title 39", true, null, null, true, null));
-		Module module23_2 = moduleRepository.save(new Module( "title 40", true, null, null, true, null));
+		Module module1_1 = moduleRepository.save(new Module("title 1", true, Arrays.asList(lesson1_1_1, lesson1_1_2, lesson1_1_3, lesson1_1_4), null));
+		Module module1_2 = moduleRepository.save(new Module( "title 2", true, Arrays.asList(lesson1_2_1, lesson1_2_2, lesson1_2_3, lesson1_2_4), null));
+		Module module2_1 = moduleRepository.save(new Module("title 3", true, Arrays.asList(lesson2_1_1, lesson2_1_2, lesson2_1_3, lesson2_1_4), null));
+		Module module2_2 = moduleRepository.save(new Module( "title 4", true, Arrays.asList(lesson2_2_1, lesson2_2_2, lesson2_2_3, lesson2_2_4), null));
+		Module module2_3 = moduleRepository.save(new Module( "title 5", false, null, null));
+		Module module4_1 = moduleRepository.save(new Module( "title 6", true, null, null));
+		Module module4_2 = moduleRepository.save(new Module( "title 7", false, null, null));
+		Module module4_3 = moduleRepository.save(new Module( "title 8", false, null, null));
+		Module module4_4 = moduleRepository.save(new Module( "title 9", true, null, null));
+		Module module5_1 = moduleRepository.save(new Module( "title 9", true, null, null));
+		Module module5_2 = moduleRepository.save(new Module( "title 10", true, null, null));
+		Module module5_3 = moduleRepository.save(new Module( "title 11", false, null, null));
+		Module module5_4 = moduleRepository.save(new Module( "title 12", true, null, null));
+		Module module5_5 = moduleRepository.save(new Module( "title 13", true, null, null));
+		Module module6_1 = moduleRepository.save(new Module( "title 14", false, null, null));
+		Module module6_2 = moduleRepository.save(new Module( "title 15", true, null, null));
+		Module module6_3 = moduleRepository.save(new Module( "title 16", true, null, null));
+		Module module7_1 = moduleRepository.save(new Module( "title 17", false, null, null));
+		Module module7_2 = moduleRepository.save(new Module( "title 18", true, null, null));
+		Module module8_1 = moduleRepository.save(new Module( "title 19", true, null, null));
+		Module module9_1 =  moduleRepository.save(new Module( "title 20", true, null, null));
+		Module module9_2 =  moduleRepository.save(new Module( "title 21", true, null, null));
+		Module module10_1 = moduleRepository.save(new Module( "title 22", true, null, null));
+		Module module10_2 = moduleRepository.save(new Module( "title 23", true, null, null));
+		Module module12_1 = moduleRepository.save(new Module( "title 24", true, null, null));
+		Module module12_2 = moduleRepository.save(new Module( "title 25", true, null, null));
+		Module module13_1 = moduleRepository.save(new Module( "title 26", true, null, null));
+		Module module13_2 = moduleRepository.save(new Module( "title 27", true,  null, null));
+		Module module15_1 = moduleRepository.save(new Module( "title 28", true, null, null));
+		Module module15_2 = moduleRepository.save(new Module( "title 29", true, null, null));
+		Module module16_1 = moduleRepository.save(new Module( "title 30", true,  null, null));
+		Module module16_2 = moduleRepository.save(new Module( "title 31", true,  null, null));
+		Module module17_1 = moduleRepository.save(new Module( "title 32", true, null, null));
+		Module module17_2 = moduleRepository.save(new Module( "title 33", true, null, null));
+		Module module20_1 = moduleRepository.save(new Module( "title 34", true, null, null));
+		Module module21_1 = moduleRepository.save(new Module( "title 35", true,  null, null));
+		Module module21_2 = moduleRepository.save(new Module( "title 36", true, null, null));
+		Module module22_1 = moduleRepository.save(new Module( "title 37", true, null, null));
+		Module module22_2 = moduleRepository.save(new Module( "title 38", true, null, null));
+		Module module23_1 = moduleRepository.save(new Module( "title 39", true,  null, null));
+		Module module23_2 = moduleRepository.save(new Module( "title 40", true, null, null));
 
 		// REACTJS
 		ArrayList<Module> contents1 = new ArrayList<>(Arrays.asList(module1_1,module1_2));

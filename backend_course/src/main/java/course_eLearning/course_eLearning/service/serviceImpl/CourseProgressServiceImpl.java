@@ -19,6 +19,11 @@ public class CourseProgressServiceImpl implements CourseProgressService {
     }
 
     @Override
+    public CourseProgress getById(String course_progress_id) {
+        return progressRepository.findById(course_progress_id).orElse(null);
+    }
+
+    @Override
     public List<CourseProgress> getInProgress(String student_id) {
         List<CourseProgress> courseProgresses = progressRepository.findAllByStudent(student_id);
         courseProgresses.removeIf(courseProgress -> courseProgress.getFinishedPercentage() <= 0);
