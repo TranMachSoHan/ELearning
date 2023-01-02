@@ -1,9 +1,11 @@
 package com.example.templatesample.config;
 
-import com.example.templatesample.jwt.AuthEntryPointJwt;
-import com.example.templatesample.jwt.AuthTokenFilter;
-import com.example.templatesample.model.oauth2.OAuth2LoginSuccessHandler;
-import com.example.templatesample.service.impl.CustomOAuth2UserService;
+import com.example.templatesample.security.AuthEntryPointJwt;
+import com.example.templatesample.security.AuthTokenFilter;
+import com.example.templatesample.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository;
+import com.example.templatesample.security.oauth2.OAuth2AuthenticationFailureHandler;
+import com.example.templatesample.security.oauth2.OAuth2LoginSuccessHandler;
+import com.example.templatesample.security.oauth2.CustomOAuth2UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -21,22 +24,14 @@ import javax.annotation.Resource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true,
+jsr250Enabled = true,
+prePostEnabled = true)
+
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource(name = "profileService")
     private UserDetailsService userDetailsService;
-
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
-
-    @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(encoder());
-    }
 
     @Autowired
     private CustomOAuth2UserService customOAuth2UserService;
@@ -44,11 +39,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Autowired
+    private OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler;
+
+    @Autowired
+    private HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
+
+    @Autowired
     private AuthEntryPointJwt authEntryPointJwt;
+
+    @Override
+    @Bean
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
+
+    @Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+        authenticationManagerBuilder
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(encoder());
+    }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
         return new AuthTokenFilter();
+    }
+
+    @Bean
+    public HttpCookieOAuth2AuthorizationRequestRepository cookieOAuth2AuthorizationRequestRepository() {
+        return new HttpCookieOAuth2AuthorizationRequestRepository();
     }
 
     private static final String[] AUTH_WHITELIST = {
@@ -62,30 +81,55 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             // -- Swagger UI v3 (OpenAPI)
             "/v3/api-docs/**",
-            "/swagger-ui/**"
-            // other public endpoints of your API may be appended to this array
+            "/swagger-ui/**",
+            "/error",
+            "/favicon.ico",
+            "/**/*.png",
+            "/**/*.gif",
+            "/**/*.svg",
+            "/**/*.jpg",
+            "/**/*.html",
+            "/**/*.css",
+            "/**/*.js"
+
     };
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
-//                .anonymous().disable()
+                .cors()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .csrf()
+                    .disable()
+                .httpBasic()
+                    .disable()
+                .formLogin()
+                .disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new AuthEntryPointJwt())
+                .and()
                 .authorizeRequests()
                 .antMatchers("/","/auth/sign-up/**","/auth/sign-in","/oauth/**","/auth/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/oauth2/**").permitAll()
 //                .antMatchers("/").hasAnyAuthority("PROFESSOR","STUDENT")
-                .antMatchers("/professor/**").hasAuthority("PROFESSOR")
-                .antMatchers("/student/**").hasAuthority("STUDENT")
                 .anyRequest().authenticated()
                 .and()
-                .httpBasic()
-                .and()
                 .oauth2Login()
+                    .authorizationEndpoint()
+                .baseUri("/oauth2/authorize")
+                .authorizationRequestRepository(cookieOAuth2AuthorizationRequestRepository())
+                .and()
+                .redirectionEndpoint()
+                .baseUri("/oauth2/callback/*")
+                .and()
                 .userInfoEndpoint().userService(customOAuth2UserService)
                 .and()
-                .successHandler(oAuth2LoginSuccessHandler);
+                .successHandler(oAuth2LoginSuccessHandler)
+                .failureHandler(oAuth2AuthenticationFailureHandler);
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
