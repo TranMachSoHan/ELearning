@@ -1,9 +1,7 @@
 package course_eLearning.course_eLearning.util;
 
-import course_eLearning.course_eLearning.dto.CourseDetailDTO;
-import course_eLearning.course_eLearning.dto.CourseListDTO;
-import course_eLearning.course_eLearning.dto.ModuleListDTO;
-import course_eLearning.course_eLearning.model.Course;
+import course_eLearning.course_eLearning.dto.*;
+import course_eLearning.course_eLearning.model.*;
 import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.service.ModuleService;
 import org.modelmapper.ModelMapper;
@@ -35,6 +33,12 @@ public class ModelMapperConfig {
     @Autowired
     private static ModelMapper modelMapper  = new ModelMapperConfig().modelMapper();
 
+    public static Course convertDTOtoCourse(CoursePostDTO coursePostDTO){
+        Course course = modelMapper.map(coursePostDTO, Course.class);
+        course.setSkill(Skill.valueOf(coursePostDTO.getSkill().toUpperCase()));
+        course.setCourseID(null);
+        return course;
+    }
     public static CourseListDTO convertToCourseListDto(Course course){
         CourseListDTO courseListDTO = modelMapper.map(course, CourseListDTO.class);
         courseListDTO.setProfessor(course.getProfessorID());
@@ -46,8 +50,9 @@ public class ModelMapperConfig {
 
         List<Module> modules = course.getModules();
         if(modules != null){
-            List<ModuleListDTO> moduleListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleListDTO).collect(Collectors.toList());
-            courseDetailDTO.setModules(moduleListDTOS);
+            List<ModuleOverviewListDTO> moduleOverviewListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleOverviewListDTO).collect(Collectors.toList());
+            courseDetailDTO.setModules(moduleOverviewListDTOS);
+            courseDetailDTO.setComments(course.getComments());
         }else {
             courseDetailDTO.setModules(new ArrayList<>());
         }
@@ -55,10 +60,30 @@ public class ModelMapperConfig {
         return courseDetailDTO;
     }
 
-    public static ModuleListDTO convertToModuleListDTO(Module module){
-        ModuleListDTO moduleListDTO = modelMapper.map(module, ModuleListDTO.class);
-        moduleListDTO.setVideoList(module.getVideoList());
-        return moduleListDTO;
+    public static CourseProgressDetailDTO convertToCourseProgressDetailDTO(CourseProgress courseProgress){
+        CourseProgressDetailDTO progressDetailDTO = modelMapper.map(courseProgress, CourseProgressDetailDTO.class);
+        progressDetailDTO.setCourse_id(courseProgress.getCourse().getCourseID());
+        List<Module> modules = courseProgress.getCourse().getModules();
+        // always not null
+        if(modules != null){
+            progressDetailDTO.setModuleProgresses(modules, courseProgress.getModuleProgresses());
+        }
+        else {
+            return null;
+        }
+        return progressDetailDTO;
+    }
+
+    public static ModuleOverviewListDTO convertToModuleOverviewListDTO(Module module){
+        ModuleOverviewListDTO moduleOverviewListDTO = modelMapper.map(module, ModuleOverviewListDTO.class);
+        moduleOverviewListDTO.setLessonList(module.getLessons());
+        return moduleOverviewListDTO;
+    }
+
+    public static LessonDetailDTO convertToLessonDetailDTO(Lesson lesson, Object material){
+        LessonDetailDTO lessonDetailDTO = modelMapper.map(lesson, LessonDetailDTO.class);
+        lessonDetailDTO.setMaterial(material);
+        return lessonDetailDTO;
     }
 
 }

@@ -13,7 +13,7 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [major, setMajor] = useState("");
   const [minor, setMinor] = useState("");
-
+    
   const handleSubmit = (e) => {
     e.preventDefault();
     let signUpRequest;
