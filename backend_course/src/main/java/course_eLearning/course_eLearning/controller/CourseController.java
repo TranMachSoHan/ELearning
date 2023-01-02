@@ -3,9 +3,10 @@ package course_eLearning.course_eLearning.controller;
 import course_eLearning.course_eLearning.dto.CourseDetailDTO;
 import course_eLearning.course_eLearning.dto.CourseListDTO;
 import course_eLearning.course_eLearning.dto.CoursePostDTO;
+import course_eLearning.course_eLearning.dto.CourseProgressDetailDTO;
+import course_eLearning.course_eLearning.model.CourseProgress;
 import course_eLearning.course_eLearning.model.Skill;
 import course_eLearning.course_eLearning.service.SkillService;
-import course_eLearning.course_eLearning.service.kafka.Producer;
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.service.CourseService;
 import course_eLearning.course_eLearning.util.ModelMapperConfig;
@@ -27,11 +28,9 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
 public class CourseController {
     @Autowired
-    CourseService courseService;
+    private CourseService courseService;
     @Autowired
-    SkillService skillService;
-
-    private ModelMapper mapper = new ModelMapper();
+    private SkillService skillService;
 
     @GetMapping("/pageableBySkill")
     public ResponseEntity<Map<String, Object>> pageableCourseBySkill(
@@ -92,11 +91,10 @@ public class CourseController {
         return new ResponseEntity<>(courseListDTOS, headers, HttpStatus.OK);
     }
 
+
     @PostMapping("/create")
     public ResponseEntity<Course> createCourse(@RequestBody CoursePostDTO coursePostDTO){
-        Course course = mapper.map(coursePostDTO, Course.class);
-        course.setSkill(Skill.valueOf(coursePostDTO.getSkill().toUpperCase()));
-        course.setCourseID(null);
+        Course course = ModelMapperConfig.convertDTOtoCourse(coursePostDTO);
         return ResponseEntity.ok(courseService.createCourse(course));
     }
 
@@ -105,8 +103,8 @@ public class CourseController {
         return ResponseEntity.ok(courseService.createCourse(course));
     }
 
-    @GetMapping("/id/{courseId}")
-    public ResponseEntity<CourseDetailDTO> getCourseById(@PathVariable("courseId") String course_id){
+    @GetMapping("/overview/id/{courseId}")
+    public ResponseEntity<CourseDetailDTO> getCourseOverviewById(@PathVariable("courseId") String course_id){
         Course course = courseService.getCourseById(course_id);
 
         HttpHeaders headers = new HttpHeaders();
@@ -121,16 +119,19 @@ public class CourseController {
         }
     }
 
+
+
     @PostMapping("/id/{courseId}/enroll")
-    public ResponseEntity<Course> enrollCourse(
+    public ResponseEntity<CourseProgressDetailDTO> enrollCourse(
             @PathVariable("courseId") String course_id,
             @RequestParam("studentId") String student_id
     ){
-        Course course = courseService.enrollCourse(course_id, student_id);
-        if (course == null){
+        CourseProgress progress = courseService.enrollCourse(course_id, student_id);
+        if (progress == null){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(course, HttpStatus.OK);
+        CourseProgressDetailDTO progressDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(progress);
+        return new ResponseEntity<>(progressDTO, HttpStatus.OK);
 
     }
 }
