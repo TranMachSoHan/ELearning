@@ -1,15 +1,18 @@
 package com.example.templatesample.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
-@Data
-@Builder
+@Getter
+@Setter
+@SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 @Document(collection = "payment")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
@@ -19,6 +22,13 @@ public class Payment {
     private String bank;
     private String accountNumber;
     private Date dateIssued;
-    private Long studentID;
+    private String studentID;
+
+    public Payment(String bank, String accountNumber, String studentID) {
+        this.bank = bank;
+        this.accountNumber = accountNumber;
+        this.dateIssued = new Date();
+        this.studentID = studentID;
+    }
 
 }
