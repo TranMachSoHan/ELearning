@@ -120,7 +120,13 @@ public class CourseController {
     }
 
 
-
+    /**
+     * http://localhost:8080/course/id/63b5151a7e7b23000f83a709/enroll?studentId=studentId
+     * Enroll course
+     * @param course_id
+     * @param student_id
+     * @return
+     */
     @PostMapping("/id/{courseId}/enroll")
     public ResponseEntity<CourseProgressDetailDTO> enrollCourse(
             @PathVariable("courseId") String course_id,

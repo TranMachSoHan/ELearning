@@ -86,4 +86,13 @@ public class ModelMapperConfig {
         return lessonDetailDTO;
     }
 
+    public static Lesson convertDTOToLesson(LessonPostDTO lessonPostDTO){
+        return modelMapper.map(lessonPostDTO, Lesson.class);
+    }
+
+    public static CourseProgressOverviewListDTO convertToCourseProgressOverviewDTO(CourseProgress courseProgress){
+        CourseProgressOverviewListDTO dto = modelMapper.map(courseProgress, CourseProgressOverviewListDTO.class);
+        dto.setCourseName(courseProgress.getCourse().getCourseName());
+        return dto;
+    }
 }

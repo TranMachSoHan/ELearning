@@ -15,11 +15,9 @@ public class FileMeta {
 
     private String fileName;
     private String filePath;
-    private String version;
 
-    public FileMeta(String fileName, String filePath, String version) {
+    public FileMeta(String fileName, String filePath) {
         this.fileName = fileName;
         this.filePath = filePath;
-        this.version = version;
     }
 }

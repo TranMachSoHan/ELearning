@@ -22,8 +22,7 @@ public class ModuleOverviewListDTO {
         if(lessonList != null){
             this.lessonList = lessonList.stream()
                     .map( lesson -> {
-                        double duration = lesson.getVideo() != null ? lesson.getVideo().getDuration() : 0;
-                        return new LessonListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), duration);
+                        return new LessonListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), lesson.getVideo());
                     })
                     .collect(Collectors.toList());
         }
@@ -37,6 +36,22 @@ public class ModuleOverviewListDTO {
 
         private String title;
         private LessonType type;
-        private double videoDuration;
+        private VideoOverviewDTO video;
+
+        public LessonListDTO(String lessonID, String title, LessonType type, Lesson.Video video) {
+            this.lessonID=lessonID;
+            this.title = title;
+            this.type = type;
+            if (this.video != null){
+                this.video.setDuration(video.getDuration());
+            }
+        }
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class VideoOverviewDTO{
+        private double duration;
     }
 }

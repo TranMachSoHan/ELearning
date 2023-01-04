@@ -40,7 +40,6 @@ public class CourseProgressDetailDTO {
         private String lessonID;
         private String title;
         private LessonType type;
-        private double videoDuration;
         private LessonStatus lessonStatus;
     }
 
@@ -70,13 +69,13 @@ public class CourseProgressDetailDTO {
                     .map( lesson -> {
                         double duration = lesson.getVideo() != null ? lesson.getVideo().getDuration() : 0;
                         if (lessonLearned == null){
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), duration, LessonStatus.NOT_STARTED);
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED);
                         }
                         if(lessonLearned.get(lesson.getLessonID()) != null ){
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), duration, lessonLearned.get(lesson.getLessonID()));
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), lessonLearned.get(lesson.getLessonID()));
                         }
                         else {
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), duration, LessonStatus.NOT_STARTED);
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED);
                         }
                     })
                     .collect(Collectors.toList());

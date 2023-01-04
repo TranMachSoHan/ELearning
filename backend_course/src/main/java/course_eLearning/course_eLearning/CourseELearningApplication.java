@@ -26,9 +26,9 @@ public class CourseELearningApplication implements CommandLineRunner {
 	@Autowired
 	private CourseProgressRepository courseProgressRepository;
 	@Autowired
-	private VideoRepository videoRepository;
-	@Autowired
 	private LessonRepository lessonRepository;
+	@Autowired
+	private FileMetaRepository fileMetaRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(CourseELearningApplication.class, args);
@@ -59,17 +59,33 @@ public class CourseELearningApplication implements CommandLineRunner {
 		comment7_2 = commentRepository.save(comment7_2);
 		comment7_3 = commentRepository.save(comment7_3);
 
+		FileMeta imageMeta1 = fileMetaRepository.save(new FileMeta("CryptShield-2.png", "https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/36fd2194-ee0b-4f9d-bb36-28163fb7a947/CryptShield-2.png"));
+		FileMeta imageMeta2 = fileMetaRepository.save(new FileMeta("1672719510415-308958501_810385533538235_264186827225329196_n.jpg", "elearning-sead-storage/4e61e91a-e4be-463f-9df6-19aae4102d6c"));
+		FileMeta videoMeta1  = fileMetaRepository.save(new FileMeta("Discord Game Session.mp4","https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/5529afd8-f388-4722-ba65-7148408ea237/Discord%20Game%20Session.mp4"));
+		FileMeta videoMeta2 = fileMetaRepository.save(new FileMeta("Discord Game Session.mp4","elearning-sead-storage/c4afa5a8-07eb-435a-bdd4-eab5e68371fe"));
+		FileMeta videoMeta3 = fileMetaRepository.save(new FileMeta("Ghi Màn hình 2022-11-06 lúc 16.20.29 (online-video-cutter.com).mp4","elearning-sead-storage/1085dfb9-ffc8-4318-99c6-193f158f1203"));
+
+//		//Tao video
+		Lesson.Video video1_1_1 = new Lesson.Video(videoMeta1, 3600);
+		Lesson.Video video1_1_3 =new Lesson.Video(videoMeta2, 4500);
+		Lesson.Video video1_2_1 = new Lesson.Video(videoMeta3, 3600);
+//		Lesson.Video video1_2_3 = new Lesson.Video(new FileMeta("file name", "file path"), 4500);
+//		Lesson.Video video2_1_1 = new Lesson.Video(new FileMeta("file name", "file path"), 3600);
+//		Lesson.Video video2_1_3 = new Lesson.Video(new FileMeta("file name", "file path"), 4500);
+
+
+		// will be removed
+
 		//Tao video
-		Video video1_1_1 = videoRepository.save(new Video("video url", 3600));
-		Video video1_1_3 = videoRepository.save(new Video("video url", 4500));
-		Video video1_2_1 = videoRepository.save(new Video("video url", 3600));
-		Video video1_2_3 = videoRepository.save(new Video("video url", 4500));
-		Video video2_1_1 = videoRepository.save(new Video("video url", 3600));
-		Video video2_1_3 = videoRepository.save(new Video("video url", 4500));
+		Lesson.Video video1_2_3 = null;
+		Lesson.Video video2_1_1 = null;
+		Lesson.Video video2_1_3 = null;
+
 
 		// Tao article
-		Lesson.Article article1 = new Lesson.Article("lorem ipsum","Image url 1");
+		Lesson.Article article1 = new Lesson.Article("lorem ipsum",imageMeta1);
 		Lesson.Article article2 = new Lesson.Article("lorem ipsum",null);
+
 
 		// Tao lesson
 		Lesson lesson1_1_1 = lessonRepository.save(new Lesson("Intro", LessonType.VIDEO, video1_1_1, null, null));
