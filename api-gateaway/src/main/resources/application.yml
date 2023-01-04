@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: course-service
+          uri: http://localhost:8082/
+          predicates:
+            - Path=/course/**, /courseProgress/**, /lesson/**, /module/**, /fileMeta/**
+        - id: profile-service
+          uri: http://localhost:8081/
+          predicates:
+            - Path=/profile/**, /auth/**
