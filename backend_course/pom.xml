@@ -76,6 +76,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+
 <!--		unit test only, should be deleted -->
 	</dependencies>
 

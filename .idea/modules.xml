@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/backend/ELearning/ELearning.iml" filepath="$PROJECT_DIR$/backend/ELearning/ELearning.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Uni.iml" filepath="$PROJECT_DIR$/.idea/Uni.iml" />
-      <module fileurl="file://$PROJECT_DIR$/backend_course/course_eLearning.iml" filepath="$PROJECT_DIR$/backend_course/course_eLearning.iml" />
     </modules>
   </component>
 </project>
