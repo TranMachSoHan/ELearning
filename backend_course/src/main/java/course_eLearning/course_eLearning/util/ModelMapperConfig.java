@@ -86,6 +86,22 @@ public class ModelMapperConfig {
         return lessonDetailDTO;
     }
 
+    public static Module convertDTOToModule(ModulePostDTO modulePostDTO){
+        return modelMapper.map(modulePostDTO, Module.class);
+    }
+
+    public static CourseSettingDTO convertCourseToCourseSettingDTO(Course course){
+        CourseSettingDTO courseSettingDTO = modelMapper.map(course, CourseSettingDTO.class);
+        List<Module> modules = course.getModules();
+        if(modules != null){
+            List<ModuleOverviewListDTO> moduleOverviewListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleOverviewListDTO).collect(Collectors.toList());
+            courseSettingDTO.setModules(moduleOverviewListDTOS);
+        }else {
+            courseSettingDTO.setModules(new ArrayList<>());
+        }
+        return courseSettingDTO;
+    }
+
     public static Lesson convertDTOToLesson(LessonPostDTO lessonPostDTO){
         return modelMapper.map(lessonPostDTO, Lesson.class);
     }

@@ -1,10 +1,8 @@
 package course_eLearning.course_eLearning.controller;
 
-import course_eLearning.course_eLearning.dto.CourseDetailDTO;
-import course_eLearning.course_eLearning.dto.CourseListDTO;
-import course_eLearning.course_eLearning.dto.CoursePostDTO;
-import course_eLearning.course_eLearning.dto.CourseProgressDetailDTO;
+import course_eLearning.course_eLearning.dto.*;
 import course_eLearning.course_eLearning.model.CourseProgress;
+import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.model.Skill;
 import course_eLearning.course_eLearning.service.SkillService;
 import course_eLearning.course_eLearning.model.Course;
@@ -50,10 +48,16 @@ public class CourseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/getCourseSetting")
+    public ResponseEntity<CourseSettingDTO> getCourseSetting(
+            @PathVariable("courseId") String course_id,
+            @RequestParam("professorId") String professor_id
+    ){
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
     @GetMapping("/getAllBySkill")
     public ResponseEntity<List<CourseListDTO>> getCourseBySkill(@RequestParam String skill){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
 
         List<Course> courses = courseService.getCoursesBySkill(skill);
         List<CourseListDTO> courseListDTOS = courses.stream().map(ModelMapperConfig::convertToCourseListDto).collect(Collectors.toList());
@@ -64,8 +68,6 @@ public class CourseController {
 
     @GetMapping("/getAllGroupingBySkill")
     public ResponseEntity<Map<String, List<CourseListDTO>>> getAllGroupingBySkill(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
 
         List<Skill> skills = skillService.getAllSkills();
         Map<String, List<CourseListDTO>> courseGroupedBySkill = new HashMap<>();
@@ -77,18 +79,16 @@ public class CourseController {
             courseGroupedBySkill.put(skill.toString(),courseListDTOS );
         }
 
-        return new ResponseEntity<>(courseGroupedBySkill, headers, HttpStatus.OK);
+        return new ResponseEntity<>(courseGroupedBySkill, HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<CourseListDTO>> getAllCourses(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
 
         List<Course> courses = courseService.getCourses();
         List<CourseListDTO> courseListDTOS = courses.stream().map(ModelMapperConfig::convertToCourseListDto).collect(Collectors.toList());
 
-        return new ResponseEntity<>(courseListDTOS, headers, HttpStatus.OK);
+        return new ResponseEntity<>(courseListDTOS, HttpStatus.OK);
     }
 
 
@@ -98,6 +98,19 @@ public class CourseController {
         return ResponseEntity.ok(courseService.createCourse(course));
     }
 
+    @PostMapping("/id/{courseId}/createModule")
+    public ResponseEntity<CourseSettingDTO> createModule(
+            @RequestBody ModulePostDTO modulePostDTO,
+            @PathVariable("courseId") String course_id
+    ){
+        Module module = ModelMapperConfig.convertDTOToModule(modulePostDTO);
+        Course course = courseService.createModule(course_id, module);
+        if (course != null){
+            CourseSettingDTO courseSettingDTO = ModelMapperConfig.convertCourseToCourseSettingDTO(course);
+            return new ResponseEntity<>(courseSettingDTO, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
     @PutMapping("/updateCourse")
     public ResponseEntity<Course> updateCourse(@RequestBody Course course){
         return ResponseEntity.ok(courseService.createCourse(course));

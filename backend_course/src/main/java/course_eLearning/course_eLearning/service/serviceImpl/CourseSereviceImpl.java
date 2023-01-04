@@ -2,8 +2,10 @@ package course_eLearning.course_eLearning.service.serviceImpl;
 
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.model.CourseProgress;
+import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.repository.CourseRepository;
+import course_eLearning.course_eLearning.repository.ModuleRepository;
 import course_eLearning.course_eLearning.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,8 @@ import java.util.*;
 public class CourseSereviceImpl implements CourseService {
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private ModuleRepository moduleRepository;
 
     @Autowired
     private CourseProgressRepository courseProgressRepository;
@@ -25,6 +29,20 @@ public class CourseSereviceImpl implements CourseService {
     public Course createCourse(Course course) {
         Course newCourse = courseRepository.save(course);
         return newCourse;
+    }
+
+    @Override
+    public Course createModule(String course_id, Module module) {
+        Optional<Course> courseOptional = courseRepository.findById(course_id);
+        if (courseOptional.isPresent()){
+
+            Course course = courseOptional.get();
+            module = moduleRepository.save(module);
+            course.addModule(module);
+            courseRepository.save(course);
+            return course;
+        }
+        return null;
     }
 
     @Override

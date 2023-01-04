@@ -36,7 +36,8 @@ public class Course {
         this.comments = comments;
         this.skill = skill;
         this.star = star;
-        this.modules = modules;
+
+        this.modules = modules==null ? new ArrayList<>() : modules ;
         this.courseProgresses = new ArrayList<>();
     }
 
@@ -50,6 +51,7 @@ public class Course {
         this.courseProgresses.add(courseProgress);
     }
 
+    public void addModule(Module module){this.modules.add(module);}
     public void updateCourse(Course course){
         this.courseName = course.courseName;
         this.courseDescription = course.courseDescription;
