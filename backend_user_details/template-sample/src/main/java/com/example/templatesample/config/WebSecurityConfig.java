@@ -112,7 +112,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(new AuthEntryPointJwt())
                 .and()
                 .authorizeRequests()
-                .antMatchers("/","/auth/sign-up/**","/auth/sign-in","/oauth/**","/auth/**").permitAll()
+                .antMatchers("/","/auth/sign-up/**","/auth/sign-in","/oauth/**","/auth/**","/profile/**").permitAll()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("/oauth2/**").permitAll()
 //                .antMatchers("/").hasAnyAuthority("PROFESSOR","STUDENT")
