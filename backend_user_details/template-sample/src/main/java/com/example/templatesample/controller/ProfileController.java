@@ -22,6 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/profile")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProfileController {
 
     private static final Logger log = LoggerFactory.getLogger(ProfileController.class);

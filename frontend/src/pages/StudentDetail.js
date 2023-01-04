@@ -4,9 +4,36 @@ import { Tabs } from 'flowbite-react';
 import SavedCourseCard from '../components/SavedCourseCard';
 import SectionTitle from '../components/SectionTitle';
 import Certificate from '../components/Certificate';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getCoursesProgressByStdID } from '../api/useCourseAPI';
+import { getCurrentUser } from '../Utils/APIUltils';
 
 const StudentDetail = () => {
-    return ( <section className='pt-10'>
+    const {user} = useAuth();
+    const [progress, setProgress] = useState(null);
+    const navigate = useNavigate();
+    useEffect(() => {
+        
+
+        const getProgress = async () =>{
+            let prg= await getCoursesProgressByStdID(user.id);
+            setProgress(prg);
+            console.log(prg)
+        }
+
+        getProgress();
+
+
+       
+    }, []) 
+
+    if (!user){
+        navigate('/')
+
+    }else{
+        return ( <section className='pt-10'>
         <div className='bg-primary-50 h-[600px] grid mb-10'>
             <div className='flex items-center self-center gap-7 container-padding-left'>
                 <img src={Avatar} className='block aspect-square w-[148px] rounded-full' alt="" />
@@ -31,25 +58,23 @@ const StudentDetail = () => {
         >
             <Tabs.Item title="Saved Courses">
                 <div className='space-y-4'>
-                    <SavedCourseCard courseTitle={'Python for Absolute Beginners'}></SavedCourseCard>
-                    <SavedCourseCard courseTitle={'HTML for Absolute Beginners'}></SavedCourseCard>
-                    <SavedCourseCard courseTitle={'Javascript for Absolute Beginners'}></SavedCourseCard>
+                    {/* <SavedCourseCard courseTitle={'Python for Absolute Beginners'}></SavedCourseCard>
+                     */}
                 </div>
                
             </Tabs.Item>
 
             <Tabs.Item title="In-progress Courses">
                 <div className='space-y-4'>
-                    <SavedCourseCard courseTitle={'Python for Absolute Beginners'} type='inprogress'></SavedCourseCard>
-                    <SavedCourseCard courseTitle={'HTML for Absolute Beginners'} type='inprogress'></SavedCourseCard>
-                    <SavedCourseCard courseTitle={'Javascript for Absolute Beginners'} type='inprogress'></SavedCourseCard>
+                    {
+                        progress?.map(({course: {courseName}, finishedPercentage}) => <SavedCourseCard courseTitle={courseName} type='inprogress' percentCompleted={finishedPercentage}/>)
+                    }
                 </div>
             </Tabs.Item>
             <Tabs.Item title="Completed Courses">
                 <div className='space-y-4'>
-                    <SavedCourseCard courseTitle={'Python for Absolute Beginners'} type='completed' claimed={false}></SavedCourseCard>
-                    <SavedCourseCard courseTitle={'HTML for Absolute Beginners'} type='completed' claimed={false}></SavedCourseCard>
-                    <SavedCourseCard courseTitle={'Javascript for Absolute Beginners'} type='completed' claimed={true}></SavedCourseCard>
+                    {/* <SavedCourseCard courseTitle={'Python for Absolute Beginners'} type='completed' claimed={false}></SavedCourseCard> */}
+                    
                 </div>
             </Tabs.Item>
             
@@ -64,6 +89,9 @@ const StudentDetail = () => {
             </div>
         </div>
     </section> );
+    }
+
+    
 }
  
 export default StudentDetail;

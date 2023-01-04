@@ -44,7 +44,7 @@ function App() {
         <Route path="/skill" element={<CourseBySkill />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<SignUp />}></Route>
-        <Route path="/courseDetail" element={<CourseDetail />}></Route>
+        <Route path="/courseDetail/:courseID" element={<CourseDetail />}></Route>
         <Route path="/studentDetail" element={<StudentDetail />}></Route>
         <Route path="/learning" element={<Learning />}></Route>
         <Route
