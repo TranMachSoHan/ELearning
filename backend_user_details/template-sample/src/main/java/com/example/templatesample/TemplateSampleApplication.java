@@ -41,11 +41,11 @@ public class TemplateSampleApplication implements CommandLineRunner {
 		profileRepository.deleteAll();
 		professorRepository.deleteAll();
 		studentRepository.deleteAll();
-		Professor professor1 = new Professor("prof1@gmail.com", bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof1",null,null,null,null);
-		Professor professor2 = new Professor("prof2@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof2",null,null,null,null);
-		Professor professor3 = new Professor("prof3@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof3",null,null,null,null);
-		Professor professor4 = new Professor("prof4@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof4",null,null,null,null);
-		Professor professor5 = new Professor("prof5@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof5",null,null,null,null);
+		Professor professor1 = new Professor("prof1@gmail.com", bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof1",null,null,null,"description");
+		Professor professor2 = new Professor("prof2@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof2",null,null,null,"description");
+		Professor professor3 = new Professor("prof3@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof3",null,null,null,"description");
+		Professor professor4 = new Professor("prof4@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof4",null,null,null,"description");
+		Professor professor5 = new Professor("prof5@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof5",null,null,null,"description");
 
 		Student student1 = new Student("stud1@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud1",null,null,null,null,null, null);
 		Student student2 = new Student("stud2@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud2",null,null,null,null,null, null);
