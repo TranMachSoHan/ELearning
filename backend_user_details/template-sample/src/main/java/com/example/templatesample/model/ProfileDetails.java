@@ -15,13 +15,16 @@ public class ProfileDetails implements UserDetails, OAuth2User {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
+    private String name;
+
     private Map<String,Object> attributes;
-    public ProfileDetails(String id, String email, String password,
+    public ProfileDetails(String id, String email, String password, String name,
                               Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
+        this.name = name;
     }
 
     public static ProfileDetails build(Profile profile) {
@@ -30,6 +33,7 @@ public class ProfileDetails implements UserDetails, OAuth2User {
                 profile.getProfileID(),
                 profile.getEmail(),
                 profile.getPassword(),
+                profile.getName(),
                 authorities);
     }
 
@@ -89,7 +93,7 @@ public class ProfileDetails implements UserDetails, OAuth2User {
 
     @Override
     public String getName() {
-        return String.valueOf(id);
+        return name;
     }
 
     public void setAttributes(Map<String, Object> attributes) {

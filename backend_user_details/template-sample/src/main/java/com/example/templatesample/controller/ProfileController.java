@@ -1,5 +1,7 @@
 package com.example.templatesample.controller;
 
+import com.example.templatesample.dto.PaymentDTO;
+import com.example.templatesample.dto.ProfessorGetDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.exception.ResourceNotFoundException;
@@ -18,16 +20,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
 @RequestMapping("/profile")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProfileController {
-
-    private static final Logger log = LoggerFactory.getLogger(ProfileController.class);
-    public static final String ROLE_PROFESSOR = "ROLE_PROFESSOR";
-    public static final String ROLE_STUDENT = "ROLE_STUDENT";
 
     @Autowired
     private ProfileService profileService;
@@ -45,6 +44,12 @@ public class ProfileController {
 
     @GetMapping("/all-students")
     public List<Student> getAllStudents() {return profileService.getAllStudents();}
+
+    @GetMapping("/all-professors-string")
+    public List<String> getAllProfessorsStr() {return profileService.getAllProfessors().stream().map(professor -> professor.getProfileID()).collect(Collectors.toList());}
+
+    @GetMapping("/all-students-string")
+    public List<String> getAllStudentsStr() {return profileService.getAllStudents().stream().map(student -> student.getProfileID()).collect(Collectors.toList());}
 
     @GetMapping("/test")
     public Optional<Student> getStudent() {return profileService.getStudentByEmail("khangnick14@gmail.com");}
@@ -64,6 +69,25 @@ public class ProfileController {
     public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody StudentUpdateDTO studentUpdateDTO) {
         return profileService.updateStudent(studentUpdateDTO,id);
     }
+
+    @GetMapping("professor/{id}")
+    public ResponseEntity<ProfessorGetDTO> getProfessor(@PathVariable("id") String id) {
+        System.out.println(id);
+        return profileService.getProfessorById(id);
+    }
+
+    @GetMapping("student/{id}")
+    public Optional<Student> getStudent(@PathVariable("id") String id) {
+        return profileService.getStudentById(id);
+    }
+
+
+    @PutMapping("student/{id}/add-payment")
+    public ResponseEntity<Student> addPayment(@PathVariable("id") String id, @RequestBody PaymentDTO paymentDTO) {
+        return profileService.addPaymentStudent(id,paymentDTO);
+    }
+
+
 
 
 

@@ -1,6 +1,8 @@
 package course_eLearning.course_eLearning.service.serviceImpl;
 
+import course_eLearning.course_eLearning.model.Lesson;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.repository.LessonRepository;
 import course_eLearning.course_eLearning.repository.ModuleRepository;
 import course_eLearning.course_eLearning.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +14,21 @@ import java.util.Optional;
 public class ModuleServiceImpl implements ModuleService {
     @Autowired
     private ModuleRepository moduleRepository;
+
+    @Autowired
+    private LessonRepository lessonRepository;
+
     @Override
-    public Module findById(String moduleId) {
+    public Module createLesson(String moduleId, Lesson lesson) {
         Optional<Module> optionalModule =  moduleRepository.findById(moduleId);
-        return optionalModule.orElse(null);
+
+        if(optionalModule.isPresent()){
+            Module module = optionalModule.get();
+            lesson = lessonRepository.save(lesson);
+            module.addLesson(lesson);
+            return moduleRepository.save(module);
+        }
+
+        return null;
     }
 }

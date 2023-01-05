@@ -1,6 +1,7 @@
 package com.example.templatesample.service;
 
 import com.example.templatesample.dto.PaymentDTO;
+import com.example.templatesample.dto.ProfessorGetDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.model.Payment;
@@ -27,9 +28,13 @@ public interface ProfileService {
     List<Professor> getAllProfessors();
     List<Student> getAllStudents();
 
-    Optional<Object> getProfessorOrStudent(Profile profile);
-
-    Profile getByEmail(String email);
-
     Optional<Student> getStudentByEmail(String email);
+
+    //get by id
+    Optional<Student> getStudentById(String id);
+    ResponseEntity<ProfessorGetDTO>  getProfessorById(String id);
+
+
+
+
 }

@@ -1,11 +1,11 @@
 package com.example.templatesample.service.impl;
 
 import com.example.templatesample.dto.PaymentDTO;
+import com.example.templatesample.dto.ProfessorGetDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.exception.BadRequestException;
 import com.example.templatesample.model.*;
-import com.example.templatesample.model.enums.AuthenticationProvider;
 import com.example.templatesample.model.enums.Role;
 import com.example.templatesample.repository.ProfessorRepository;
 import com.example.templatesample.repository.ProfileRepository;
@@ -70,7 +70,7 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
         Optional<Student> studentData = studentRepository.findById(id);
         if(studentData.isPresent()) {
             Student _student = studentData.get();
-            Payment payment = new Payment(paymentDTO.getBank(), paymentDTO.getAccountNumber(), _student.getProfileID());
+            Payment payment = new Payment(paymentDTO.getName(), paymentDTO.getBank(), paymentDTO.getAccountNumber(), _student.getProfileID());
             _student.setPayment(payment);
             studentRepository.save(_student);
             return new ResponseEntity<>(profileRepository.save(_student), HttpStatus.OK);
@@ -130,23 +130,31 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
     }
 
     @Override
-    public Optional<Object> getProfessorOrStudent(Profile profile) {
-        Optional<Professor> professor = profileRepository.findProfessorByEmail(profile.getEmail());
-        Optional<Student> student = profileRepository.findStudentByEmail(profile.getEmail());
-        if(professor.isEmpty()) {
-            return Optional.ofNullable(student);
-        }
-        return Optional.of(professor);
-    }
-
-    @Override
-    public Profile getByEmail(String email) {
-        return profileRepository.findByEmail(email);
-    }
-
-    @Override
     public Optional<Student> getStudentByEmail(String email) {
         return profileRepository.findStudentByEmail(email);
+    }
+
+    @Override
+    public Optional<Student> getStudentById(String id) {
+        return profileRepository.findStudentById(id);
+    }
+
+    @Override
+    public ResponseEntity<ProfessorGetDTO> getProfessorById(String id) {
+        Optional<Professor> professorData = professorRepository.findById(id);
+        if(professorData.isPresent()) {
+            ProfessorGetDTO professorGetDTO = new ProfessorGetDTO();
+
+            Professor _professor = professorData.get();
+            professorGetDTO.setId(_professor.getProfileID());
+            professorGetDTO.setName(_professor.getName());
+            professorGetDTO.setAvatar(_professor.getAvatar());
+            professorGetDTO.setDescription(_professor.getDescription());
+
+            return new ResponseEntity<>(professorGetDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override
