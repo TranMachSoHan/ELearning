@@ -42,13 +42,17 @@ public class ModelMapperConfig {
     }
     public static CourseListDTO convertToCourseListDto(Course course){
         CourseListDTO courseListDTO = modelMapper.map(course, CourseListDTO.class);
-        courseListDTO.setProfessor(course.getProfessorID());
+        ProfessorDTO professorDTO = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+        courseListDTO.setProfessor(professorDTO);
         return courseListDTO;
     }
 
     public static CourseDetailDTO convertToCourseDetailDTO(Course course){
         CourseDetailDTO courseDetailDTO = modelMapper.map(course, CourseDetailDTO.class);
 
+        /**
+         * List of course modules
+         */
         List<Module> modules = course.getModules();
         if(modules != null){
             List<ModuleOverviewListDTO> moduleOverviewListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleOverviewListDTO).collect(Collectors.toList());
@@ -58,11 +62,20 @@ public class ModelMapperConfig {
             courseDetailDTO.setModules(new ArrayList<>());
         }
 
+        /**
+         * set number of student
+         */
         List<CourseProgress> courseProgresses = course.getCourseProgresses();
         Long numberOfStudent = courseProgresses.stream()
                 .filter(progress->progress.getCourseProgressType() == CourseProgressType.IN_PROGRESS)
                 .count();
         courseDetailDTO.setNumberOfStudent(numberOfStudent);
+
+        /**
+         * get professor detail
+         */
+        ProfessorDTO professorDTO = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+        courseDetailDTO.setProfessor(professorDTO);
 
         return courseDetailDTO;
     }

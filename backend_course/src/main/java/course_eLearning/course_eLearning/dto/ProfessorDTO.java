@@ -7,23 +7,11 @@ import org.springframework.web.client.RestTemplate;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class ProfessorDTO {
-    private String professorID;
-    private String professorName;
-    private String professorDescription;
+    public String id;
+    public String name;
+    public String avatar;
+    public String description;
 
-    public ProfessorDTO(String professorID){
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        // get professor name by id
-
-//        String response = restTemplate.getForObject(USER_API_URL+"?user_id="+professorId, String.class);
-//        if( response.getStatusCode().is2xxSuccessful()) {
-//            LOG.info("Todos sent to dashboard successfully!");
-//        }
-
-        this.professorID = professorID;
-        this.professorName = "professorName";
-    }
 }
