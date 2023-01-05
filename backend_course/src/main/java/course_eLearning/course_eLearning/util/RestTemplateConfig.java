@@ -1,6 +1,7 @@
 package course_eLearning.course_eLearning.util;
 
 import course_eLearning.course_eLearning.dto.ProfessorDTO;
+import course_eLearning.course_eLearning.dto.RestAPI.ProfessorResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.ParameterizedTypeReference;
@@ -11,14 +12,14 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 public class RestTemplateConfig {
-    private static RestTemplate restTemplate = new RestTemplate();
+    private static final RestTemplate restTemplate = new RestTemplate();
 
-    private static String BASE_URL_API = "http://localhost:8080";
+    private static final String BASE_URL_API = "http://localhost:8080";
 
 
-    public static ProfessorDTO getProfessorDTO(String professorID){
-        ResponseEntity<ProfessorDTO> response
-                = restTemplate.getForEntity(BASE_URL_API + "/profile/professor/"+professorID, ProfessorDTO.class);
+    public static ProfessorResponse getProfessorDTO(String professorID){
+        ResponseEntity<ProfessorResponse> response
+                = restTemplate.getForEntity(BASE_URL_API + "/profile/professor/"+professorID, ProfessorResponse.class);
         if( response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         }

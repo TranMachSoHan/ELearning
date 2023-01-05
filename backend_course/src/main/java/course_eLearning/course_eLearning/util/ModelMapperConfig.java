@@ -1,6 +1,7 @@
 package course_eLearning.course_eLearning.util;
 
 import course_eLearning.course_eLearning.dto.*;
+import course_eLearning.course_eLearning.dto.RestAPI.ProfessorResponse;
 import course_eLearning.course_eLearning.model.*;
 import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.model.helper.CourseProgressType;
@@ -42,12 +43,15 @@ public class ModelMapperConfig {
     }
     public static CourseListDTO convertToCourseListDto(Course course){
         CourseListDTO courseListDTO = modelMapper.map(course, CourseListDTO.class);
-        ProfessorDTO professorDTO = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+
+        ProfessorResponse professorResponse = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+        ProfessorDTO professorDTO = modelMapper.map(professorResponse, ProfessorDTO.class);
+
         courseListDTO.setProfessor(professorDTO);
         return courseListDTO;
     }
 
-    public static CourseDetailDTO convertToCourseDetailDTO(Course course){
+    public static CourseDetailDTO convertToCourseDetailDTO(Course course, Long numberCoursesOfProf, Long numberOfStudent){
         CourseDetailDTO courseDetailDTO = modelMapper.map(course, CourseDetailDTO.class);
 
         /**
@@ -65,16 +69,14 @@ public class ModelMapperConfig {
         /**
          * set number of student
          */
-        List<CourseProgress> courseProgresses = course.getCourseProgresses();
-        Long numberOfStudent = courseProgresses.stream()
-                .filter(progress->progress.getCourseProgressType() == CourseProgressType.IN_PROGRESS)
-                .count();
         courseDetailDTO.setNumberOfStudent(numberOfStudent);
 
         /**
          * get professor detail
          */
-        ProfessorDTO professorDTO = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+        ProfessorResponse professorResponse = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+        ProfessorDTO professorDTO = modelMapper.map(professorResponse, ProfessorDTO.class);
+        professorDTO.setNumberOfCourses(numberCoursesOfProf);
         courseDetailDTO.setProfessor(professorDTO);
 
         return courseDetailDTO;

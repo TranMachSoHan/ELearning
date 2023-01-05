@@ -119,12 +119,13 @@ public class CourseController {
     @GetMapping("/overview/id/{courseId}")
     public ResponseEntity<CourseDetailDTO> getCourseOverviewById(@PathVariable("courseId") String course_id){
         Course course = courseService.getCourseById(course_id);
-        RestTemplateConfig.getProfessorDTO(course.getProfessorID());
         if(course == null){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         else{
-            CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course);
+            Long numberCoursesOfProf = courseService.countProfessorCourses(course.getProfessorID());
+            Long numberOfStudent = courseService.countInProgressCourse(course);
+            CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course,numberCoursesOfProf,numberOfStudent);
             return new ResponseEntity<>(courseDetailDTO,  HttpStatus.OK);
         }
     }
