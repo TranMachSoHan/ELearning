@@ -3,6 +3,7 @@ package course_eLearning.course_eLearning.service.serviceImpl;
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.model.CourseProgress;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.repository.CourseRepository;
 import course_eLearning.course_eLearning.repository.ModuleRepository;
@@ -141,6 +142,23 @@ public class CourseSereviceImpl implements CourseService {
         else{
             return null;
         }
+    }
+
+    @Override
+    public Long countProfessorCourses(String professor_id) {
+        List<Course> courses = courseRepository.findAll();
+
+        return courses.stream()
+                .filter(course -> course.getProfessorID().equals(professor_id))
+                .count();
+    }
+
+    @Override
+    public Long countInProgressCourse(Course course) {
+        List<CourseProgress> courseProgresses = course.getCourseProgresses();
+        return courseProgresses.stream()
+                .filter(progress->progress.getCourseProgressType() == CourseProgressType.IN_PROGRESS)
+                .count();
     }
 
 

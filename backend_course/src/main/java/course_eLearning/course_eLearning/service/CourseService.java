@@ -24,5 +24,6 @@ public interface CourseService{
     public abstract Page<Course> getAllCourseByName(int pageNum, int pageSize, String courseName);
     public abstract CourseProgress enrollCourse(String course_id, String student_id);
     public abstract CourseProgress saveCourse(String course_id, String student_id);
-
+    public abstract Long countProfessorCourses(String professor_id);
+    public abstract Long countInProgressCourse(Course course);
 }

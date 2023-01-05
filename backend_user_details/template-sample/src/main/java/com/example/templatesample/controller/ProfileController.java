@@ -1,6 +1,7 @@
 package com.example.templatesample.controller;
 
 import com.example.templatesample.dto.PaymentDTO;
+import com.example.templatesample.dto.ProfessorGetDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.exception.ResourceNotFoundException;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -42,6 +44,12 @@ public class ProfileController {
     @GetMapping("/all-students")
     public List<Student> getAllStudents() {return profileService.getAllStudents();}
 
+    @GetMapping("/all-professors-string")
+    public List<String> getAllProfessorsStr() {return profileService.getAllProfessors().stream().map(professor -> professor.getProfileID()).collect(Collectors.toList());}
+
+    @GetMapping("/all-students-string")
+    public List<String> getAllStudentsStr() {return profileService.getAllStudents().stream().map(student -> student.getProfileID()).collect(Collectors.toList());}
+
     @GetMapping("/test")
     public Optional<Student> getStudent() {return profileService.getStudentByEmail("khangnick14@gmail.com");}
 
@@ -62,7 +70,7 @@ public class ProfileController {
     }
 
     @GetMapping("professor/{id}")
-    public Optional<Professor> getProfessor(@PathVariable("id") String id) {
+    public ResponseEntity<ProfessorGetDTO> getProfessor(@PathVariable("id") String id) {
         System.out.println(id);
         return profileService.getProfessorById(id);
     }

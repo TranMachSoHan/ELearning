@@ -1,2 +1,5 @@
-package com.example.templatesample.dto;public class StudentGetDTO {
+package com.example.templatesample.dto;
+
+public class StudentGetDTO {
+
 }

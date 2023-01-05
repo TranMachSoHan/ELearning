@@ -1,17 +1,15 @@
-package course_eLearning.course_eLearning.dto;
+package course_eLearning.course_eLearning.dto.RestAPI;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.client.RestTemplate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProfessorDTO {
+public class ProfessorResponse {
     public String id;
     public String name;
     public String avatar;
     public String description;
-    public Long numberOfCourses;
 }
