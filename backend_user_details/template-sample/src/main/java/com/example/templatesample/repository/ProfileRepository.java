@@ -15,6 +15,7 @@ import java.util.Optional;
 public interface ProfileRepository extends MongoRepository<Profile, String> {
     Profile findByEmail(String email);
 
+
     List<Profile> findAllByUserRole(Role userRole);
 
     @Query("{'_class': 'com.example.templatesample.model.Professor'}")
@@ -28,6 +29,12 @@ public interface ProfileRepository extends MongoRepository<Profile, String> {
 
     @Query("{'_class': 'com.example.templatesample.model.Student','email': ?0}")
     Optional<Student> findStudentByEmail(String email);
+
+    @Query("{'_class': 'com.example.templatesample.model.Professor','profileID': ?0}")
+    Optional<Professor> findProfessorById(String profileID);
+
+    @Query("{'_class': 'com.example.templatesample.model.Student','profileID': ?0}")
+    Optional<Student> findStudentById(String profileID);
 
 
 

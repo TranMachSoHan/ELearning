@@ -19,12 +19,15 @@ import java.util.Date;
 public class Payment {
     @Id
     private Long paymentID;
+
+    private String name;
     private String bank;
     private String accountNumber;
     private Date dateIssued;
     private String studentID;
 
-    public Payment(String bank, String accountNumber, String studentID) {
+    public Payment(String name, String bank, String accountNumber, String studentID) {
+        this.name = name;
         this.bank = bank;
         this.accountNumber = accountNumber;
         this.dateIssued = new Date();

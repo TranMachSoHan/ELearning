@@ -1,5 +1,6 @@
 package com.example.templatesample.controller;
 
+import com.example.templatesample.dto.PaymentDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.exception.ResourceNotFoundException;
@@ -23,10 +24,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/profile")
 public class ProfileController {
-
-    private static final Logger log = LoggerFactory.getLogger(ProfileController.class);
-    public static final String ROLE_PROFESSOR = "ROLE_PROFESSOR";
-    public static final String ROLE_STUDENT = "ROLE_STUDENT";
 
     @Autowired
     private ProfileService profileService;
@@ -63,6 +60,25 @@ public class ProfileController {
     public ResponseEntity<Student> updateStudent(@PathVariable("id") String id, @RequestBody StudentUpdateDTO studentUpdateDTO) {
         return profileService.updateStudent(studentUpdateDTO,id);
     }
+
+    @GetMapping("professor/{id}")
+    public Optional<Professor> getProfessor(@PathVariable("id") String id) {
+        System.out.println(id);
+        return profileService.getProfessorById(id);
+    }
+
+    @GetMapping("student/{id}")
+    public Optional<Student> getStudent(@PathVariable("id") String id) {
+        return profileService.getStudentById(id);
+    }
+
+
+    @PutMapping("student/{id}/add-payment")
+    public ResponseEntity<Student> addPayment(@PathVariable("id") String id, @RequestBody PaymentDTO paymentDTO) {
+        return profileService.addPaymentStudent(id,paymentDTO);
+    }
+
+
 
 
 

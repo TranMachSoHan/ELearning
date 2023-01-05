@@ -27,9 +27,13 @@ public interface ProfileService {
     List<Professor> getAllProfessors();
     List<Student> getAllStudents();
 
-    Optional<Object> getProfessorOrStudent(Profile profile);
-
-    Profile getByEmail(String email);
-
     Optional<Student> getStudentByEmail(String email);
+
+    //get by id
+    Optional<Student> getStudentById(String id);
+    Optional<Professor> getProfessorById(String id);
+
+
+
+
 }
