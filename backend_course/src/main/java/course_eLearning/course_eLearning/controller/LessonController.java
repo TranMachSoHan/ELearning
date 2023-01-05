@@ -18,6 +18,7 @@ public class LessonController {
     @Autowired
     private LessonService lessonService;
 
+
     @GetMapping("/id/{lessonId}/material")
     public ResponseEntity<LessonDetailDTO> getLessonArticle(@PathVariable("lessonId") String lesson_id){
 
@@ -28,4 +29,6 @@ public class LessonController {
         }
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
     }
+
+
 }

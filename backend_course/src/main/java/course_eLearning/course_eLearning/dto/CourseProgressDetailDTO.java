@@ -3,6 +3,7 @@ package course_eLearning.course_eLearning.dto;
 import course_eLearning.course_eLearning.model.CourseProgress;
 import course_eLearning.course_eLearning.model.Lesson;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.model.helper.LessonStatus;
 import course_eLearning.course_eLearning.model.helper.LessonType;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class CourseProgressDetailDTO {
     private String course_id;
     private List<ModuleProgressDTO> moduleProgresses;
     private String lastLessonOpened;
+    private CourseProgressType courseProgressType;
 
     @Data
     @AllArgsConstructor
@@ -40,13 +42,12 @@ public class CourseProgressDetailDTO {
         private String lessonID;
         private String title;
         private LessonType type;
-        private double videoDuration;
         private LessonStatus lessonStatus;
     }
 
     public void setModuleProgresses(List<Module> modules, HashMap<String, CourseProgress.ModuleProgress> moduleProgressHashMap){
 
-        if(modules != null){
+        if(modules != null && this.courseProgressType == CourseProgressType.IN_PROGRESS){
             this.moduleProgresses = modules.stream()
                     .map(module -> {
                         CourseProgress.ModuleProgress moduleProgress =moduleProgressHashMap.get(module.getModuleID());
@@ -70,13 +71,13 @@ public class CourseProgressDetailDTO {
                     .map( lesson -> {
                         double duration = lesson.getVideo() != null ? lesson.getVideo().getDuration() : 0;
                         if (lessonLearned == null){
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), duration, LessonStatus.NOT_STARTED);
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED);
                         }
                         if(lessonLearned.get(lesson.getLessonID()) != null ){
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), duration, lessonLearned.get(lesson.getLessonID()));
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), lessonLearned.get(lesson.getLessonID()));
                         }
                         else {
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), duration, LessonStatus.NOT_STARTED);
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED);
                         }
                     })
                     .collect(Collectors.toList());
