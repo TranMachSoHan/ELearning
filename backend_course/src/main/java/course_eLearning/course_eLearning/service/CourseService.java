@@ -23,4 +23,6 @@ public interface CourseService{
     public abstract Course getCourseById(String courseId);
     public abstract Page<Course> getAllCourseByName(int pageNum, int pageSize, String courseName);
     public abstract CourseProgress enrollCourse(String course_id, String student_id);
+    public abstract CourseProgress saveCourse(String course_id, String student_id);
+
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CourseProgressOverviewListDTO {
     private String courseProgressID;
+    private String courseID;
     private String courseName;
     private double finishedPercentage;
 

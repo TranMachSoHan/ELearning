@@ -3,6 +3,7 @@ package course_eLearning.course_eLearning.dto;
 import course_eLearning.course_eLearning.model.CourseProgress;
 import course_eLearning.course_eLearning.model.Lesson;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.model.helper.LessonStatus;
 import course_eLearning.course_eLearning.model.helper.LessonType;
 import lombok.AllArgsConstructor;
@@ -22,6 +23,7 @@ public class CourseProgressDetailDTO {
     private String course_id;
     private List<ModuleProgressDTO> moduleProgresses;
     private String lastLessonOpened;
+    private CourseProgressType courseProgressType;
 
     @Data
     @AllArgsConstructor
@@ -45,7 +47,7 @@ public class CourseProgressDetailDTO {
 
     public void setModuleProgresses(List<Module> modules, HashMap<String, CourseProgress.ModuleProgress> moduleProgressHashMap){
 
-        if(modules != null){
+        if(modules != null && this.courseProgressType == CourseProgressType.IN_PROGRESS){
             this.moduleProgresses = modules.stream()
                     .map(module -> {
                         CourseProgress.ModuleProgress moduleProgress =moduleProgressHashMap.get(module.getModuleID());

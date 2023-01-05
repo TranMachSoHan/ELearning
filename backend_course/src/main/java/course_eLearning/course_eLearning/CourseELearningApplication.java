@@ -251,23 +251,23 @@ public class CourseELearningApplication implements CommandLineRunner {
 		// Join courses 
 		// Save course progress
 		CourseProgress courseProgress1 = courseProgressRepository.save(new CourseProgress(course1, student_id1, true));
-		course1.addCourseProgress(courseProgress1.getCourseProgressID());
+		course1.addCourseProgress(courseProgress1);
 		courseRepository.save(course1);
 
 		CourseProgress courseProgress2 = courseProgressRepository.save(new CourseProgress(course3, student_id1, true));
-		course3.addCourseProgress(courseProgress2.getCourseProgressID());
+		course3.addCourseProgress(courseProgress2);
 		courseRepository.save(course3);
 
 		CourseProgress courseProgress3 = courseProgressRepository.save(new CourseProgress(course7, student_id1, true));
-		course7.addCourseProgress(courseProgress3.getCourseProgressID());
+		course7.addCourseProgress(courseProgress3);
 		courseRepository.save(course7);
 
 		CourseProgress courseProgress4 = courseProgressRepository.save(new CourseProgress(course15, student_id1, false));
-		course15.addCourseProgress(courseProgress4.getCourseProgressID());
+		course15.addCourseProgress(courseProgress4);
 		courseRepository.save(course15);
 
 		CourseProgress courseProgress5 = courseProgressRepository.save(new CourseProgress(course23, student_id1, false));
-		course23.addCourseProgress(courseProgress5.getCourseProgressID());
+		course23.addCourseProgress(courseProgress5);
 		courseRepository.save(course23);
 	}
 }

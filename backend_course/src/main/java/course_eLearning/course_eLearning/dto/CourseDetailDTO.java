@@ -15,9 +15,19 @@ public class CourseDetailDTO {
     private String courseID;
     private String courseName;
     private String star;
-    private String professorID;
+    private ProfessorDTO professor;
     private String courseDescription;
+    private Long numberOfStudent;
     private List<ModuleOverviewListDTO> modules;
     private List<Comment> comments;
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    class ProfessorDTO{
+        String professorID;
+        String professorName;
+        String professorDescription;
+    }
 }
 

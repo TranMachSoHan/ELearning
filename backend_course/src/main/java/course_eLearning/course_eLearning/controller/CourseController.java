@@ -8,10 +8,8 @@ import course_eLearning.course_eLearning.service.SkillService;
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.service.CourseService;
 import course_eLearning.course_eLearning.util.ModelMapperConfig;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -119,23 +117,21 @@ public class CourseController {
     @GetMapping("/overview/id/{courseId}")
     public ResponseEntity<CourseDetailDTO> getCourseOverviewById(@PathVariable("courseId") String course_id){
         Course course = courseService.getCourseById(course_id);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-
+        System.out.println(course_id);
         if(course == null){
-            return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         else{
             CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course);
-            return new ResponseEntity<>(courseDetailDTO, headers, HttpStatus.OK);
+            return new ResponseEntity<>(courseDetailDTO,  HttpStatus.OK);
         }
     }
 
 
     /**
      * http://localhost:8080/course/id/63b5151a7e7b23000f83a709/enroll?studentId=studentId
-     * Enroll course
+     * this will handle the save progress to enroll course
+     * this will handle the course already enrolled and the student click on enroll
      * @param course_id
      * @param student_id
      * @return
@@ -151,6 +147,18 @@ public class CourseController {
         }
         CourseProgressDetailDTO progressDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(progress);
         return new ResponseEntity<>(progressDTO, HttpStatus.OK);
+    }
 
+    @PostMapping("/id/{courseId}/save")
+    public ResponseEntity<CourseProgressDetailDTO> savedCourse(
+            @PathVariable("courseId") String course_id,
+            @RequestParam("studentId") String student_id
+    ){
+        CourseProgress progress = courseService.saveCourse(course_id, student_id);
+        if (progress == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        CourseProgressDetailDTO progressDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(progress);
+        return new ResponseEntity<>(progressDTO, HttpStatus.OK);
     }
 }

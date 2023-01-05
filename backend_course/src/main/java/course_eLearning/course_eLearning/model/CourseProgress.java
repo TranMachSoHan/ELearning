@@ -1,5 +1,6 @@
 package course_eLearning.course_eLearning.model;
 
+import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.model.helper.LessonStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,9 +20,9 @@ import java.util.List;
 public class CourseProgress {
     @Id
     private String courseProgressID;
-
     @DBRef
     private Course course;
+    private CourseProgressType courseProgressType;
     private String student;
     private double finishedPercentage;
     private int numOfModuleFinished ;
@@ -33,14 +34,35 @@ public class CourseProgress {
     public CourseProgress(Course course, String student, boolean isEnrolled) {
         this.course = course;
         this.student = student;
-        this.finishedPercentage = isEnrolled ? 1 : 0;
+        this.finishedPercentage = 0;
         this.numOfModuleFinished = 0;
         this.submissions = new ArrayList<>();
         this.moduleProgresses = new HashMap<>();
-        enrollLesson();
+        if (isEnrolled){
+            this.courseProgressType = CourseProgressType.IN_PROGRESS;
+            enrollLesson();
+        }
+        else {
+            this.courseProgressType = CourseProgressType.SAVED_PROGRESS;
+        }
     }
 
-    private void enrollLesson(){
+
+    public CourseProgress(Course course, String student) {
+        this.course = course;
+        this.student = student;
+        this.finishedPercentage = 0;
+        this.numOfModuleFinished = 0;
+        this.submissions = new ArrayList<>();
+        this.moduleProgresses = new HashMap<>();
+    }
+
+    public void saveCourseProgress(){
+        this.courseProgressType = CourseProgressType.SAVED_PROGRESS;
+    }
+
+    public void enrollLesson(){
+        this.courseProgressType = CourseProgressType.IN_PROGRESS;
         if(this.course.getModules() != null && this.course.getModules().size() != 0){
             Module firstModule = this.course.getModules().get(0);
             if(firstModule.getLessons() != null && firstModule.getLessons().size() != 0){
@@ -50,6 +72,7 @@ public class CourseProgress {
             }
         }
     }
+
 
     public void setModuleProgresses(Module module , String prevLesson, String newLesson) {
         ModuleProgress foundModuleProgress = this.moduleProgresses.get(module.getModuleID());

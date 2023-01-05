@@ -3,6 +3,7 @@ package course_eLearning.course_eLearning.util;
 import course_eLearning.course_eLearning.dto.*;
 import course_eLearning.course_eLearning.model.*;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.service.ModuleService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -57,6 +58,12 @@ public class ModelMapperConfig {
             courseDetailDTO.setModules(new ArrayList<>());
         }
 
+        List<CourseProgress> courseProgresses = course.getCourseProgresses();
+        Long numberOfStudent = courseProgresses.stream()
+                .filter(progress->progress.getCourseProgressType() == CourseProgressType.IN_PROGRESS)
+                .count();
+        courseDetailDTO.setNumberOfStudent(numberOfStudent);
+
         return courseDetailDTO;
     }
 
@@ -65,12 +72,8 @@ public class ModelMapperConfig {
         progressDetailDTO.setCourse_id(courseProgress.getCourse().getCourseID());
         List<Module> modules = courseProgress.getCourse().getModules();
         // always not null
-        if(modules != null){
-            progressDetailDTO.setModuleProgresses(modules, courseProgress.getModuleProgresses());
-        }
-        else {
-            return null;
-        }
+        progressDetailDTO.setModuleProgresses(modules, courseProgress.getModuleProgresses());
+
         return progressDetailDTO;
     }
 
@@ -108,6 +111,7 @@ public class ModelMapperConfig {
 
     public static CourseProgressOverviewListDTO convertToCourseProgressOverviewDTO(CourseProgress courseProgress){
         CourseProgressOverviewListDTO dto = modelMapper.map(courseProgress, CourseProgressOverviewListDTO.class);
+        dto.setCourseID(courseProgress.getCourse().getCourseID());
         dto.setCourseName(courseProgress.getCourse().getCourseName());
         return dto;
     }

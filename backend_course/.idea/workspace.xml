@@ -5,15 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="83e4d923-98a3-4373-a714-a2512fa23f44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseSettingDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/ModulePostDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateaway/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateaway/.idea/aws.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateaway/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateaway/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateaway/.idea/jarRepositories.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateaway/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../api-gateaway/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/helper/CourseProgressType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/CourseELearningApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/CourseELearningApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseProgressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseProgressController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseDetailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseProgressDetailDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseProgressDetailDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseProgressOverviewListDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseProgressOverviewListDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/Module.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/Module.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/CourseProgress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/CourseProgress.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseProgressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseProgressService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseProgressServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseProgressServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseSereviceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseSereviceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/ModelMapperConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/ModelMapperConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/course_eLearning/course_eLearning/dto/CourseDetailDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/course_eLearning/course_eLearning/dto/ProfessorDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/course_eLearning/course_eLearning/util/ModelMapperConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/course_eLearning/course_eLearning/util/RestTemplateConfig.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +40,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>

@@ -6,6 +6,7 @@ import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.repository.CourseRepository;
 import course_eLearning.course_eLearning.repository.ModuleRepository;
+import course_eLearning.course_eLearning.service.CourseProgressService;
 import course_eLearning.course_eLearning.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public class CourseSereviceImpl implements CourseService {
     private ModuleRepository moduleRepository;
 
     @Autowired
-    private CourseProgressRepository courseProgressRepository;
+    private CourseProgressService progressService;
 
     @Override
     public Course createCourse(Course course) {
@@ -90,18 +91,50 @@ public class CourseSereviceImpl implements CourseService {
         return null;
     }
 
+
     @Override
     public CourseProgress enrollCourse(String course_id, String student_id) {
         Optional<Course> courseOptional = courseRepository.findById(course_id);
         if(courseOptional.isPresent()){
             Course course = courseOptional.get();
 
-            // Save course progress
-            CourseProgress courseProgress = new CourseProgress(course, student_id, true);
-            courseProgress = courseProgressRepository.save(courseProgress);
+            // check whether the course has the course progress of that student or not
+            CourseProgress courseProgress = progressService.findExistedCourseProgress(course.getCourseProgresses(),student_id);
 
-            course.addCourseProgress(courseProgress.getCourseProgressID());
-            courseRepository.save(course);
+            // student does not enroll this course
+            if (courseProgress == null){
+                System.out.println("null in the enroll course");
+                courseProgress = progressService.enrollCourseProgress(course, student_id);
+                course.addCourseProgress(courseProgress);
+                courseRepository.save(course);
+            }
+            // student has enroll this course, to make sure convert to the in progress type
+            else{
+                progressService.setInProgress(courseProgress);
+            }
+
+            // if not then return the exiting course progress
+            return courseProgress;
+        }
+        else{
+            return null;
+        }
+    }
+
+    @Override
+    public CourseProgress saveCourse(String course_id, String student_id) {
+        Optional<Course> courseOptional = courseRepository.findById(course_id);
+        if(courseOptional.isPresent()){
+            Course course = courseOptional.get();
+
+            // check whether the course has the course progress of that student or not
+            CourseProgress courseProgress = progressService.findExistedCourseProgress(course.getCourseProgresses(),student_id);
+
+            if(courseProgress == null){
+                courseProgress = progressService.saveCourseProgress(course, student_id);
+                course.addCourseProgress(courseProgress);
+                courseRepository.save(course);
+            }
 
             return courseProgress;
         }

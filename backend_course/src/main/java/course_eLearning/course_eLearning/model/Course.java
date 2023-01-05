@@ -27,7 +27,8 @@ public class Course {
     private String star = null;
     @DBRef
     private List<Module> modules;
-    private List<String> courseProgresses;
+    @DBRef
+    private List<CourseProgress> courseProgresses;
 
     public Course(String courseName, String professorID, String courseDescription, List<Comment> comments, Skill skill, String star, List<Module> modules) {
         this.courseName = courseName;
@@ -47,7 +48,7 @@ public class Course {
         this.courseDescription = courseDescription;
     }
 
-    public void addCourseProgress(String courseProgress) {
+    public void addCourseProgress(CourseProgress courseProgress) {
         this.courseProgresses.add(courseProgress);
     }
 
