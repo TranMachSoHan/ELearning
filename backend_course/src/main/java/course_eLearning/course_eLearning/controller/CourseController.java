@@ -8,6 +8,8 @@ import course_eLearning.course_eLearning.service.SkillService;
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.service.CourseService;
 import course_eLearning.course_eLearning.util.ModelMapperConfig;
+import course_eLearning.course_eLearning.util.RestTemplateConfig;
+import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -117,7 +119,7 @@ public class CourseController {
     @GetMapping("/overview/id/{courseId}")
     public ResponseEntity<CourseDetailDTO> getCourseOverviewById(@PathVariable("courseId") String course_id){
         Course course = courseService.getCourseById(course_id);
-        System.out.println(course_id);
+        RestTemplateConfig.getProfessorDTO(course.getProfessorID());
         if(course == null){
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }

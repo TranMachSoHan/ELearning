@@ -21,13 +21,6 @@ public class CourseDetailDTO {
     private List<ModuleOverviewListDTO> modules;
     private List<Comment> comments;
 
-    @Data
-    @AllArgsConstructor
-    @NoArgsConstructor
-    class ProfessorDTO{
-        String professorID;
-        String professorName;
-        String professorDescription;
-    }
+
 }
 

@@ -10,6 +10,7 @@ import org.springframework.web.client.RestTemplate;
 public class ProfessorDTO {
     private String professorID;
     private String professorName;
+    private String professorDescription;
 
     public ProfessorDTO(String professorID){
 
