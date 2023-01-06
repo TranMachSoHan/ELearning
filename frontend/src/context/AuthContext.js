@@ -29,7 +29,7 @@ export const AuthContextProvider = ({
 
   const logout =  () => {
     setUser(null)
-    localStorage.setItem(ACCESS_TOKEN, null)
+    localStorage.removeItem(ACCESS_TOKEN)
   }
 
   

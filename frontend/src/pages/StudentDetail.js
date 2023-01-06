@@ -1,32 +1,58 @@
 import Avatar from "../assets/instructor-ava.jpg";
 import CourseThumb from "../assets/course-demo-thumb.jpg";
-import { Tabs } from "flowbite-react";
+import { Modal, Tabs } from "flowbite-react";
 import SavedCourseCard from "../components/SavedCourseCard";
 import SectionTitle from "../components/SectionTitle";
 import Certificate from "../components/Certificate";
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCoursesProgressByStdID } from "../api/useCourseAPI";
 import { getCurrentUser } from "../Utils/APIUltils";
+import { getStudentProfileById } from "../api/useAuthAPI";
+import Button from "../components/Button";
 
 const StudentDetail = () => {
-  const { user } = useAuth();
+  const { studentID } = useParams();
   const [progress, setProgress] = useState(null);
+  const [profile, setProfile] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
-    getCurrentUser().then((res) => console.log(res));
+
+    
+    
+    const getStudent = async () => {
+        let res = await fetch(`http://localhost:8081/profile/student/${studentID}`)
+        let std = await res.json();
+        console.log(std)
+        setProfile(std)
+        
+    }
+    
+
 
     const getProgress = async () => {
-      let prg = await getCoursesProgressByStdID(user.id);
+      let prg = await getCoursesProgressByStdID(studentID);
       setProgress(prg);
       console.log(prg);
     };
 
+    
+    getStudent();
     getProgress();
+    
+
+    
   }, []);
 
-  if (!user) {
+   const [openModal, setOpenModal] = useState(false)
+
+    const onClose = () => {
+        setOpenModal(false)
+    }
+
+
+  if (!studentID) {
     navigate("/");
   } else {
     return (
@@ -40,13 +66,13 @@ const StudentDetail = () => {
             />
             <div>
               <h1 className="font-bold text-primary-500 text-headline-48">
-                Hoang Minh Quan
+                {profile?.name}
               </h1>
               <p className="mt-3 mb-5 text-lead-24">
-                Major: Software Engineering - Minor: N/A
+                Major: {profile?.major} - Minor: {profile?.minor}
               </p>
 
-              <p className="flex items-center cursor-pointer text-primary-500 text-button-21">
+              <p onClick={() => {setOpenModal(true)}} className="flex items-center cursor-pointer text-primary-500 text-button-21">
                 <span>Edit my info</span>
                 <svg
                   width="24"
@@ -63,6 +89,35 @@ const StudentDetail = () => {
                   />
                 </svg>
               </p>
+
+              <Modal
+                show={openModal}
+                
+                popup={true}
+                onClose={onClose}
+            >
+                <Modal.Header>Update Profile</Modal.Header>
+                <Modal.Body>
+                    <form className="space-y-5">
+                         <div className='space-y-2'>
+                            <label htmlFor="newName" >Update Name</label>
+                            <input type="text" name="newName" id="newName" className='block w-full p-2 border border-black' placeholder='New Name' />
+                        </div>
+                         <div className='space-y-2'>
+                            <label htmlFor="newMajor" >Update Major</label>
+                            <input type="text" name="newMajor" id="newMajor" className='block w-full p-2 border border-black' placeholder='Edit Major' />
+                        </div>
+                         <div className='space-y-2'>
+                            <label htmlFor="newMinor" >Update Minor</label>
+                            <input type="text" name="newMinor" id="newMinor" className='block w-full p-2 border border-black' placeholder='Edit Mi' />
+                        </div>
+
+
+                        <Button isPrimary={true} size="large" className={'mb-2'} text={"Update"}></Button>
+                        
+                    </form>
+                </Modal.Body>
+            </Modal>
             </div>
           </div>
         </div>
@@ -78,7 +133,7 @@ const StudentDetail = () => {
           <Tabs.Item title="In-progress Courses">
             <div className="space-y-4">
               {progress?.map(
-                ({ course: { courseName }, finishedPercentage }) => (
+                ({  courseName , finishedPercentage }) => (
                   <SavedCourseCard
                     courseTitle={courseName}
                     type="inprogress"
@@ -95,7 +150,7 @@ const StudentDetail = () => {
           </Tabs.Item>
         </Tabs.Group>
 
-        <div className="mt-10 space-y-3">
+        {/* <div className="mt-10 space-y-3">
           <SectionTitle title={"My Certificates"}></SectionTitle>
 
           <div>
@@ -104,7 +159,7 @@ const StudentDetail = () => {
               certiTitle={"Completion of Agile Fundamentals"}
             ></Certificate>
           </div>
-        </div>
+        </div> */}
       </section>
     );
   }

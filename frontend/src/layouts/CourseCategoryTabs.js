@@ -173,13 +173,15 @@ const CourseCategoryTabs = () => {
     navigate(`skill/${activeSkillName}`);
   };
 
+  console.log(courseData);
+
   return (
     <section className="">
       <SectionTitle title={"A broad selection of courses"}></SectionTitle>
 
       <div className="px-12 py-10 mt-3 border border-grey-900">
         <div className="flex items-center gap-8 mb-14">
-          {courseData.map(({ skill, isActive }) => (
+          {courseData?.map(({ skill, isActive }) => (
             <TabItem
               content={skill}
               onClick={tabClick}
@@ -189,9 +191,9 @@ const CourseCategoryTabs = () => {
         </div>
 
         <div className="space-y-7">
-          {courseData.map(({ isActive, listCourses }) => {
+          {courseData?.map(({ isActive, listCourses }) => {
             if (isActive) {
-              return listCourses.map(
+              return listCourses?.map(
                 ({ courseName, courseDescription, courseID, professor }) => (
                   <TabContent
                     courseID={courseID}
