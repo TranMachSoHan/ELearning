@@ -1,6 +1,6 @@
 FROM maven:3.6.3-jdk-8-slim AS build
-COPY src /home/app/src
-COPY pom.xml /home/app
+COPY backend_course/src /home/app/src
+COPY backend_course/pom.xml /home/app
 RUN mvn -B clean package --file /home/app/pom.xml -DskipTests=true
 
 FROM openjdk:17-oracle
