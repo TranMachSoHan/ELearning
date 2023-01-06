@@ -17,6 +17,9 @@
       <change beforePath="$PROJECT_DIR$/../backend/ELearning/src/main/resources/application.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/ELearning/src/test/java/com/example/ELearning/ELearningApplicationTests.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend/springboot/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.github/workflows/on_push_course.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/on_push_course.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/course_eLearning.iml" beforeDir="false" afterPath="$PROJECT_DIR$/course_eLearning.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

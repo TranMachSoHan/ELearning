@@ -35,6 +35,6 @@
 #EXPOSE 8082
 #ENTRYPOINT ["java","-jar","/app.jar"]
 
-FROM openjdk:11
+FROM openjdk:17-oracle
 COPY target/*.jar app.jar
 ENTRYPOINT ["java","-jar", "app.jar"]
