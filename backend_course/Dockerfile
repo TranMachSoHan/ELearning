@@ -1,4 +1,4 @@
-FROM maven:3.6.3-jdk-8-slim AS build
+FROM maven:3.8.4-openjdk-17 AS build
 COPY backend_course/src /home/app/src
 COPY backend_course/pom.xml /home/app
 RUN mvn -B clean package --file /home/app/pom.xml -DskipTests=true
