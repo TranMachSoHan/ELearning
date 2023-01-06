@@ -15,7 +15,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Professor extends Profile {
+public class
+
+
+
+Professor extends Profile {
     private String description;
 
     public void updateProfessor(Professor newProfessor) {
