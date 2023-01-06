@@ -9,7 +9,7 @@ const TeacherNav = () => {
          {/* Logo */}
         <h4 className="font-black text-black cursor-pointer text-headline-21 lg:text-headline-31" onClick={() => {navigate('/')}}>Rademy</h4>
 
-        <ProfileLink name={'Quan'} imgSrc={Avatar}></ProfileLink>
+        <ProfileLink name={'Quan'} role='teacher' imgSrc={Avatar}></ProfileLink>
     </nav> );
 }
  
