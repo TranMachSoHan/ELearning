@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import StudentDetail from "./pages/StudentDetail";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentLayout from "./layouts/StudentLayout";
+import CourseEdit from './pages/CourseEdit'
 import TeacherLayout from "./layouts/TeacherLayout";
 import OAuth2RedirectHandler from "./Utils/OAuth2/OAuth2RedirectHandler";
 import { useState } from "react";
@@ -44,9 +45,10 @@ function App() {
         <Route path="/skill" element={<CourseBySkill />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<SignUp />}></Route>
-        <Route path="/courseDetail" element={<CourseDetail />}></Route>
+        <Route path="/courseDetail/:courseID" element={<CourseDetail />}></Route>
         <Route path="/studentDetail" element={<StudentDetail />}></Route>
         <Route path="/learning" element={<Learning />}></Route>
+        <Route path="/edit-course" element={<CourseEdit/>}></Route>
         <Route
           path="/oauth2/redirect"
           element={<OAuth2RedirectHandler />}

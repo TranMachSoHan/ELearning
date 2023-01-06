@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/profile")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProfileController {
 
     @Autowired
