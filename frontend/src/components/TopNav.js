@@ -76,7 +76,7 @@ const TopNav = () => {
                 </li>
                 :
                 <li>
-                    <ProfileLink role={'student'} name={user.email} />
+                    <ProfileLink role={'student'} name={user.name} />
                 </li>
             }
 

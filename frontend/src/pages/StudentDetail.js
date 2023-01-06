@@ -16,7 +16,9 @@ const StudentDetail = () => {
     const navigate = useNavigate();
     useEffect(() => {
         
-
+        getCurrentUser()
+        .then((res) => {console.log(res)} )
+        .catch(err => console.log(err))
         const getProgress = async () =>{
             let prg= await getCoursesProgressByStdID(user.id);
             setProgress(prg);
