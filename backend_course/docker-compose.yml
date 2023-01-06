@@ -3,7 +3,6 @@ services:
   backend_course:
     build:
       context: .
-      target: development
     ports:
       - "8083:8083"
     container_name: backend_course

@@ -64,20 +64,6 @@
 			<artifactId>aws-java-sdk</artifactId>
 			<version>1.12.373</version>
 		</dependency>
-<!--		unit test only, should be deleted -->
-		<dependency>
-			<groupId>org.junit.vintage</groupId>
-			<artifactId>junit-vintage-engine</artifactId>
-			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<groupId>org.hamcrest</groupId>
-					<artifactId>hamcrest-core</artifactId>
-				</exclusion>
-			</exclusions>
-		</dependency>
-
-<!--		unit test only, should be deleted -->
 	</dependencies>
 
 	<build>
@@ -92,13 +78,6 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<configuration>
-					<source>11</source>
-					<target>11</target>
 				</configuration>
 			</plugin>
 			<plugin>

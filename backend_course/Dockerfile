@@ -1,6 +1,8 @@
-FROM openjdk:8-jdk-alpine
-ADD target/eLearning-course.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+#FROM openjdk:8-jdk-alpine
+#ADD target/eLearning-course.jar app.jar
+#ENTRYPOINT ["java","-jar","/app.jar"]
+
+# syntax=docker/dockerfile:1
 
 # syntax=docker/dockerfile:1
 
@@ -17,8 +19,22 @@ ENTRYPOINT ["java","-jar","/app.jar"]
 #
 #FROM base as build
 #RUN ./mvnw package
-
+#
 #FROM eclipse-temurin:17-jre-jammy as production
 #EXPOSE 8080
 #COPY --from=build /backend_course/target/eLearning-course-*.jar /eLearning-course.jar
 #CMD ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/spring-petclinic.jar"]
+
+#FROM maven:3.6.0-jdk-11-slim AS build
+#COPY src /src
+#COPY pom.xml /pom.xml
+#RUN mvn -B install --file pom.xml
+
+#FROM openjdk:11
+#COPY --from=build /target/eLearning-course.jar app.jar
+#EXPOSE 8082
+#ENTRYPOINT ["java","-jar","/app.jar"]
+
+FROM openjdk:11
+COPY target/*.jar app.jar
+ENTRYPOINT ["java","-jar", "app.jar"]
