@@ -1,8 +1,10 @@
 package course_eLearning.course_eLearning.util;
 
 import course_eLearning.course_eLearning.dto.*;
+import course_eLearning.course_eLearning.dto.RestAPI.ProfessorResponse;
 import course_eLearning.course_eLearning.model.*;
 import course_eLearning.course_eLearning.model.Module;
+import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.service.ModuleService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -41,13 +43,20 @@ public class ModelMapperConfig {
     }
     public static CourseListDTO convertToCourseListDto(Course course){
         CourseListDTO courseListDTO = modelMapper.map(course, CourseListDTO.class);
-        courseListDTO.setProfessor(course.getProfessorID());
+
+        ProfessorResponse professorResponse = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+        ProfessorDTO professorDTO = modelMapper.map(professorResponse, ProfessorDTO.class);
+
+        courseListDTO.setProfessor(professorDTO);
         return courseListDTO;
     }
 
-    public static CourseDetailDTO convertToCourseDetailDTO(Course course){
+    public static CourseDetailDTO convertToCourseDetailDTO(Course course, Long numberCoursesOfProf, Long numberOfStudent){
         CourseDetailDTO courseDetailDTO = modelMapper.map(course, CourseDetailDTO.class);
 
+        /**
+         * List of course modules
+         */
         List<Module> modules = course.getModules();
         if(modules != null){
             List<ModuleOverviewListDTO> moduleOverviewListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleOverviewListDTO).collect(Collectors.toList());
@@ -57,6 +66,19 @@ public class ModelMapperConfig {
             courseDetailDTO.setModules(new ArrayList<>());
         }
 
+        /**
+         * set number of student
+         */
+        courseDetailDTO.setNumberOfStudent(numberOfStudent);
+
+        /**
+         * get professor detail
+         */
+        ProfessorResponse professorResponse = RestTemplateConfig.getProfessorDTO(course.getProfessorID());
+        ProfessorDTO professorDTO = modelMapper.map(professorResponse, ProfessorDTO.class);
+        professorDTO.setNumberOfCourses(numberCoursesOfProf);
+        courseDetailDTO.setProfessor(professorDTO);
+
         return courseDetailDTO;
     }
 
@@ -65,12 +87,8 @@ public class ModelMapperConfig {
         progressDetailDTO.setCourse_id(courseProgress.getCourse().getCourseID());
         List<Module> modules = courseProgress.getCourse().getModules();
         // always not null
-        if(modules != null){
-            progressDetailDTO.setModuleProgresses(modules, courseProgress.getModuleProgresses());
-        }
-        else {
-            return null;
-        }
+        progressDetailDTO.setModuleProgresses(modules, courseProgress.getModuleProgresses());
+
         return progressDetailDTO;
     }
 
@@ -86,4 +104,30 @@ public class ModelMapperConfig {
         return lessonDetailDTO;
     }
 
+    public static Module convertDTOToModule(ModulePostDTO modulePostDTO){
+        return modelMapper.map(modulePostDTO, Module.class);
+    }
+
+    public static CourseSettingDTO convertCourseToCourseSettingDTO(Course course){
+        CourseSettingDTO courseSettingDTO = modelMapper.map(course, CourseSettingDTO.class);
+        List<Module> modules = course.getModules();
+        if(modules != null){
+            List<ModuleOverviewListDTO> moduleOverviewListDTOS = modules.stream().map(ModelMapperConfig::convertToModuleOverviewListDTO).collect(Collectors.toList());
+            courseSettingDTO.setModules(moduleOverviewListDTOS);
+        }else {
+            courseSettingDTO.setModules(new ArrayList<>());
+        }
+        return courseSettingDTO;
+    }
+
+    public static Lesson convertDTOToLesson(LessonPostDTO lessonPostDTO){
+        return modelMapper.map(lessonPostDTO, Lesson.class);
+    }
+
+    public static CourseProgressOverviewListDTO convertToCourseProgressOverviewDTO(CourseProgress courseProgress){
+        CourseProgressOverviewListDTO dto = modelMapper.map(courseProgress, CourseProgressOverviewListDTO.class);
+        dto.setCourseID(courseProgress.getCourse().getCourseID());
+        dto.setCourseName(courseProgress.getCourse().getCourseName());
+        return dto;
+    }
 }

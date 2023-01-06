@@ -1,19 +1,17 @@
 package course_eLearning.course_eLearning.controller;
 
-import course_eLearning.course_eLearning.dto.CourseDetailDTO;
-import course_eLearning.course_eLearning.dto.CourseListDTO;
-import course_eLearning.course_eLearning.dto.CoursePostDTO;
-import course_eLearning.course_eLearning.dto.CourseProgressDetailDTO;
+import course_eLearning.course_eLearning.dto.*;
 import course_eLearning.course_eLearning.model.CourseProgress;
+import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.model.Skill;
 import course_eLearning.course_eLearning.service.SkillService;
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.service.CourseService;
 import course_eLearning.course_eLearning.util.ModelMapperConfig;
-import org.modelmapper.ModelMapper;
+import course_eLearning.course_eLearning.util.RestTemplateConfig;
+import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,10 +48,16 @@ public class CourseController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/getCourseSetting")
+    public ResponseEntity<CourseSettingDTO> getCourseSetting(
+            @PathVariable("courseId") String course_id,
+            @RequestParam("professorId") String professor_id
+    ){
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+
     @GetMapping("/getAllBySkill")
     public ResponseEntity<List<CourseListDTO>> getCourseBySkill(@RequestParam String skill){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
 
         List<Course> courses = courseService.getCoursesBySkill(skill);
         List<CourseListDTO> courseListDTOS = courses.stream().map(ModelMapperConfig::convertToCourseListDto).collect(Collectors.toList());
@@ -64,8 +68,6 @@ public class CourseController {
 
     @GetMapping("/getAllGroupingBySkill")
     public ResponseEntity<Map<String, List<CourseListDTO>>> getAllGroupingBySkill(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
 
         List<Skill> skills = skillService.getAllSkills();
         Map<String, List<CourseListDTO>> courseGroupedBySkill = new HashMap<>();
@@ -77,18 +79,16 @@ public class CourseController {
             courseGroupedBySkill.put(skill.toString(),courseListDTOS );
         }
 
-        return new ResponseEntity<>(courseGroupedBySkill, headers, HttpStatus.OK);
+        return new ResponseEntity<>(courseGroupedBySkill, HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<CourseListDTO>> getAllCourses(){
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
 
         List<Course> courses = courseService.getCourses();
         List<CourseListDTO> courseListDTOS = courses.stream().map(ModelMapperConfig::convertToCourseListDto).collect(Collectors.toList());
 
-        return new ResponseEntity<>(courseListDTOS, headers, HttpStatus.OK);
+        return new ResponseEntity<>(courseListDTOS, HttpStatus.OK);
     }
 
 
@@ -98,6 +98,19 @@ public class CourseController {
         return ResponseEntity.ok(courseService.createCourse(course));
     }
 
+    @PostMapping("/id/{courseId}/createModule")
+    public ResponseEntity<CourseSettingDTO> createModule(
+            @RequestBody ModulePostDTO modulePostDTO,
+            @PathVariable("courseId") String course_id
+    ){
+        Module module = ModelMapperConfig.convertDTOToModule(modulePostDTO);
+        Course course = courseService.createModule(course_id, module);
+        if (course != null){
+            CourseSettingDTO courseSettingDTO = ModelMapperConfig.convertCourseToCourseSettingDTO(course);
+            return new ResponseEntity<>(courseSettingDTO, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+    }
     @PutMapping("/updateCourse")
     public ResponseEntity<Course> updateCourse(@RequestBody Course course){
         return ResponseEntity.ok(courseService.createCourse(course));
@@ -106,21 +119,26 @@ public class CourseController {
     @GetMapping("/overview/id/{courseId}")
     public ResponseEntity<CourseDetailDTO> getCourseOverviewById(@PathVariable("courseId") String course_id){
         Course course = courseService.getCourseById(course_id);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json; charset=utf-8");
-
         if(course == null){
-            return new ResponseEntity<>(null, headers, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
         else{
-            CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course);
-            return new ResponseEntity<>(courseDetailDTO, headers, HttpStatus.OK);
+            Long numberCoursesOfProf = courseService.countProfessorCourses(course.getProfessorID());
+            Long numberOfStudent = courseService.countInProgressCourse(course);
+            CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course,numberCoursesOfProf,numberOfStudent);
+            return new ResponseEntity<>(courseDetailDTO,  HttpStatus.OK);
         }
     }
 
 
-
+    /**
+     * http://localhost:8080/course/id/63b5151a7e7b23000f83a709/enroll?studentId=studentId
+     * this will handle the save progress to enroll course
+     * this will handle the course already enrolled and the student click on enroll
+     * @param course_id
+     * @param student_id
+     * @return
+     */
     @PostMapping("/id/{courseId}/enroll")
     public ResponseEntity<CourseProgressDetailDTO> enrollCourse(
             @PathVariable("courseId") String course_id,
@@ -132,6 +150,18 @@ public class CourseController {
         }
         CourseProgressDetailDTO progressDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(progress);
         return new ResponseEntity<>(progressDTO, HttpStatus.OK);
+    }
 
+    @PostMapping("/id/{courseId}/save")
+    public ResponseEntity<CourseProgressDetailDTO> savedCourse(
+            @PathVariable("courseId") String course_id,
+            @RequestParam("studentId") String student_id
+    ){
+        CourseProgress progress = courseService.saveCourse(course_id, student_id);
+        if (progress == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        CourseProgressDetailDTO progressDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(progress);
+        return new ResponseEntity<>(progressDTO, HttpStatus.OK);
     }
 }

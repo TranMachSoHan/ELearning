@@ -1,6 +1,7 @@
 package com.example.templatesample.service;
 
 import com.example.templatesample.dto.PaymentDTO;
+import com.example.templatesample.dto.ProfessorGetDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.model.Payment;
@@ -31,7 +32,7 @@ public interface ProfileService {
 
     //get by id
     Optional<Student> getStudentById(String id);
-    Optional<Professor> getProfessorById(String id);
+    ResponseEntity<ProfessorGetDTO>  getProfessorById(String id);
 
 
 

@@ -20,9 +20,5 @@ public class CourseListDTO {
     private ProfessorDTO professor;
     private String courseDescription;
 
-    private final String USER_API_URL = "http://localhost:8081/api/proffesor";
 
-    public void setProfessor(String professorId){
-        this.professor = new ProfessorDTO(professorId);
-    }
 }

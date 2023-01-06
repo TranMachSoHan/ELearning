@@ -20,7 +20,6 @@ public class Lesson {
 
     private String title;
     private LessonType type;
-    @DBRef
     private Video video;
     private Article article;
     @DBRef
@@ -39,7 +38,20 @@ public class Lesson {
     @AllArgsConstructor
     public static class Article {
         String paragraph;
-        String image;
+        FileMeta imageFile;
+    }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class Video {
+        FileMeta videoFile;
+        double duration;
+
+        public Video(String fileName, String filePath, double duration) {
+            this.videoFile = new FileMeta(fileName, filePath);
+            this.duration = duration;
+        }
     }
 }
 

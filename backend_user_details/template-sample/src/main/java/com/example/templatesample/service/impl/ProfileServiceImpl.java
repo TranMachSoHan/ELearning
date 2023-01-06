@@ -1,6 +1,7 @@
 package com.example.templatesample.service.impl;
 
 import com.example.templatesample.dto.PaymentDTO;
+import com.example.templatesample.dto.ProfessorGetDTO;
 import com.example.templatesample.dto.ProfessorUpdateDTO;
 import com.example.templatesample.dto.StudentUpdateDTO;
 import com.example.templatesample.exception.BadRequestException;
@@ -139,8 +140,21 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
     }
 
     @Override
-    public Optional<Professor> getProfessorById(String id) {
-        return profileRepository.findProfessorById(id);
+    public ResponseEntity<ProfessorGetDTO> getProfessorById(String id) {
+        Optional<Professor> professorData = professorRepository.findById(id);
+        if(professorData.isPresent()) {
+            ProfessorGetDTO professorGetDTO = new ProfessorGetDTO();
+
+            Professor _professor = professorData.get();
+            professorGetDTO.setId(_professor.getProfileID());
+            professorGetDTO.setName(_professor.getName());
+            professorGetDTO.setAvatar(_professor.getAvatar());
+            professorGetDTO.setDescription(_professor.getDescription());
+
+            return new ResponseEntity<>(professorGetDTO, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @Override

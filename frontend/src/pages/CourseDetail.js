@@ -2,13 +2,13 @@ import Button from "../components/Button";
 import CourseThumb from '../assets/course-demo-thumb.jpg'
 import Avatar from '../assets/instructor-ava.jpg'
 import SectionTitle from "../components/SectionTitle";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
 import { Accordion } from "flowbite-react";
 import CourseContent from "../components/CourseContent";
 import { useEffect, useState } from "react";
-import { getCourseById } from "../api/useCourseAPI";
-
+import { enrollCourse, getCourseById } from "../api/useCourseAPI";
+import {useAuth} from '../context/AuthContext'
 const commentData = [
     {
         name: 'Nguyen Van Minh',
@@ -43,6 +43,9 @@ const modules = [
 ]
 const CourseDetail = () => {
 
+    const {user } = useAuth();
+    const navigate = useNavigate();
+
     let { courseID } = useParams();
     let [detail, setDetail] = useState(null)
     useEffect(() => {
@@ -56,6 +59,16 @@ const CourseDetail = () => {
         fetchData();
     },[courseID])
 
+    const enroll = async () => {
+        if (user){
+            let enrollMsg = await enrollCourse(courseID, user.id)
+            console.log(enrollMsg);
+        }else{
+            navigate('/login')
+        }
+    }
+    
+
     if (detail){
         return ( <section className="pt-8">
         <div className="relative grid">
@@ -67,7 +80,7 @@ const CourseDetail = () => {
                 <h1 className="font-bold text-headline-48 text-primary-500">{detail.courseName}</h1>
                 <p className="py-4 text-lead-24">Created by Hoang Minh Quan - 21,434 students enrolled</p>
                 <div className="flex items-center gap-5">
-                    <Button size="large" text={'Start Now!'}></Button>
+                    <Button size="large" onClick={enroll} text={'Start Now!'}></Button>
                     <Button isPrimary={false} size='large' text={'Save Later'}></Button>
                 </div>
             </div>
