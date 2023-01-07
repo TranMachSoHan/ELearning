@@ -43,7 +43,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
-          repository: maklisa2000/rmit_e_learning_course_frontend
+          repository: maklisa2000/rmit_e_learning_user_backend
           dockerfile: backend_user_details/template-sample/Dockerfile
           tags: latest
 
@@ -64,7 +64,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           repository: maklisa2000/rmit_e_learning_course_frontend
-          dockerfile: api-gateway/Dockerfile
+          dockerfile: api-gateaway/Dockerfile
           tags: latest
 
 # https://www.youtube.com/watch?v=JsOoUrII3EY
