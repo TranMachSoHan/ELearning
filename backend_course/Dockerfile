@@ -7,5 +7,3 @@ FROM openjdk:17-oracle
 USER spring:spring
 COPY --from=build /home/app/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","/app.jar"]
-#COPY */course_eLearning.jar app.jar
-#ENTRYPOINT ["java","-jar", "app.jar"]

@@ -7,7 +7,8 @@ on:
     branches: [ course-backend ]
 
 jobs:
-  build-and-deploy-course-backend:
+  build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -18,13 +19,16 @@ jobs:
           java-version: 17
           distribution: 'temurin'
       - name: Build with Maven
-        run: mvn -B package -DskipTests=true --file backend_course/pom.xml
+        run: mvn -B package -DskipTests=true --file pom.xml
 
-      - name: Build and push Docker image
+      - name: Publish to Docker Hub
         uses: docker/build-push-action@v1
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           repository: maklisa2000/rmit_e_learning
-          dockerfile: backend_course/Dockerfile
-          tags: latest
+          tags: course_backend:latest
+
+
+
+# https://www.youtube.com/watch?v=JsOoUrII3EY
