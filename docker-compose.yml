@@ -1,8 +1,16 @@
-version: '3.8'
-x-aws-vpc: "vpc-e26e5687"
+version: '3.3'
 services:
+  course_user:  
+    container_name: course_user
+    image: index.docker.io/maklisa2000/rmit_e_learning_user_backend
+    networks:
+      - local_net
+    depends_on:
+      - db
+    ports:
+      - "8081:8081"
 
-  mongodb:
+  db:
     image: mongo:latest
     restart: always
     environment:
@@ -11,7 +19,14 @@ services:
     ports:
       - "27017:27017"
     container_name: mongodb
+    networks:
+      - local_net
     volumes:
       - ./database-data:/data/db
+
 volumes:
   mongodb_data_container:
+
+networks:
+  local_net:
+    driver: bridge
