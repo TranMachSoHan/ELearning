@@ -27,4 +27,5 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
           repository: maklisa2000/rmit_e_learning
-          tags: latest
+          tags: course_backend:latest
+
