@@ -78,7 +78,7 @@ const CourseDetail = () => {
             </div>
             <div className="col-span-1 z-[1]  self-center ml-[72px]  relative col-start-1 row-start-1 row-span-1">
                 <h1 className="font-bold text-headline-48 text-primary-500">{detail.courseName}</h1>
-                <p className="py-4 text-lead-24">Created by Hoang Minh Quan - 21,434 students enrolled</p>
+                <p className="py-4 text-lead-24">Created by {detail.professor.name} - {detail.numberOfStudent} students enrolled</p>
                 <div className="flex items-center gap-5">
                     <Button size="large" onClick={enroll} text={'Start Now!'}></Button>
                     <Button isPrimary={false} size='large' text={'Save Later'}></Button>
@@ -113,8 +113,8 @@ const CourseDetail = () => {
             <div className="flex items-center gap-8 max-w-[80%]">
                 <img src={Avatar} alt="" className="block aspect-square rounded-full object-cover w-[168px]" />
                 <div>
-                    <h3 className="font-bold text-headline-26">Hoang Minh Quan</h3>
-                    <p className="pt-1 pb-3 font-light text-small-16">24 courses</p>
+                    <h3 className="font-bold text-headline-26">{detail.professor.name}</h3>
+                    <p className="pt-1 pb-3 font-light text-small-16">{detail.professor.numberOfCourses} courses</p>
 
                     <p>Lorem ipsum dolor sit amet consectetur. Ornare augue tristique posuere laoreet eget pulvinar egestas gravida maecenas. Vel neque quis ac magna.</p>
 

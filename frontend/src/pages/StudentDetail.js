@@ -22,9 +22,9 @@ const StudentDetail = () => {
     
     
     const getStudent = async () => {
-        let res = await fetch(`http://localhost:8081/profile/student/${studentID}`)
-        let std = await res.json();
-        console.log(std)
+        // let res = await fetch(`http://localhost:8081/profile/student/${studentID}`)
+        let std = await getStudentProfileById(studentID);
+        // console.log(std)
         setProfile(std)
         
     }
@@ -109,7 +109,7 @@ const StudentDetail = () => {
                         </div>
                          <div className='space-y-2'>
                             <label htmlFor="newMinor" >Update Minor</label>
-                            <input type="text" name="newMinor" id="newMinor" className='block w-full p-2 border border-black' placeholder='Edit Mi' />
+                            <input type="text" name="newMinor" id="newMinor" className='block w-full p-2 border border-black' placeholder='Edit Minor' />
                         </div>
 
 

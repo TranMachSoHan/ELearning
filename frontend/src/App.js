@@ -15,6 +15,7 @@ import OAuth2RedirectHandler from "./Utils/OAuth2/OAuth2RedirectHandler";
 import { useState } from "react";
 import { getCurrentUser } from "./Utils/APIUltils";
 import { ACCESS_TOKEN } from "./constants";
+import TeacherDetail from "./pages/teacherDetail";
 
 function App() {
   const [authenticated, setAuthenticated] = useState("false");
@@ -42,11 +43,12 @@ function App() {
     <Routes>
       <Route element={<StudentLayout />}>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/skill" element={<CourseBySkill />}></Route>
+        <Route path="/skill/:skillName" element={<CourseBySkill />}></Route>
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<SignUp />}></Route>
         <Route path="/courseDetail/:courseID" element={<CourseDetail />}></Route>
         <Route path="/studentDetail/:studentID" element={<StudentDetail />}></Route>
+        <Route path="/teacherDetail/:instructorID" element={<TeacherDetail />}></Route>
         <Route path="/learning" element={<Learning />}></Route>
         <Route path="/edit-course" element={<CourseEdit/>}></Route>
         <Route

@@ -15,7 +15,7 @@ const ProfileLink = ({imgSrc, name, role, userID}) => {
         </svg>
 
         <ul className={"absolute right-0 -bottom-0 transform min-w-[180px] translate-y-full z-10 p-4 space-y-2 bg-white drop-shadow-lg " + (open ? 'block' : 'hidden')}>
-            <li className="hover:text-primary-500"><Link to={role == 'student' ? `studentDetail/${userID}` : 'teacherDetail'}>Go to Profile</Link></li>
+            <li className="hover:text-primary-500"><Link to={role == 'student' ? `studentDetail/${userID}` : `teacherDetail/${userID}`}>Go to Profile</Link></li>
             <li className="cursor-pointer hover:text-primary-500" onClick={logout}>Sign Out</li>
         </ul>
         

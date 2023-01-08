@@ -13,6 +13,12 @@ export const getStudentProfileById = async (id) => {
 }
 
 
-export const signOut = () => {
-    
+
+export const getTeacherProfileById = async (id) => {
+    try {
+        const res = await axios.get(`http://localhost:8081/profile/professor/${id}`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
 }
