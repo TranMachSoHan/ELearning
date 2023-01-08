@@ -49,7 +49,7 @@ function App() {
         <Route path="/courseDetail/:courseID" element={<CourseDetail />}></Route>
         <Route path="/studentDetail/:studentID" element={<StudentDetail />}></Route>
         <Route path="/teacherDetail/:instructorID" element={<TeacherDetail />}></Route>
-        <Route path="/learning" element={<Learning />}></Route>
+        <Route path="/learning/:courseName/:courseProgressID" element={<Learning />}></Route>
         <Route path="/edit-course" element={<CourseEdit/>}></Route>
         <Route
           path="/oauth2/redirect"

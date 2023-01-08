@@ -133,10 +133,11 @@ const StudentDetail = () => {
           <Tabs.Item title="In-progress Courses">
             <div className="space-y-4">
               {progress?.map(
-                ({  courseName , finishedPercentage }) => (
+                ({  courseName , finishedPercentage, courseProgressID }) => (
                   <SavedCourseCard
                     courseTitle={courseName}
                     type="inprogress"
+                    courseLink={`/learning/${courseName}/${courseProgressID}`}
                     percentCompleted={finishedPercentage}
                   />
                 )
