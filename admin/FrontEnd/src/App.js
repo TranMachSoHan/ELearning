@@ -7,7 +7,7 @@ import { Career } from './pages/Career'
 
 function App() {
   return (
-    <div>
+    <div class="flex flex-row">
       <SideBar></SideBar>
       <Routes>
 
