@@ -2,13 +2,17 @@ package com.example.templatesample.security.oauth2;
 
 import com.example.templatesample.config.AppProperties;
 import com.example.templatesample.exception.BadRequestException;
+import com.example.templatesample.model.ProfileDetails;
+import com.example.templatesample.payload.JwtResponse;
 import com.example.templatesample.security.JwtUtils;
 import com.example.templatesample.service.ProfileService;
 import com.example.templatesample.utils.CookieUtils;
 
+import com.nimbusds.oauth2.sdk.util.JSONUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -20,7 +24,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.example.templatesample.security.oauth2.HttpCookieOAuth2AuthorizationRequestRepository.REDIRECT_URI_PARAM_COOKIE_NAME;
 
@@ -64,8 +70,16 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
 //        }
 
         String targetUrl = redirectUri.orElse(getDefaultTargetUrl());
-
+        ProfileDetails profileDetails = (ProfileDetails) authentication.getPrincipal();
+        System.out.println(profileDetails);
         String token = tokenProvider.createToken(authentication);
+        List<String> roles = profileDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+        JwtResponse jwtResponse = new JwtResponse(token,
+                profileDetails.getId(),
+                profileDetails.getUsername(),
+                roles, profileDetails.getName());
         System.out.println("target " + targetUrl );
         System.out.println("log in !!!!!!! with token " + token);
         return UriComponentsBuilder.fromUriString(targetUrl)

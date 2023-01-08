@@ -20,8 +20,6 @@ public interface ProfileService {
 
     Student createStudent(Student student);
 
-    ResponseEntity<Student> addPaymentStudent(String id, PaymentDTO paymentDTO);
-
     ResponseEntity<Professor> updateProfessor(ProfessorUpdateDTO professor, String id);
     ResponseEntity<Student> updateStudent(StudentUpdateDTO student, String id);
     List<Profile> getAll();
@@ -32,7 +30,7 @@ public interface ProfileService {
 
     //get by id
     Optional<Student> getStudentById(String id);
-    ResponseEntity<ProfessorGetDTO>  getProfessorById(String id);
+    Optional<ProfessorGetDTO> getProfessorById(String id);
 
 
 

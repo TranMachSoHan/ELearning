@@ -10,3 +10,8 @@ spring:
             scope:
               - email
               - profile
+
+  cache:
+    redis:
+      time-to-live: 100S
+    type: simple

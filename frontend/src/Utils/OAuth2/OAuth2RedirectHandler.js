@@ -15,14 +15,26 @@ const OAuth2RedirectHandler = () => {
       : decodeURIComponent(results[1].replace(/\+/g, " "));
   };
 
-  const token = getUrlParameter("token");
+  function paramsToObject(entries) {
+    const result = {};
+    for (const [key, value] of entries) {
+      // each 'entry' is a [key, value] tupple
+      result[key] = value;
+    }
+    return result;
+  }
+  const a = getUrlParameter("token");
+  const res = "?" + a.slice(12, a.length - 1);
+  const foo = res.replace(/\, /gi, "&");
+  const token = Object.fromEntries(new URLSearchParams(foo));
+
   console.log(token);
 
   const error = getUrlParameter("error");
 
   useEffect(() => {
     if (token) {
-      localStorage.setItem(ACCESS_TOKEN, token);
+      localStorage.setItem(ACCESS_TOKEN, JSON.stringify(token));
       navigate("/");
     } else {
       navigate("/login");

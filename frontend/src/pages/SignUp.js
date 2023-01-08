@@ -13,7 +13,9 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [major, setMajor] = useState("");
   const [minor, setMinor] = useState("");
-    
+  const [bank, setBank] = useState("");
+  const [accountNumber, setAccountNumber] = useState("");
+
   const handleSubmit = (e) => {
     e.preventDefault();
     let signUpRequest;
@@ -27,6 +29,12 @@ const SignUp = () => {
           major: major,
           minor: minor,
           userRole: "STUDENT",
+          payment: {
+            bank: bank,
+            accountNumber: accountNumber,
+            name: name,
+            dateIssued: new Date(),
+          },
         }
       );
     } else if (registerType === "instructor") {
@@ -157,6 +165,28 @@ const SignUp = () => {
                 <option value="Business Management">Business Management</option>
                 <option value="IT">IT</option>
               </select>
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="bank">Bank</label>
+              <input
+                type="text"
+                name="bank"
+                id="bank"
+                className="block w-full p-2 border border-black"
+                onChange={(e) => setBank(e.target.value)}
+                value={bank}
+              />
+            </div>
+            <div className="space-y-2">
+              <label htmlFor="accountNumber">Account number</label>
+              <input
+                type="text"
+                name="accountNumber"
+                id="accountNumber"
+                className="block w-full p-2 border border-black"
+                onChange={(e) => setAccountNumber(e.target.value)}
+                value={accountNumber}
+              />
             </div>
           </>
         ) : null}
