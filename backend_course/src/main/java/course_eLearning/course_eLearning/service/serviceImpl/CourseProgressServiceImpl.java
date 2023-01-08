@@ -2,6 +2,7 @@ package course_eLearning.course_eLearning.service.serviceImpl;
 
 import course_eLearning.course_eLearning.model.Course;
 import course_eLearning.course_eLearning.model.CourseProgress;
+import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.service.CourseProgressService;
@@ -81,4 +82,25 @@ public class CourseProgressServiceImpl implements CourseProgressService {
         }
         return courseProgress;
     }
+
+    @Override
+    public CourseProgress setNextLesson(Module module , String course_progress_id, String new_lesson_id) {
+        CourseProgress courseProgress = getById(course_progress_id);
+
+        courseProgress.setLessonProgressed(module , new_lesson_id);
+        courseProgress= progressRepository.save(courseProgress);
+
+        return courseProgress;
+    }
+
+    @Override
+    public CourseProgress setLessonCompleted(Module module , String course_progress_id, String completed_lesson_id) {
+        CourseProgress courseProgress = getById(course_progress_id);
+
+        courseProgress.setLessonCompleted(module , completed_lesson_id);
+        courseProgress= progressRepository.save(courseProgress);
+
+        return courseProgress;
+    }
+
 }

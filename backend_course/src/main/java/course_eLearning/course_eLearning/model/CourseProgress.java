@@ -12,6 +12,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.IntStream;
 
 @Data
 @AllArgsConstructor
@@ -29,7 +31,6 @@ public class CourseProgress {
     private List<Submission> submissions ;
 
     private HashMap<String, ModuleProgress> moduleProgresses;
-    private String lastLessonOpened;
 
     public CourseProgress(Course course, String student, boolean isEnrolled) {
         this.course = course;
@@ -63,20 +64,35 @@ public class CourseProgress {
 
     public void enrollLesson(){
         this.courseProgressType = CourseProgressType.IN_PROGRESS;
-        if(this.course.getModules() != null && this.course.getModules().size() != 0){
-            Module firstModule = this.course.getModules().get(0);
-            if(firstModule.getLessons() != null && firstModule.getLessons().size() != 0){
-                Lesson firstLesson = firstModule.getLessons().get(0);
-                lastLessonOpened = firstLesson.getLessonID();
-                setModuleProgresses(firstModule, null, firstLesson.getLessonID());
+    }
+    public void setLessonCompleted(Module module , String prevLesson){
+        ModuleProgress foundModuleProgress = this.moduleProgresses.get(module.getModuleID());
+        if(foundModuleProgress != null){
+            if(prevLesson != null){
+                foundModuleProgress.setLessonCompleted(prevLesson);
+
+                // TODO: check module is Finished
+
             }
         }
     }
 
+    public void setLessonProgressed(Module module , String newLesson){
+        ModuleProgress foundModuleProgress = this.moduleProgresses.get(module.getModuleID());
+        if(foundModuleProgress == null){
+
+            ModuleProgress moduleProgress = new ModuleProgress();
+            moduleProgress.addLessonLearned(newLesson);
+            this.moduleProgresses.put(module.getModuleID(),moduleProgress);
+        }
+        else {
+            foundModuleProgress.addLessonLearned(newLesson);
+            this.moduleProgresses.put(module.getModuleID(),foundModuleProgress);
+        }
+    }
 
     public void setModuleProgresses(Module module , String prevLesson, String newLesson) {
         ModuleProgress foundModuleProgress = this.moduleProgresses.get(module.getModuleID());
-        this.lastLessonOpened = newLesson;
         if(foundModuleProgress != null){
             // the previous lesson front end give is not null
             // this will not be null if the user click next , meaning this lesson had finished
