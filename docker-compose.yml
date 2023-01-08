@@ -13,7 +13,12 @@ services:
         - kong-net
       volumes:
         - ./database-data:/data/db
+networks:
+  kong-net:
+    driver: bridge
 
+volumes:
+  mongodb_data_container:
   # mongodb_course:
   #     image: mongo:latest
   #     environment:
@@ -91,10 +96,4 @@ services:
   #     restart_policy:
   #       condition: on-failure
 
-networks:
-  kong-net:
-    driver: bridge
 
-volumes:
-  mongodb_data_container:
-  postgres:
