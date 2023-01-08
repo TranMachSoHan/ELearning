@@ -2,47 +2,99 @@ version: '3.3'
 services:
   mongodb:
       image: mongo:latest
-      restart: always
       environment:
         MONGO_INITDB_ROOT_USERNAME: root
         MONGO_INITDB_ROOT_PASSWORD: password
-        MONGO_INITDB_DATABASE: admin
+        MONGO_INITDB_DATABASE: user_eLearning
       ports:
         - "27017:27017"
       container_name: mongodb
       networks:
-        - local_net
+        - kong-net
       volumes:
         - ./database-data:/data/db
 
-  backend_user:  
-    image: public.ecr.aws/l4i7m7o8/rmit_e_learning_user_backend:latest
-    # image: rmit_e_learning_user_backend:latest
-    networks:
-      - local_net
-    depends_on:
-      - mongodb
-      - api_gateaway
-    environment:
-      - DB_HOST=mongodb
-      - DB_PORT=27017
-      - DB_USER=root
-      - DB_PASS=app_password
-      - DB_NAME=admin
-      - WAIT_HOSTS= mongodb:27017
-    ports:
-      - "8081:8081"
+  # mongodb_course:
+  #     image: mongo:latest
+  #     environment:
+  #       MONGO_INITDB_ROOT_USERNAME: root
+  #       MONGO_INITDB_ROOT_PASSWORD: password
+  #       MONGO_INITDB_DATABASE: course_eLearning
+  #     ports:
+  #       - "27018:27018"
+  #     container_name: mongodb_course
+  #     networks:
+  #       - kong-net
+  #     volumes:
+  #       - ./my-database:/data/db
 
-  api_gateaway:
-    image: public.ecr.aws/l4i7m7o8/rmit_e_learning_api_gateway:latest
-    networks:
-      - local_net
-    ports:
-      - "8080:8080"
+  # backend_user:  
+  #   image: public.ecr.aws/l4i7m7o8/rmit_e_learning_user_backend:latest
+  #   container_name: backend_user
+  #   networks:
+  #     - kong-net
+  #   depends_on:
+  #     - mongodb
+  #   ports:
+  #     - "8081:8081"
+  #   environment:
+  #     - DB_HOST=mongodb
+  #     - DB_PORT=27017
+  #     - DB_USER=root
+  #     - DB_PASS=password
+  #     - DB_NAME=user_eLearning
+
+  # backend_course:  
+  #   # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_course_backend:latest
+  #   image: rmit_e_learning_course_backend:latest
+  #   restart: always
+  #   networks:
+  #     - kong-net
+  #   depends_on:
+  #     - mongodb_course
+  #   ports:
+  #     - "8082:8082"
+  #   container_name: backend_course
+  #   environment:
+  #     - DB_HOST=mongodb_course
+  #     - DB_PORT=27018
+  #     - DB_USER=root
+  #     - DB_PASS=password
+  #     - DB_NAME=course_eLearning
+  
+  # kong:
+  #   image: kong:2.2.0
+  #   environment:
+  #     KONG_ADMIN_ACCESS_LOG: /dev/stdout
+  #     KONG_ADMIN_ERROR_LOG: /dev/stderr
+  #     KONG_ADMIN_LISTEN: '0.0.0.0:8001'
+  #     KONG_DATABASE: "off"
+  #     KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+  #     KONG_PROXY_ACCESS_LOG: /dev/stdout
+  #     KONG_PROXY_ERROR_LOG: /dev/stderr
+  #   volumes:
+  #     - ./kong/:/usr/local/kong/declarative
+  #   networks:
+  #     - kong-net
+  #   ports:
+  #     - "8000:8000/tcp"
+  #     - "127.0.0.1:8001:8001/tcp"
+  #     - "8443:8443/tcp"
+  #     - "127.0.0.1:8444:8444/tcp"
+  #   healthcheck:
+  #     test: ["CMD", "kong", "health"]
+  #     interval: 10s
+  #     timeout: 10s
+  #     retries: 10
+  #   restart: on-failure
+  #   deploy:
+  #     restart_policy:
+  #       condition: on-failure
+
+networks:
+  kong-net:
+    driver: bridge
 
 volumes:
   mongodb_data_container:
-
-networks:
-  local_net:
-    driver: bridge
+  postgres:

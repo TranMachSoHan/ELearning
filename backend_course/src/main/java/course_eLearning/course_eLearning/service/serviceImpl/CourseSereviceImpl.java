@@ -104,7 +104,6 @@ public class CourseSereviceImpl implements CourseService {
 
             // student does not enroll this course
             if (courseProgress == null){
-                System.out.println("null in the enroll course");
                 courseProgress = progressService.enrollCourseProgress(course, student_id);
                 course.addCourseProgress(courseProgress);
                 courseRepository.save(course);
