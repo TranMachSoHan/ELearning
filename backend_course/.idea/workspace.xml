@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="83e4d923-98a3-4373-a714-a2512fa23f44" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/CourseELearningApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/CourseELearningApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseProgressController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseProgressController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/CourseProgress.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model/CourseProgress.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseProgressService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseProgressService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/ModuleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/ModuleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseProgressServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseProgressServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseSereviceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseSereviceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/ModuleServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/ModuleServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/RestTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/RestTemplateConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
-    </list>
+    <list default="true" id="83e4d923-98a3-4373-a714-a2512fa23f44" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,7 +60,8 @@
     "last_opened_file_path": "/Users/macos/Documents/ELearning/backend_course",
     "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "d0d6ec074bb3ab0d2849ec1e14bd1d13"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -141,6 +127,7 @@
       <updated>1671518648512</updated>
       <workItem from="1673162580575" duration="2154000" />
       <workItem from="1673166512767" duration="3040000" />
+      <workItem from="1673252268201" duration="540000" />
     </task>
     <servers />
   </component>
