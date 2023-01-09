@@ -8,6 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Document(collection = "professor")
@@ -33,15 +34,15 @@ Professor extends Profile implements Serializable {
         this.description = newProfessor.description;
     }
 
-    public Professor(String email, String password, Role userRole, String name, Integer age, String education, String avatar, String description) {
+    public Professor(String email, String password, Role userRole, String name, Integer age, String avatar, String description, Date createdDate) {
         this.email = email;
         this.password = password;
         this.userRole = userRole;
         this.name = name;
         this.age = age;
-        this.education = education;
         this.avatar = avatar;
         this.description = description;
+        this.createdDate = createdDate;
     }
 
 }

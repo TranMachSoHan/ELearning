@@ -44,19 +44,19 @@ public class ProfileController {
     }
 
     @GetMapping("/all-professors")
+    @Cacheable(value = "professors")
     public List<Professor> getAllProfessors() {return profileService.getAllProfessors();}
 
     @GetMapping("/all-students")
     public List<Student> getAllStudents() {return profileService.getAllStudents();}
 
     @GetMapping("/all-professors-string")
+    @Cacheable(value = "professorsId")
     public List<String> getAllProfessorsStr() {return profileService.getAllProfessors().stream().map(professor -> professor.getProfileID()).collect(Collectors.toList());}
 
     @GetMapping("/all-students-string")
+    @Cacheable(value = "studentsId")
     public List<String> getAllStudentsStr() {return profileService.getAllStudents().stream().map(student -> student.getProfileID()).collect(Collectors.toList());}
-
-    @GetMapping("/test")
-    public Optional<Student> getStudent() {return profileService.getStudentByEmail("khangnick14@gmail.com");}
 
     @GetMapping("/me")
     public Profile getCurrentProfile(@CurrentUser ProfileDetails profileDetails) {
