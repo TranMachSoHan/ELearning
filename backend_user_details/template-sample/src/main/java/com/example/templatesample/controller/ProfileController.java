@@ -9,6 +9,7 @@ import com.example.templatesample.model.Professor;
 import com.example.templatesample.model.Profile;
 import com.example.templatesample.model.ProfileDetails;
 import com.example.templatesample.model.Student;
+import com.example.templatesample.payload.StudentMajorResponse;
 import com.example.templatesample.repository.ProfileRepository;
 import com.example.templatesample.security.oauth2.user.CurrentUser;
 import com.example.templatesample.service.ProfileService;
@@ -88,6 +89,15 @@ public class ProfileController {
         return profileService.getStudentById(id);
     }
 
+    @GetMapping("student/countMajor")
+    public StudentMajorResponse countStudentMajor() {
+        List<Student> addStudents = profileService.getAllStudents();
+        long countSE = addStudents.stream().filter(c -> c.getMajor().equals("Software Engineering")).count();
+        long countDM = addStudents.stream().filter(c -> c.getMajor().equals("Digital Marketing")).count();
+        long countBM = addStudents.stream().filter(c -> c.getMajor().equals("Business Management")).count();
+        long countIT = addStudents.stream().filter(c -> c.getMajor().equals("IT")).count();
+        return new StudentMajorResponse(countSE,countDM,countBM,countIT);
+    }
 
 
 
