@@ -41,6 +41,7 @@ const SignUp = () => {
           userRole: "STUDENT",
           avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/
           ${avpath.filePath}`,
+          createdDate: new Date(),
           payment: {
             bank: bank,
             accountNumber: accountNumber,
@@ -57,6 +58,7 @@ const SignUp = () => {
           password: password,
           name: name,
           userRole: "PROFESSOR",
+          createdDate: new Date(),
           avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/
           ${avpath.filePath}`,
           description: instructorDescription,

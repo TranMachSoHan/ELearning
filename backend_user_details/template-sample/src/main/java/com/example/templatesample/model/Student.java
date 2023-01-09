@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Date;
 
 
 @SuperBuilder
@@ -34,16 +35,16 @@ public class Student extends Profile implements Serializable {
                 this.payment = newStudent.getPayment();
         }
 
-        public Student(String email, String password, Role userRole, String name, Integer age, String education, String avatar, String major, String minor, Payment payment) {
+        public Student(String email, String password, Role userRole, String name, Integer age, String avatar, String major, String minor, Payment payment, Date createdDate) {
                 this.email = email;
                 this.password = password;
                 this.userRole = userRole;
                 this.name = name;
                 this.age = age;
-                this.education = education;
                 this.avatar = avatar;
                 this.major = major;
                 this.minor = minor;
                 this.payment = payment;
+                this.createdDate = createdDate;
         }
 }
