@@ -4,23 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="83e4d923-98a3-4373-a714-a2512fa23f44" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/RestAPI/ProfessorResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/controller/CourseController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseListDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/CourseListDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/ProfessorDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/dto/ProfessorDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/CourseService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseSereviceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/service/serviceImpl/CourseSereviceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/ModelMapperConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/ModelMapperConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/RestTemplateConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/util/RestTemplateConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/TemplateSampleApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/TemplateSampleApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/controller/ProfileController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/controller/ProfileController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/dto/ProfessorGetDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/dto/ProfessorGetDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/dto/StudentGetDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/dto/StudentGetDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/service/ProfileService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/service/ProfileService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/service/impl/ProfileServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../backend_user_details/template-sample/src/main/java/com/example/templatesample/service/impl/ProfileServiceImpl.java" afterDir="false" />
-    </list>
+    <list default="true" id="83e4d923-98a3-4373-a714-a2512fa23f44" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +34,7 @@
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
+        <option name="mavenHome" value="Use Maven wrapper" />
         <option name="useMavenConfig" value="true" />
       </MavenGeneralSettings>
     </option>
@@ -71,10 +56,12 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
     "last_opened_file_path": "/Users/macos/Documents/ELearning/backend_course",
-    "project.structure.last.edited": "Modules",
+    "project.structure.last.edited": "Problems",
     "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2"
+    "project.structure.side.proportion": "0.2",
+    "spring.configuration.checksum": "d0d6ec074bb3ab0d2849ec1e14bd1d13"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -82,17 +69,24 @@
       <recent name="$PROJECT_DIR$/src/main/java/course_eLearning/course_eLearning/model" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.CourseELearningApplication">
     <configuration name="CourseELearningApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="corretto-11" />
       <option name="MAIN_CLASS_NAME" value="course_eLearning.course_eLearning.CourseELearningApplication" />
       <module name="course_eLearning" />
+      <shortenClasspath name="ARGS_FILE" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="course_eLearning.course_eLearning.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <shortenClasspath name="ARGS_FILE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -106,6 +100,13 @@
     <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
       <module name="backend_course" />
       <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CourseELearningApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="course_eLearning" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="course_eLearning.course_eLearning.CourseELearningApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -124,8 +125,14 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1671518648512</updated>
+      <workItem from="1673162580575" duration="2154000" />
+      <workItem from="1673166512767" duration="3040000" />
+      <workItem from="1673252268201" duration="3310000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">

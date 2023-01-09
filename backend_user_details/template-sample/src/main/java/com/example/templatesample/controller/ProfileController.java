@@ -15,6 +15,9 @@ import com.example.templatesample.service.ProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +28,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/profile")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProfileController {
 
     @Autowired
@@ -33,6 +37,7 @@ public class ProfileController {
     @Autowired
     private ProfileRepository profileRepository;
 
+    @Cacheable(value = "profiles")
     @GetMapping("/all-profiles")
     public List<Profile> getAllProfiles() {
         return profileService.getAll();
@@ -71,20 +76,18 @@ public class ProfileController {
 
     @GetMapping("professor/{id}")
     public ResponseEntity<ProfessorGetDTO> getProfessor(@PathVariable("id") String id) {
+        ProfessorGetDTO professorGetDTO = profileService.getProfessorById(id).orElse(null);
         System.out.println(id);
-        return profileService.getProfessorById(id);
+        return new ResponseEntity<>(professorGetDTO, HttpStatus.OK);
     }
 
     @GetMapping("student/{id}")
     public Optional<Student> getStudent(@PathVariable("id") String id) {
+
+        System.out.println("call student api!!");
         return profileService.getStudentById(id);
     }
 
-
-    @PutMapping("student/{id}/add-payment")
-    public ResponseEntity<Student> addPayment(@PathVariable("id") String id, @RequestBody PaymentDTO paymentDTO) {
-        return profileService.addPaymentStudent(id,paymentDTO);
-    }
 
 
 

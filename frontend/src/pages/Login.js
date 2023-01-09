@@ -4,7 +4,8 @@ import { useRef, useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { login } from "../Utils/APIUltils";
 import { GOOGLE_AUTH_URL, ACCESS_TOKEN } from "../constants/index";
-import { Alert } from "react-s-alert";
+import { useAuth } from "../context/AuthContext";
+// import { Alert } from "react-s-alert";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,9 +15,14 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const {setUser} = useAuth();
 
   useEffect(() => {
     userRef.current.focus();
+
+    return () => {
+      setUser(JSON.parse(localStorage.getItem(ACCESS_TOKEN)));
+    }
   }, []);
 
   useEffect(() => {
@@ -71,8 +77,10 @@ const Login = () => {
       .then((response) => {
         console.log(response);
         localStorage.setItem(ACCESS_TOKEN, JSON.stringify(response));
+        setUser(JSON.parse(localStorage.getItem(ACCESS_TOKEN)));
         if (response.roles[0] === "STUDENT") {
-          navigate("/");
+           
+          navigate(`/studentDetail/${response.id}`);
         } else {
           navigate("/teacher");
         }
@@ -87,7 +95,7 @@ const Login = () => {
   return (
     <section className="min-h-[700px] pt-24">
       <SectionTitle title="Login"></SectionTitle>
-      <a href={GOOGLE_AUTH_URL}>Google login</a>
+      
       <form onSubmit={handleSubmit} className="w-1/4 pt-20 mx-auto space-y-6">
         <div className="space-y-2">
           <label htmlFor="email">Email</label>
@@ -123,8 +131,11 @@ const Login = () => {
         >
           {error}
         </p>
-
-        <Button type="submit" text={"Login"} isPrimary={true}></Button>
+        <div className="space-y-2">
+           <Button type="submit" text={"Login"} isPrimary={true}></Button>
+          <a href={GOOGLE_AUTH_URL} className='block underline text-primary-500 hover:text-primary-900'>or sign in with Google login</a>
+        </div>
+       
       </form>
     </section>
   );

@@ -10,6 +10,7 @@ import course_eLearning.course_eLearning.repository.ModuleRepository;
 import course_eLearning.course_eLearning.service.CourseProgressService;
 import course_eLearning.course_eLearning.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -63,7 +64,9 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
+    @Cacheable(value = "courses")
     public List<Course> getCourses() {
+        System.out.println("call get all courses service!!!");
         return courseRepository.findAll();
     }
 
@@ -75,6 +78,7 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
+    @Cacheable(value = "courses",key = "#skill")
     public List<Course> getCoursesBySkill(String skill) {
         // Handle upper case
         return courseRepository.findBySkill(skill.toUpperCase());
@@ -104,7 +108,6 @@ public class CourseSereviceImpl implements CourseService {
 
             // student does not enroll this course
             if (courseProgress == null){
-                System.out.println("null in the enroll course");
                 courseProgress = progressService.enrollCourseProgress(course, student_id);
                 course.addCourseProgress(courseProgress);
                 courseRepository.save(course);

@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Document(collection = "professor")
@@ -15,7 +16,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Professor extends Profile {
+public class
+
+
+
+Professor extends Profile implements Serializable {
     private String description;
 
     public void updateProfessor(Professor newProfessor) {

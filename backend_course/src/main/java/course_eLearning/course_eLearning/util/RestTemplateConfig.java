@@ -14,7 +14,7 @@ import java.util.List;
 public class RestTemplateConfig {
     private static final RestTemplate restTemplate = new RestTemplate();
 
-    private static final String BASE_URL_API = "http://localhost:8080";
+    private static final String BASE_URL_API = "http://localhost:8081";
 
 
     public static ProfessorResponse getProfessorDTO(String professorID){
