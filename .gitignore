@@ -2,3 +2,4 @@
 **/my-database/
 **/node_modules/
 **/target/
+.DS_Store
