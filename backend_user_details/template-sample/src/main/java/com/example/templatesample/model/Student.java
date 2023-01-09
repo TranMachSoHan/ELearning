@@ -5,6 +5,8 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
+
 
 @SuperBuilder
 @Getter
@@ -12,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "student")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student extends Profile {
+public class Student extends Profile implements Serializable {
         private String major;
 
         private String minor;
