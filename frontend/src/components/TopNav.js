@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { ACCESS_TOKEN } from "../constants";
+import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
+import ProfileLink from "./ProfileLink";
 const skillList =[
     'Python',
     'ReactJs',
@@ -12,6 +15,8 @@ const TopNav = () => {
     const [open, setOpen] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+
+    //const [userName, setUserName] = useState(null);
 
     const [subMenuText, setSubMenuText] = useState("Skills")
     
@@ -25,6 +30,10 @@ const TopNav = () => {
         }
         
     }, [location.pathname])
+
+
+    //Check if student logged in
+    const {user} = useAuth();
 
     
     return ( <nav className="flex items-center justify-between pt-14">
@@ -58,10 +67,20 @@ const TopNav = () => {
                 </NavLink>
             </li>
 
-            <li className="flex items-center gap-1.5">
-                <Button text={'Log In'} onClick={()=> {navigate('/login')}} isPrimary={false} size='small'></Button>
-                <Button  text={'Sign Up'} onClick={()=> {navigate('/register')}} isPrimary={true} size='small'></Button>
-            </li>
+            {/* Display login/sing up buttons or authenticated user */}
+            {
+                !user?.email ? 
+                 <li className="flex items-center gap-1.5">
+                    <Button text={'Log In'} onClick={()=> {navigate('/login')}} isPrimary={false} size='small'></Button>
+                    <Button  text={'Sign Up'} onClick={()=> {navigate('/register')}} isPrimary={true} size='small'></Button>
+                </li>
+                :
+                <li>
+                    <ProfileLink role={'student'} name={user?.name} userID={user?.profileId} />
+                </li>
+            }
+
+           
 
         </ul>
         {/* Navigation List Ends */}
