@@ -11,6 +11,7 @@ import com.example.templatesample.payload.JwtResponse;
 import com.example.templatesample.payload.LoginRequest;
 import com.example.templatesample.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @CacheEvict(value = "profiles", allEntries = true)
     @PostMapping("/sign-up/professor")
     public ResponseEntity<?> createProfessor(@RequestBody Professor professor) {
         Professor result = profileService.createProfessor(professor);
@@ -54,6 +56,8 @@ public class AuthController {
         return ResponseEntity.created(location).body(new ApiResponse(true, "Successful register professor"));
     }
 
+
+    @CacheEvict(value = "profiles", allEntries = true)
     @PostMapping("/sign-up/student")
     public ResponseEntity<?> createStudent(@RequestBody Student student) {
         Student result = profileService.createStudent(student);
