@@ -80,7 +80,7 @@ const Login = () => {
         setUser(JSON.parse(localStorage.getItem(ACCESS_TOKEN)));
         if (response.roles[0] === "STUDENT") {
            
-          navigate("/");
+          navigate(`/studentDetail/${response.id}`);
         } else {
           navigate("/teacher");
         }

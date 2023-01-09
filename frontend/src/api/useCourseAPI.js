@@ -21,6 +21,16 @@ export const getCoursesProgressByStdID = async (studentID) => {
 }
 
 
+export const getStudyProgress = async (progressID) => {
+    try {
+        const res = await Base.get(`/courseProgress/id/${progressID}/study`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}
+
 
 export const paginateCoursesBySkill = async (pageNum, pageSize, skill) => {
     try {
