@@ -21,13 +21,35 @@ export const getCoursesProgressByStdID = async (studentID) => {
 };
 
 export const getStudyProgress = async (progressID) => {
-  try {
-    const res = await Base.get(`/courseProgress/id/${progressID}/study`);
-    return res.data;
-  } catch (error) {
-    return error;
-  }
-};
+    try {
+        const res = await Base.get(`/courseProgress/id/${progressID}/study`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}
+
+export const markLessonCompleted = async (progressID, moduleID, lessonID) => {
+    try {
+        const res = await Base.put(`/courseProgress/id/${progressID}/markedLessonCompleted?moduleID=${moduleID}&completedLessonID=${lessonID}`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}
+export const startLesson = async (progressID, moduleID, lessonID) => {
+    try {
+        const res = await Base.put(`/courseProgress/id/${progressID}/nextLesson?moduleID=${moduleID}&newLessonID=${lessonID}`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}
+
+
 
 export const paginateCoursesBySkill = async (pageNum, pageSize, skill) => {
   try {

@@ -7,8 +7,7 @@
 
   body,
   html {
-    @apply font-sans text-lg text-gray-900;
-
+    @apply bg-grey-300;
     scroll-behavior: smooth;
   }
 
