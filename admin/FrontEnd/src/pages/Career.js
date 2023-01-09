@@ -7,7 +7,7 @@ export const Career = () => {
                 name: 'Python',
                 courselist: [
                     {
-                        name: "Python for beginnder"
+                        name: "Python for beginner"
                     }, {
                         name: "Python for junior"
                     }, {
@@ -19,7 +19,7 @@ export const Career = () => {
                 name: 'Java',
                 courselist: [
                     {
-                        name: "Java for beginnder"
+                        name: "Java for beginner"
                     }, {
                         name: "Java for junior"
                     }, {
@@ -30,7 +30,7 @@ export const Career = () => {
                 name: 'C++',
                 courselist: [
                     {
-                        name: "C++ for beginnder"
+                        name: "C++ for beginner"
                     }, {
                         name: "C++ for junior"
                     }, {
@@ -60,6 +60,7 @@ export const Career = () => {
                                 </div>
                             ))
                         }
+                        // eslint-disable-next-line array-callback-return
                         return;
                     })}
 
