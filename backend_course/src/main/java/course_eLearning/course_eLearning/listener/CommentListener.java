@@ -17,5 +17,6 @@ public class CommentListener {
     public void listen(Comment comment) {
         System.out.println(comment);
         comment = commentRepository.save(comment);
+        System.out.println(comment.getId());
     }
 }
