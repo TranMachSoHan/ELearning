@@ -1,0 +1,48 @@
+version: '3.3'
+services:
+  mongodb:
+      image: mongo:latest
+      restart: always
+      environment:
+        MONGO_INITDB_ROOT_USERNAME: root
+        MONGO_INITDB_ROOT_PASSWORD: password
+        MONGO_INITDB_DATABASE: admin
+      ports:
+        - "27017:27017"
+      container_name: mongodb
+      networks:
+        - local_net
+      volumes:
+        - ./database-data:/data/db
+
+  backend_user:  
+    image: public.ecr.aws/l4i7m7o8/rmit_e_learning_user_backend:latest
+    # image: rmit_e_learning_user_backend:latest
+    networks:
+      - local_net
+    depends_on:
+      - mongodb
+      - api_gateaway
+    environment:
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - DB_USER=root
+      - DB_PASS=app_password
+      - DB_NAME=admin
+      - WAIT_HOSTS= mongodb:27017
+    ports:
+      - "8081:8081"
+
+  api_gateaway:
+    image: public.ecr.aws/l4i7m7o8/rmit_e_learning_api_gateway:latest
+    networks:
+      - local_net
+    ports:
+      - "8080:8080"
+
+volumes:
+  mongodb_data_container:
+
+networks:
+  local_net:
+    driver: bridge

@@ -28,8 +28,8 @@ public class Lesson {
     public Lesson(String title, LessonType type, Video video, Article article, List<Quiz> quizzes) {
         this.title = title;
         this.type = type;
-        this.video = video;
-        this.article = article;
+        this.video = video == null ? new Video(null, 0) : video;
+        this.article = article == null ? new Article(null, null) : article;
         this.quizzes = quizzes;
     }
 
@@ -45,8 +45,8 @@ public class Lesson {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class Video {
-        FileMeta videoFile;
-        double duration;
+        FileMeta videoFile = null;
+        double duration = 0;
 
         public Video(String fileName, String filePath, double duration) {
             this.videoFile = new FileMeta(fileName, filePath);
