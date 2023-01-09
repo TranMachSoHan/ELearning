@@ -14,6 +14,7 @@ import com.example.templatesample.service.ProfileService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -65,19 +66,6 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
         return profileRepository.save(student);
     }
 
-    @Override
-    public ResponseEntity<Student> addPaymentStudent(String id, PaymentDTO paymentDTO) {
-        Optional<Student> studentData = studentRepository.findById(id);
-        if(studentData.isPresent()) {
-            Student _student = studentData.get();
-            Payment payment = new Payment(paymentDTO.getName(), paymentDTO.getBank(), paymentDTO.getAccountNumber(), _student.getProfileID());
-            _student.setPayment(payment);
-            studentRepository.save(_student);
-            return new ResponseEntity<>(profileRepository.save(_student), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-    }
     @Override
     public ResponseEntity<Professor> updateProfessor(ProfessorUpdateDTO professor, String id) {
         Optional<Professor> professorData = professorRepository.findById(id);
@@ -135,26 +123,27 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
     }
 
     @Override
+    @Cacheable(value = "student",key = "#id")
     public Optional<Student> getStudentById(String id) {
+        System.out.println("call student service");
         return profileRepository.findStudentById(id);
     }
 
     @Override
-    public ResponseEntity<ProfessorGetDTO> getProfessorById(String id) {
+    @Cacheable(value = "professor",key = "#id")
+    public Optional<ProfessorGetDTO> getProfessorById(String id) {
+        System.out.println("call professor get by id service");
         Optional<Professor> professorData = professorRepository.findById(id);
+        ProfessorGetDTO professorGetDTO = new ProfessorGetDTO();
         if(professorData.isPresent()) {
-            ProfessorGetDTO professorGetDTO = new ProfessorGetDTO();
 
             Professor _professor = professorData.get();
             professorGetDTO.setId(_professor.getProfileID());
             professorGetDTO.setName(_professor.getName());
             professorGetDTO.setAvatar(_professor.getAvatar());
             professorGetDTO.setDescription(_professor.getDescription());
-
-            return new ResponseEntity<>(professorGetDTO, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return Optional.of(professorGetDTO);
     }
 
     @Override

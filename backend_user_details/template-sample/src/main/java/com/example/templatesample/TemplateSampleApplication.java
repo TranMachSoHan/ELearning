@@ -11,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,6 +21,8 @@ import java.util.Arrays;
 
 @SpringBootApplication
 @EnableSwagger2
+@EnableCaching
+
 public class TemplateSampleApplication implements CommandLineRunner {
 	@Autowired
 	private ProfileRepository profileRepository;
@@ -60,7 +63,7 @@ public class TemplateSampleApplication implements CommandLineRunner {
 //		studentRepository.saveAll(
 //				Arrays.asList(student1,student2,student3,student4,student5));
 //
-
-
+//
+//
 	}
 }

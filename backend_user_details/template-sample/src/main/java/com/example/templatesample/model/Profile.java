@@ -10,6 +10,8 @@ import net.bytebuddy.implementation.bind.annotation.Super;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @SuperBuilder
@@ -17,7 +19,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @AllArgsConstructor
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Profile {
+public class Profile implements Serializable {
     @Id
     public String profileID;
     public String email;
