@@ -18,8 +18,11 @@ const SignUp = () => {
   const [accountNumber, setAccountNumber] = useState("");
   const [avatar, setAvatar] = useState();
   const [instructorDescription, setInstructorDescription] = useState("");
+  const [isRegistering, setIsRegistering] = useState(false);
 
   const handleSubmit = async (e) => {
+    setIsRegistering(true);
+
     e.preventDefault();
     const formData = new FormData();
     formData.append("file", avatar);
@@ -63,6 +66,7 @@ const SignUp = () => {
     signup(signUpRequest, registerType).then((response) => {
       console.log(response);
       console.log(registerType);
+      setIsRegistering(false);
       navigate("/login");
     });
   };
@@ -247,7 +251,7 @@ const SignUp = () => {
           </>
         )}
 
-        <Button type="submit" text={"Sign Up"} isPrimary={true}></Button>
+        <Button type="submit" text={"Sign Up"} isPrimary={true} loadingText="Signing you up..." isLoading={isRegistering}></Button>
       </form>
     </section>
   );
