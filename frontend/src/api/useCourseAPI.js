@@ -31,6 +31,27 @@ export const getStudyProgress = async (progressID) => {
     
 }
 
+export const markLessonCompleted = async (progressID, moduleID, lessonID) => {
+    try {
+        const res = await Base.put(`/courseProgress/id/${progressID}/markedLessonCompleted?moduleID=${moduleID}&completedLessonID=${lessonID}`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}
+export const startLesson = async (progressID, moduleID, lessonID) => {
+    try {
+        const res = await Base.put(`/courseProgress/id/${progressID}/nextLesson?moduleID=${moduleID}&newLessonID=${lessonID}`)
+        return res.data
+    } catch (error) {
+        return error
+    } 
+    
+}
+
+
+
 
 export const paginateCoursesBySkill = async (pageNum, pageSize, skill) => {
     try {
