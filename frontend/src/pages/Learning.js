@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import LearningListModules from "../components/LearningListModules";
 import Demo from '../assets/video-demo.mp4'
 import { useEffect, useState } from "react";
-import { getStudyProgress } from "../api/useCourseAPI";
+import { getStudyProgress, markLessonCompleted } from "../api/useCourseAPI";
 import Button from "../components/Button";
 const modules = [
     'Up and Running with Python',
@@ -21,6 +21,8 @@ const Learning = () => {
     const [progress, setProgress] = useState(null);
     const [article, setArticle] = useState(null);
     const [contentTitle, setContentTitle] = useState(null);
+    const [currentLessonID, setCurrentLessonID] = useState(null);
+    const [currentModuleID, setCurrentModuleID] = useState(null);
     
 
     useEffect(()=>{
@@ -37,10 +39,12 @@ const Learning = () => {
     const [videoLink, setVideoLink] = useState(null);
     const [contentType, setContentType] = useState(null);
 
-    const [completed, setCompleted] = useState(false);
+    const [completed, setCompleted] = useState(null);
 
-    const completeLesson = () => {
-        
+    const completeLesson = async () => {
+        let res = await markLessonCompleted(courseProgressID, currentModuleID, currentLessonID)
+        console.log(res);
+        setCompleted(true);
     }
 
     return ( <section>
@@ -49,7 +53,7 @@ const Learning = () => {
 
         <div className="grid grid-cols-3">
             <div>
-                <LearningListModules setCompleted={setCompleted} setArticle={setArticle} setContentTitle={setContentTitle} setVideoLink={setVideoLink} setContentType={setContentType} modules={progress?.moduleProgresses} />
+                <LearningListModules setCurrentLessonID={setCurrentLessonID} setCurrentModuleID={setCurrentModuleID} setCompleted={setCompleted} setArticle={setArticle} setContentTitle={setContentTitle} setVideoLink={setVideoLink} setContentType={setContentType} modules={progress?.moduleProgresses} />
                 
             </div>
 
@@ -75,6 +79,7 @@ const Learning = () => {
                 <div className="flex justify-end">
 
                     {
+                        completed === null ? null :
                         !completed ? 
                         <Button text={'Complete Lesson'} onClick={completeLesson} isPrimary={true} size="large"></Button>
                         : <p className="text-success-500">
