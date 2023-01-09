@@ -13,6 +13,7 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [major, setMajor] = useState("");
   const [minor, setMinor] = useState("");
+  const [instructorDescription, setInstructorDescription] = useState("");
     
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -37,6 +38,7 @@ const SignUp = () => {
           password: password,
           name: name,
           userRole: "PROFESSOR",
+          description: instructorDescription
         }
       );
     }
@@ -52,7 +54,7 @@ const SignUp = () => {
     <section className="min-h-[700px] pt-24">
       <SectionTitle title="Sign Up"></SectionTitle>
 
-      <form onSubmit={handleSubmit} className="w-1/4 pt-20 mx-auto space-y-6">
+      <form onSubmit={handleSubmit} className="w-1/2 pt-20 mx-auto space-y-6">
         <div className="space-y-2">
           <label htmlFor="name">Name</label>
           <input
@@ -159,7 +161,15 @@ const SignUp = () => {
               </select>
             </div>
           </>
-        ) : null}
+        ) : (
+          <>
+            <div className="space-y-2">
+              <label htmlFor="major">Brief Introduction about yourself</label>
+
+              <textarea onChange={(e) => {setInstructorDescription(e.target.value) }} type="" rows={6} className='w-full' />
+            </div>
+          </>
+        )}
 
         <Button type="submit" text={"Sign Up"} isPrimary={true}></Button>
       </form>
