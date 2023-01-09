@@ -18,16 +18,24 @@ const request = (options) => {
     );
 };
 
-export function getStudents() {
+export function getStudentsString() {
     return request({
         url: API_BASE_URL + "/profile/all-students-string",
         method: "GET",
     });
 }
 
-export function getProfessors() {
+export function getProfessorsString() {
     return request({
         url: API_BASE_URL + "/profile/all-professors-string",
         method: "GET",
     });
 }
+
+export function getStudents() {
+    return request({
+        url: API_BASE_URL + "/profile/all-students",
+        method: "GET",
+    });
+}
+

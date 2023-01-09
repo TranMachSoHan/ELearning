@@ -1,18 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Doughnut, Pie, Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from "chart.js";
-import { getProfessors, getStudents } from '../API/APIultils';
+import { getProfessorsString, getStudents } from '../API/APIultils';
 
 export const Stats = () => {
-    ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
+    ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement)
+    const [studentCount, setStudentCount] = useState(0)
+    const [professorCount, setProfessorCount] = useState(0)
     useEffect(() => {
         const fetchData = async () => {
             try {
-
                 let student = await getStudents()
-                console.log(student)
-                let professor = await getProfessors()
-                console.log(professor)
+                await setStudentCount(Object.keys(student).length)
+                console.log(await student.filter(value => value.major === "IT").length);
+                let professor = await getProfessorsString()
+                await setProfessorCount(Object.keys(professor).length)
             } catch (error) {
                 console.log(error)
             }
@@ -26,37 +28,29 @@ export const Stats = () => {
                 <Doughnut
                     data={{
                         labels: [
-                            "Africa",
-                            "Asia",
-                            "Europe",
-                            "Latin America",
-                            "North America"
+                            "IT",
+                            "Business Management",
+                            "Software Engineering",
+                            "Digital Marketing",
                         ],
                         datasets: [
                             {
                                 label: "Population (millions)",
                                 backgroundColor: [
-                                    "#3e95cd",
-                                    "#8e5ea2",
-                                    "#3cba9f",
-                                    "#e8c3b9",
-                                    "#c45850"
+                                    "#B1BAFB",
+                                    "#6475F7",
+                                    "#3142C4",
+                                    "#182162"
                                 ],
-                                data: [2478, 5267, 734, 784, 433]
+                                data: [2478, 5267, 734, 784]
                             }
                         ]
-                    }}
-                    option={{
-                        title: {
-                            display: true,
-                            text: "Predicted world population (millions) in 2050"
-                        }
                     }}
                 />
             </div>
 
             <div class=" flex flex-col p-5 bg-white rounded shadow-sm">
-                <b class="flex flex-row text-gray-500">Occupancy Percentage</b>
+                <b class="flex flex-row text-gray-500">Student / Professor Segments</b>
                 <Pie
                     data={{
                         labels: [
@@ -65,20 +59,14 @@ export const Stats = () => {
                         ],
                         datasets: [
                             {
-                                label: "Population (millions)",
+                                label: "Users",
                                 backgroundColor: [
                                     "#B1BAFB",
                                     "#3D53F5"
                                 ],
-                                data: [2478, 5267]
+                                data: [professorCount, studentCount]
                             }
                         ]
-                    }}
-                    option={{
-                        title: {
-                            display: true,
-                            text: "Predicted world population (millions) in 2050"
-                        }
                     }}
                 />
             </div>
@@ -106,13 +94,6 @@ export const Stats = () => {
                                 data: [2478, 5267, 734, 784, 433]
                             }
                         ]
-                    }}
-                    options={{
-                        legend: { display: false },
-                        title: {
-                            display: true,
-                            text: "Predicted world population (millions) in 2050"
-                        }
                     }}
                 />
             </div>
