@@ -24,7 +24,7 @@ const StudentDetail = () => {
     const getStudent = async () => {
         // let res = await fetch(`http://localhost:8081/profile/student/${studentID}`)
         let std = await getStudentProfileById(studentID);
-        // console.log(std)
+        console.log(std)
         setProfile(std)
         
     }

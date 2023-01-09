@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Document(collection = "professor")
@@ -19,7 +20,7 @@ public class
 
 
 
-Professor extends Profile {
+Professor extends Profile implements Serializable {
     private String description;
 
     public void updateProfessor(Professor newProfessor) {
