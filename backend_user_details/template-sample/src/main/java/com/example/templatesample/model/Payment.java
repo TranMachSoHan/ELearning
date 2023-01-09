@@ -33,4 +33,10 @@ public class Payment implements Serializable {
         this.dateIssued = new Date();
     }
 
+    public Payment(String name, String bank, String accountNumber, Date dateIssued) {
+        this.name = name;
+        this.bank = bank;
+        this.accountNumber = accountNumber;
+        this.dateIssued = dateIssued;
+    }
 }

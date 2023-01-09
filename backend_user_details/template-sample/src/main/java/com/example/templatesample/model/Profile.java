@@ -11,6 +11,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -30,4 +31,6 @@ public class Profile implements Serializable {
     public Integer age;
     public String education;
     public String avatar;
+
+    public Date createdDate;
 }

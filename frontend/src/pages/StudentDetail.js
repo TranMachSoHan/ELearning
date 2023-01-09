@@ -7,7 +7,7 @@ import Certificate from "../components/Certificate";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getCoursesProgressByStdID } from "../api/useCourseAPI";
+import { getCoursesProgressByStdID, getCoursesSavedByStdID } from "../api/useCourseAPI";
 import { getCurrentUser } from "../Utils/APIUltils";
 import { getStudentProfileById } from "../api/useAuthAPI";
 import Button from "../components/Button";
@@ -16,6 +16,8 @@ const StudentDetail = () => {
   const { studentID } = useParams();
   const [progress, setProgress] = useState(null);
   const [profile, setProfile] = useState(null);
+  const [saveCourse, setSaveCourse] = useState(null);
+
   const navigate = useNavigate();
   useEffect(() => {
 
@@ -34,12 +36,20 @@ const StudentDetail = () => {
     const getProgress = async () => {
       let prg = await getCoursesProgressByStdID(studentID);
       setProgress(prg);
-      console.log(prg);
+      // console.log(prg);
     };
+    const getSave = async () => {
+      let s = await getCoursesSavedByStdID(studentID);
+      setSaveCourse(s);
+      // console.log(prg);
+    };
+
+    
 
     
     getStudent();
     getProgress();
+    getSave()
     
 
     
@@ -60,7 +70,7 @@ const StudentDetail = () => {
         <div className="bg-primary-50 h-[600px] grid mb-10">
           <div className="flex items-center self-center gap-7 container-padding-left">
             <img
-              src={Avatar}
+              src={profile?.avatar}
               className="block aspect-square w-[148px] rounded-full"
               alt=""
             />
@@ -125,8 +135,16 @@ const StudentDetail = () => {
         <Tabs.Group aria-label="Tabs with underline" style="underline">
           <Tabs.Item title="Saved Courses">
             <div className="space-y-4">
-              {/* <SavedCourseCard courseTitle={'Python for Absolute Beginners'}></SavedCourseCard>
-               */}
+              {saveCourse?.map(
+                ({  courseName , courseID }) => (
+                  <SavedCourseCard
+                    courseTitle={courseName}
+                    type="saved"
+                    courseLink={`/courseDetail/${courseID}`}
+                    // percentCompleted={finishedPercentage}
+                  />
+                )
+              )}
             </div>
           </Tabs.Item>
 
