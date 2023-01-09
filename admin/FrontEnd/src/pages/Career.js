@@ -46,17 +46,23 @@ export const Career = () => {
             <div class="flex flex-row p-8 bg-white rounded shadow-sm">
                 <div class="flex flex-col border-r border-grey-100 pr-4">
                     {data.learning_path.map((item, key) => (
-                        <div class="my-4">
-                            <h2 onClick={(e) => { setState(item.name); console.log(state) }} class={"text-base font-black cursor-pointer  group-hover:text-white font-sans" + (state === item.name ? "text-primary-500" : "text-grey-800")}>{item.name}</h2>
+                        <div onClick={(e) => { setState(item.name); console.log(state) }} class="my-4">
+                            <h2 class={"text-base font-black cursor-pointer  group-hover:text-white font-sans" + (state === item.name ? "text-primary-500" : "text-grey-800")}>{item.name}</h2>
                         </div>
                     ))}
                 </div>
                 <div class="flex flex-col right-0 pl-5">
-                    {data.learning_path.map((item, key) => (
-                        <div class="my-4">
-                            <h2 class="text-base text-grey-800 group-hover:text-white font-sans">item.name</h2>
-                        </div>
-                    ))}
+                    {data.learning_path.map(function (item, key) {
+                        if (item.name === state) {
+                            return item.courselist.map((item, key) => (
+                                <div class="my-4">
+                                    <h2 class="text-base text-grey-800 group-hover:text-white font-sans">{item.name}</h2>
+                                </div>
+                            ))
+                        }
+                        return;
+                    })}
+
                 </div>
 
             </div>
