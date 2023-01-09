@@ -31,4 +31,11 @@ public class ModuleServiceImpl implements ModuleService {
 
         return null;
     }
+
+    @Override
+    public Module getModuleById(String moduleId) {
+        return moduleRepository.findById(moduleId).orElse(null);
+    }
+
+
 }
