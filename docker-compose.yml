@@ -1,42 +1,99 @@
 version: '3.3'
+networks:
+  my_network:
+    driver: bridge
+
 services:
-  mongodb:
+  mongo-course:
       image: mongo:latest
+      hostname: mongo-course
       environment:
         MONGO_INITDB_ROOT_USERNAME: root
         MONGO_INITDB_ROOT_PASSWORD: password
-        MONGO_INITDB_DATABASE: user_eLearning
+        MONGO_INITDB_DATABASE: course_eLearning
       ports:
-        - "27017:27017"
-      container_name: mongodb
+        - "27030:27017"
+      container_name: mongo-course
       networks:
-        - kong-net
+        - my_network
       volumes:
-        - ./database-data:/data/db
-  backend_user:
-    image: public.ecr.aws/l4i7m7o8/rmit_e_learning_user_backend:latest
-    container_name: backend_user
-    networks:
-      - kong-net
-    ports:
-      - "8081:8081"
+        - ./mongo-course/db:/data/db
 
-  backend_course:  
-    image: public.ecr.aws/l4i7m7o8/rmit_e_learning_course_backend:latest
-    # image: rmit_e_learning_course_backend:latest
-    container_name: backend_course
+  mongo-user:
+    image: mongo:latest
+    hostname: mongo-user
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: user_eLearning
+    ports:
+      - "27031:27017"
+    container_name: mongo-user
     networks:
-      - kong-net
+      - my_network
+    volumes:
+      # seeding scripts
+      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
+      # named volumes
+      - ./mongo-user/db:/data/db
+      - mongoconfig:/data/configdb
+
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: course_eLearning
+    ports:
+      - "27017:27017"
+    container_name: mongodb
+    networks:
+      - my_network
+    volumes:
+      - ./database-data:/data/db
+
+  backend_user:
+    # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_user_backend:latest
+    image: rmit_e_learning_user_backend:latest
+    container_name: backend_user
     depends_on:
       - mongodb
+      - redis
+    networks:
+      - my_network
     ports:
-      - "8082:8082"
+      - "8081:8081"
     environment:
       - DB_HOST=mongodb
       - DB_PORT=27017
       - DB_USER=root
       - DB_PASS=password
       - DB_NAME=user_eLearning
+
+  backend_course:  
+    # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_course_backend:latest
+    image: rmit_e_learning_course_backend:latest
+    container_name: backend_course
+    networks:
+      - my_network
+    depends_on:
+      - backend_user
+      - mongodb
+      - redis
+    links:
+      - backend_user
+    ports:
+      - "8082:8082"
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    hostname: redis
+    networks:
+      - my_network
+    ports:
+      - "6379:6379"
+    
   zoo1:
     image: zookeeper:3.4.9
     hostname: zoo1
@@ -68,12 +125,15 @@ services:
     depends_on:
       - zoo1
 
-networks:
-  kong-net:
-    driver: bridge
+
 
 volumes:
+  mongo-user:
+  mongo-course:
+  mongoconfig:
   mongodb_data_container:
+  cache:
+    driver: local
 
   # mongodb_course:
   #     image: mongo:latest

@@ -22,7 +22,6 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableSwagger2
 @EnableCaching
-
 public class TemplateSampleApplication implements CommandLineRunner {
 	@Autowired
 	private ProfileRepository profileRepository;
@@ -42,28 +41,28 @@ public class TemplateSampleApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-//		profileRepository.deleteAll();
-//		professorRepository.deleteAll();
-//		studentRepository.deleteAll();
-//		Professor professor1 = new Professor("prof1@gmail.com", bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof1",null,null,null,"description");
-//		Professor professor2 = new Professor("prof2@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof2",null,null,null,"description");
-//		Professor professor3 = new Professor("prof3@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof3",null,null,null,"description");
-//		Professor professor4 = new Professor("prof4@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof4",null,null,null,"description");
-//		Professor professor5 = new Professor("prof5@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof5",null,null,null,"description");
-//
-//		Student student1 = new Student("stud1@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud1",null,null,null,null,null, null);
-//		Student student2 = new Student("stud2@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud2",null,null,null,null,null, null);
-//		Student student3 = new Student("stud3@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud3",null,null,null,null,null, null);
-//		Student student4 = new Student("stud4@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud4",null,null,null,null,null, null);
-//		Student student5 = new Student("stud5@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud5",null,null,null,null,null, null);
-//		profileRepository.saveAll(
-//				Arrays.asList(professor1,professor2,professor3,professor4,professor5,student1,student2,student3,student4,student5));
-//		professorRepository.saveAll(
-//				Arrays.asList(professor1,professor2,professor3,professor4,professor5));
-//		studentRepository.saveAll(
-//				Arrays.asList(student1,student2,student3,student4,student5));
-//
-//
-//
+		profileRepository.deleteAll();
+		professorRepository.deleteAll();
+		studentRepository.deleteAll();
+		Professor professor1 = new Professor("prof1@gmail.com", bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof1",null,null,null,"description");
+		Professor professor2 = new Professor("prof2@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof2",null,null,null,"description");
+		Professor professor3 = new Professor("prof3@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof3",null,null,null,"description");
+		Professor professor4 = new Professor("prof4@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof4",null,null,null,"description");
+		Professor professor5 = new Professor("prof5@gmail.com",bCryptPasswordEncoder.encode("123"), Role.PROFESSOR,"prof5",null,null,null,"description");
+
+		Student student1 = new Student("stud1@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud1",null,null,null,null,null, null);
+		Student student2 = new Student("stud2@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud2",null,null,null,null,null, null);
+		Student student3 = new Student("stud3@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud3",null,null,null,null,null, null);
+		Student student4 = new Student("stud4@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud4",null,null,null,null,null, null);
+		Student student5 = new Student("stud5@gmail.com",bCryptPasswordEncoder.encode("123"), Role.STUDENT,"stud5",null,null,null,null,null, null);
+		profileRepository.saveAll(
+				Arrays.asList(professor1,professor2,professor3,professor4,professor5,student1,student2,student3,student4,student5));
+		professorRepository.saveAll(
+				Arrays.asList(professor1,professor2,professor3,professor4,professor5));
+		studentRepository.saveAll(
+				Arrays.asList(student1,student2,student3,student4,student5));
+
+
+
 	}
 }

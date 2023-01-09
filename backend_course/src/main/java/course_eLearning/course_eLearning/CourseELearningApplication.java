@@ -5,6 +5,7 @@ import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.model.helper.LessonType;
 import course_eLearning.course_eLearning.repository.*;
 import course_eLearning.course_eLearning.util.RestTemplateConfig;
+import org.apache.kafka.common.errors.NetworkException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -12,6 +13,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
 
 
+import java.net.ConnectException;
 import java.util.*;
 
 @SpringBootApplication
