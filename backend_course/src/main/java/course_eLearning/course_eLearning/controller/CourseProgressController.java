@@ -3,7 +3,9 @@ package course_eLearning.course_eLearning.controller;
 import course_eLearning.course_eLearning.dto.CourseProgressDetailDTO;
 import course_eLearning.course_eLearning.dto.CourseProgressOverviewListDTO;
 import course_eLearning.course_eLearning.model.CourseProgress;
+import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.service.CourseProgressService;
+import course_eLearning.course_eLearning.service.ModuleService;
 import course_eLearning.course_eLearning.util.ModelMapperConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,9 @@ import java.util.stream.Collectors;
 public class CourseProgressController {
     @Autowired
     private CourseProgressService progressService;
+
+    @Autowired
+    private ModuleService moduleService;
 
     @GetMapping("/all")
     public ResponseEntity<List<CourseProgress>> getAllCourseProgress(){
@@ -75,4 +80,43 @@ public class CourseProgressController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/id/{courseProgressId}/nextLesson")
+    public ResponseEntity<CourseProgressDetailDTO> nextLesson(
+            @PathVariable("courseProgressId") String course_progress_id,
+            @RequestParam("moduleID") String currentModule_id,
+            @RequestParam("newLessonID") String new_lesson_id
+    ){
+        Module module = moduleService.getModuleById(currentModule_id);
+
+        if(module != null){
+            CourseProgress courseProgress = progressService.setNextLesson(module, course_progress_id, new_lesson_id);
+            CourseProgressDetailDTO courseProgressDetailDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(courseProgress);
+
+            return new ResponseEntity<>(courseProgressDetailDTO,  HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/id/{courseProgressId}/markedLessonCompleted")
+    public ResponseEntity<CourseProgressDetailDTO> markedLessonCompleted(
+            @PathVariable("courseProgressId") String course_progress_id,
+            @RequestParam("moduleID") String currentModule_id,
+            @RequestParam("completedLessonID") String completed_lesson_id
+    ){
+        Module module = moduleService.getModuleById(currentModule_id);
+
+        if(module != null){
+            CourseProgress courseProgress = progressService.setLessonCompleted(module, course_progress_id, completed_lesson_id);
+            CourseProgressDetailDTO courseProgressDetailDTO = ModelMapperConfig.convertToCourseProgressDetailDTO(courseProgress);
+
+            return new ResponseEntity<>(courseProgressDetailDTO,  HttpStatus.OK);
+        }
+        else{
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

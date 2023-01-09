@@ -24,8 +24,11 @@ const OAuth2RedirectHandler = () => {
     return result;
   }
   const a = getUrlParameter("token");
+  console.log(a);
   const res = "?" + a.slice(12, a.length - 1);
+  console.log(res);
   const foo = res.replace(/\, /gi, "&");
+  console.log(foo);
   const token = Object.fromEntries(new URLSearchParams(foo));
 
   console.log(token);

@@ -17,8 +17,7 @@ const SignUp = () => {
   const [bank, setBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [avatar, setAvatar] = useState();
-
-  const [avatarPath, setAvatarPath] = useState("");
+  const [instructorDescription, setInstructorDescription] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -55,7 +54,9 @@ const SignUp = () => {
           password: password,
           name: name,
           userRole: "PROFESSOR",
-          avatar: avatarPath,
+          avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/
+          ${avpath.filePath}`,
+          description: instructorDescription,
         }
       );
     }
@@ -77,11 +78,6 @@ const SignUp = () => {
       avatar && URL.revokeObjectURL(avatar.preview);
     };
   }, [avatar]);
-
-  const onSubmit = async (data) => {
-    data.preventDefault();
-    console.log(data);
-  };
 
   return (
     <section className="min-h-[700px] pt-24">
@@ -106,7 +102,6 @@ const SignUp = () => {
             />
           )}
         </div>
-
         <div className="space-y-2">
           <label htmlFor="name">Name</label>
           <input
@@ -235,7 +230,22 @@ const SignUp = () => {
               />
             </div>
           </>
-        ) : null}
+        ) : (
+          <>
+            <div className="space-y-2">
+              <label htmlFor="major">Brief Introduction about yourself</label>
+
+              <textarea
+                onChange={(e) => {
+                  setInstructorDescription(e.target.value);
+                }}
+                type=""
+                rows={6}
+                className="w-full"
+              />
+            </div>
+          </>
+        )}
 
         <Button type="submit" text={"Sign Up"} isPrimary={true}></Button>
       </form>

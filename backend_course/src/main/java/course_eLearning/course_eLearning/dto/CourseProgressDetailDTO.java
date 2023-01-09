@@ -43,6 +43,7 @@ public class CourseProgressDetailDTO {
         private String title;
         private LessonType type;
         private LessonStatus lessonStatus;
+        private MaterialDTO material;
     }
 
     public void setModuleProgresses(List<Module> modules, HashMap<String, CourseProgress.ModuleProgress> moduleProgressHashMap){
@@ -70,14 +71,15 @@ public class CourseProgressDetailDTO {
             return lessonList.stream()
                     .map( lesson -> {
                         double duration = lesson.getVideo() != null ? lesson.getVideo().getDuration() : 0;
+                        MaterialDTO materialDTO = getMaterial(lesson);
                         if (lessonLearned == null){
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED);
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED,materialDTO );
                         }
                         if(lessonLearned.get(lesson.getLessonID()) != null ){
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), lessonLearned.get(lesson.getLessonID()));
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), lessonLearned.get(lesson.getLessonID()), materialDTO);
                         }
                         else {
-                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED);
+                            return new LessonProgressListDTO(lesson.getLessonID(), lesson.getTitle(), lesson.getType(), LessonStatus.NOT_STARTED, materialDTO);
                         }
                     })
                     .collect(Collectors.toList());
@@ -86,4 +88,31 @@ public class CourseProgressDetailDTO {
         return null;
     }
 
+    private MaterialDTO getMaterial(Lesson lesson){
+        MaterialDTO materialDTO;
+        switch (lesson.getType()){
+            case VIDEO:
+                String videoFile = lesson.getVideo().getVideoFile() != null ? lesson.getVideo().getVideoFile().getFilePath() : null;
+                materialDTO = new MaterialDTO(null, videoFile);
+                break;
+            case ARTICLE:
+                String imageFile = lesson.getArticle().getImageFile() != null ? lesson.getArticle().getImageFile().getFilePath() : null;
+                materialDTO = new MaterialDTO(lesson.getArticle().getParagraph(), imageFile);
+                break;
+            default:
+                materialDTO = new MaterialDTO();
+
+        }
+        return materialDTO;
+
+    }
+
+    @Data
+    @AllArgsConstructor
+    @NoArgsConstructor
+    static class MaterialDTO{
+        private String paragraph;
+        private String fileURL;
+
+    }
 }

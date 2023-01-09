@@ -7,7 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="ELearning" />
         <module name="template-sample" />
         <module name="api-gateaway" />
         <module name="course_eLearning" />
@@ -15,6 +14,7 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="discovery-server" target="17" />
+      <module name="ELearning" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">

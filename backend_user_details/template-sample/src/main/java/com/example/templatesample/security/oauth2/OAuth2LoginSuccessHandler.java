@@ -83,7 +83,7 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         System.out.println("target " + targetUrl );
         System.out.println("log in !!!!!!! with token " + token);
         return UriComponentsBuilder.fromUriString(targetUrl)
-                .queryParam("token", token)
+                .queryParam("token", jwtResponse)
                 .build().toUriString();
     }
 

@@ -9,8 +9,10 @@ import com.example.templatesample.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
@@ -20,7 +22,6 @@ import java.util.Arrays;
 @SpringBootApplication
 @EnableSwagger2
 @EnableCaching
-
 
 public class TemplateSampleApplication implements CommandLineRunner {
 	@Autowired
