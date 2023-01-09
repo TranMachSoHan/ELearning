@@ -65,7 +65,6 @@ public class CourseSereviceImpl implements CourseService {
 
     @Override
     @Cacheable(value = "courses")
-
     public List<Course> getCourses() {
         System.out.println("call get all courses service!!!");
         return courseRepository.findAll();
@@ -80,7 +79,6 @@ public class CourseSereviceImpl implements CourseService {
 
     @Override
     @Cacheable(value = "courses",key = "#skill")
-
     public List<Course> getCoursesBySkill(String skill) {
         // Handle upper case
         return courseRepository.findBySkill(skill.toUpperCase());

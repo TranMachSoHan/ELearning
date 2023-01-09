@@ -6,6 +6,7 @@ import lombok.experimental.SuperBuilder;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -16,7 +17,7 @@ import java.util.Date;
 @Document(collection = "payment")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 
-public class Payment {
+public class Payment implements Serializable {
     @Id
     private Long paymentID;
 

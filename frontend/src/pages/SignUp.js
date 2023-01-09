@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import SectionTitle from "../components/SectionTitle";
 import { signup } from "../Utils/APIUltils";
 import { useNavigate } from "react-router-dom";
+import { uploadAvatar } from "../api/useCourseAPI";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -15,9 +16,16 @@ const SignUp = () => {
   const [minor, setMinor] = useState("");
   const [bank, setBank] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
+  const [avatar, setAvatar] = useState();
 
-  const handleSubmit = (e) => {
+  const [avatarPath, setAvatarPath] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    formData.append("file", avatar);
+    let avpath = await uploadAvatar(formData);
+
     let signUpRequest;
     if (registerType === "student") {
       signUpRequest = Object.assign(
@@ -29,6 +37,8 @@ const SignUp = () => {
           major: major,
           minor: minor,
           userRole: "STUDENT",
+          avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/
+          ${avpath.filePath}`,
           payment: {
             bank: bank,
             accountNumber: accountNumber,
@@ -45,10 +55,10 @@ const SignUp = () => {
           password: password,
           name: name,
           userRole: "PROFESSOR",
+          avatar: avatarPath,
         }
       );
     }
-
     signup(signUpRequest, registerType).then((response) => {
       console.log(response);
       console.log(registerType);
@@ -56,11 +66,47 @@ const SignUp = () => {
     });
   };
 
+  const handlePreviewAvatar = (e) => {
+    const file = e.target.files[0];
+    file.preview = URL.createObjectURL(file);
+    setAvatar(file);
+  };
+
+  useEffect(() => {
+    return () => {
+      avatar && URL.revokeObjectURL(avatar.preview);
+    };
+  }, [avatar]);
+
+  const onSubmit = async (data) => {
+    data.preventDefault();
+    console.log(data);
+  };
+
   return (
     <section className="min-h-[700px] pt-24">
       <SectionTitle title="Sign Up"></SectionTitle>
 
       <form onSubmit={handleSubmit} className="w-1/4 pt-20 mx-auto space-y-6">
+        <div className="space-y-2 ">
+          <label htmlFor="avatar">Avatar</label>
+          <input
+            type="file"
+            name="avatar"
+            id="avatar"
+            className="block w-full p-2 border border-black"
+            placeholder="John Doe"
+            onChange={handlePreviewAvatar}
+          />
+          {avatar && (
+            <img
+              src={avatar.preview}
+              alt=""
+              className="w-36 mx-auto h-36 rounded-full border border-grey-100 shadow-sm"
+            />
+          )}
+        </div>
+
         <div className="space-y-2">
           <label htmlFor="name">Name</label>
           <input
