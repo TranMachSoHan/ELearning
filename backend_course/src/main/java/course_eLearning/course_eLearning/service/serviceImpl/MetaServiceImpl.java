@@ -6,7 +6,7 @@ import course_eLearning.course_eLearning.model.FileMeta;
 import course_eLearning.course_eLearning.repository.FileMetaRepository;
 import course_eLearning.course_eLearning.service.AmazonS3Service;
 import course_eLearning.course_eLearning.service.MetaService;
-import course_eLearning.course_eLearning.service.kafka.Consumer;
+// import course_eLearning.course_eLearning.service.kafka.Consumer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
