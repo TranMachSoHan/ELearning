@@ -75,6 +75,7 @@ services:
     depends_on:
       - mongodb
       - redis
+      - backend-user
     ports:
       - "8082:8082"
     links:
