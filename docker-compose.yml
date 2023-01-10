@@ -12,7 +12,7 @@ services:
         MONGO_INITDB_ROOT_PASSWORD: password
         MONGO_INITDB_DATABASE: course_eLearning
       ports:
-        - "27030:27017"
+        - "27019:27019"
       container_name: mongo-course
       networks:
         - my_network
@@ -25,18 +25,14 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: user_eLearning
     ports:
-      - "27031:27017"
+      - "27018:27018"
     container_name: mongo-user
     networks:
       - my_network
     volumes:
-      # seeding scripts
-      - ./mongo-entrypoint:/docker-entrypoint-initdb.d
       # named volumes
       - ./mongo-user/db:/data/db
-      - mongoconfig:/data/configdb
 
   mongodb:
     image: mongo:latest
@@ -52,10 +48,10 @@ services:
     volumes:
       - ./database-data:/data/db
 
-  backend_user:
+  backend-user:
     # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_user_backend:latest
     image: rmit_e_learning_user_backend:latest
-    container_name: backend_user
+    container_name: backend-user
     depends_on:
       - mongodb
       - redis
@@ -70,20 +66,25 @@ services:
       - DB_PASS=password
       - DB_NAME=user_eLearning
 
-  backend_course:  
+  backend-course:  
     # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_course_backend:latest
     image: rmit_e_learning_course_backend:latest
-    container_name: backend_course
+    container_name: backend-course
     networks:
       - my_network
     depends_on:
-      - backend_user
       - mongodb
       - redis
-    links:
-      - backend_user
     ports:
       - "8082:8082"
+    links:
+      - "kafka1:kafka1"
+    environment:
+      - DB_HOST=mongodb
+      - DB_PORT=27017
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=course_eLearning
 
   redis:
     container_name: redis
@@ -128,9 +129,6 @@ services:
 
 
 volumes:
-  mongo-user:
-  mongo-course:
-  mongoconfig:
   mongodb_data_container:
   cache:
     driver: local

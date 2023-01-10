@@ -42,6 +42,7 @@ public class CourseELearningApplication implements CommandLineRunner {
 	public void run(String... args) {
 		try{
 			List<String> professors = RestTemplateConfig.getProfessorList();
+			System.out.println(professors.size());
 			String professor_id1 = professors.get(0);
 			String professor_id2 = professors.get(1);
 			String professor_id3 = professors.get(2);
