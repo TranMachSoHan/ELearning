@@ -27,7 +27,6 @@ public class CourseProgress {
     private CourseProgressType courseProgressType;
     private String student;
     private double finishedPercentage;
-    private int numOfModuleFinished ;
     private List<Submission> submissions ;
 
     private HashMap<String, ModuleProgress> moduleProgresses;
@@ -36,7 +35,6 @@ public class CourseProgress {
         this.course = course;
         this.student = student;
         this.finishedPercentage = 0;
-        this.numOfModuleFinished = 0;
         this.submissions = new ArrayList<>();
         this.moduleProgresses = new HashMap<>();
         if (isEnrolled){
@@ -53,7 +51,6 @@ public class CourseProgress {
         this.course = course;
         this.student = student;
         this.finishedPercentage = 0;
-        this.numOfModuleFinished = 0;
         this.submissions = new ArrayList<>();
         this.moduleProgresses = new HashMap<>();
     }
@@ -100,7 +97,7 @@ public class CourseProgress {
                 foundModuleProgress.setLessonCompleted(prevLesson);
 
                 // TODO: check module is Finished
-
+                this.finishedPercentage = foundModuleProgress.getNumLessonCompleted()/module.getLessons().size()*100;
             }
             if(newLesson != null){
                 // when user hits next, the new article will be clicked
@@ -128,6 +125,10 @@ public class CourseProgress {
         }
         public void addLessonLearned(String lesson_id) {
             this.lessonLearned.putIfAbsent(lesson_id, LessonStatus.IN_PROGRESS);
+        }
+        public long getNumLessonCompleted(){
+            return this.lessonLearned.values().stream()
+                    .filter(s -> s.equals(LessonStatus.FINISHED)).count();
         }
     }
 

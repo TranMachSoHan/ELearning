@@ -43,8 +43,6 @@ public class CourseELearningApplication implements CommandLineRunner {
 
 	@Autowired
 	private FileMetaRepository fileMetaRepository;
-	@Autowired
-	private ResourceLoader resourceLoader;
 
 	private final Faker faker = new Faker();
 	public static void main(String[] args) {
@@ -55,14 +53,21 @@ public class CourseELearningApplication implements CommandLineRunner {
 		courseRepository.deleteAll();
 		moduleRepository.deleteAll();
 		commentRepository.deleteAll();
+		lessonRepository.deleteAll();
+		fileMetaRepository.deleteAll();
 		courseProgressRepository.deleteAll();
 
+		List<Course> courses = new ArrayList<>();
 		//Creating instance to avoid static member methods
 		for (Skill skillEnum : Skill.values()){
 			String skill = skillEnum.name();
 			InputStream is = getFileAsIOStream("data/udemy_"+skill.toLowerCase()+".csv");
-			csvToCourses(is, skill);
+			List<Course> skillCourse = csvToCourses(is, skill);
+			courses.addAll(skillCourse);
 		}
+
+		System.out.println("Course size: ");
+		System.out.println(courses.size());
 	}
 
 	public List<Course> csvToCourses(InputStream is , String skill) {
@@ -190,8 +195,8 @@ public class CourseELearningApplication implements CommandLineRunner {
 		for (int i = 0 ; i < numOfLessonNeeded ;i ++){
 			String studentID = students.get(new Random().nextInt(students.size()));
 			Comment comment = new Comment(studentID, faker.lorem().paragraph(), faker.date().past(2, TimeUnit.DAYS),new Random().nextInt(5));
-			comment.toString();
 			comment = commentRepository.save(comment);
+			System.out.println(comment.toString());
 			comments.add(comment);
 		}
 		return comments;
