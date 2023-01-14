@@ -21,14 +21,11 @@ public class Module {
     private boolean canViewed;
     @DBRef
     private List<Lesson> lessons = new ArrayList<>();
-    @DBRef
-    private FileMeta supportedFileMeta;
 
-    public Module(String title, boolean canViewed, List<Lesson> lessons, FileMeta supportedFileMeta) {
+    public Module(String title, boolean canViewed, List<Lesson> lessons) {
         this.title = title;
         this.canViewed = canViewed;
         this.lessons = lessons;
-        this.supportedFileMeta = supportedFileMeta;
     }
 
     public void addLesson(Lesson lesson){

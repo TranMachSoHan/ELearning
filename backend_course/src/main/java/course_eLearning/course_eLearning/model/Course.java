@@ -24,13 +24,13 @@ public class Course {
     @DBRef
     private List<Comment> comments = new ArrayList<>();
     private Skill skill = null;
-    private String star = null;
+    private double star = 5;
     @DBRef
     private List<Module> modules;
     @DBRef
     private List<CourseProgress> courseProgresses;
 
-    public Course(String courseName, String professorID, String courseDescription, List<Comment> comments, Skill skill, String star, List<Module> modules) {
+    public Course(String courseName, String professorID, String courseDescription, List<Comment> comments, Skill skill, double star, List<Module> modules) {
         this.courseName = courseName;
         this.professorID = professorID;
         this.courseDescription = courseDescription;
