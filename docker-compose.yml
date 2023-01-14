@@ -4,35 +4,6 @@ networks:
     driver: bridge
 
 services:
-  mongo-course:
-      image: mongo:latest
-      hostname: mongo-course
-      environment:
-        MONGO_INITDB_ROOT_USERNAME: root
-        MONGO_INITDB_ROOT_PASSWORD: password
-        MONGO_INITDB_DATABASE: course_eLearning
-      ports:
-        - "27019:27019"
-      container_name: mongo-course
-      networks:
-        - my_network
-      volumes:
-        - ./mongo-course/db:/data/db
-
-  mongo-user:
-    image: mongo:latest
-    hostname: mongo-user
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-    ports:
-      - "27018:27018"
-    container_name: mongo-user
-    networks:
-      - my_network
-    volumes:
-      # named volumes
-      - ./mongo-user/db:/data/db
 
   mongodb:
     image: mongo:latest
@@ -66,7 +37,7 @@ services:
       - DB_PASS=password
       - DB_NAME=course_eLearning
 
-  backend-course:  
+  backend-course:
     # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_course_backend:latest
     image: rmit_e_learning_course_backend:latest
     container_name: backend-course
