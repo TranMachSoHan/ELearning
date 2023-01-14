@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.stream.IntStream;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "courseProgresses")
-public class CourseProgress {
+public class CourseProgress implements Serializable {
     @Id
     private String courseProgressID;
     @DBRef
@@ -116,7 +117,7 @@ public class CourseProgress {
     }
 
     @Data
-    public static class ModuleProgress{
+    public static class ModuleProgress implements Serializable {
         HashMap<String, LessonStatus> lessonLearned;
 
         public ModuleProgress() {
