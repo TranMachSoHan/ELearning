@@ -64,7 +64,7 @@ services:
       - DB_PORT=27017
       - DB_USER=root
       - DB_PASS=password
-      - DB_NAME=user_eLearning
+      - DB_NAME=course_eLearning
 
   backend-course:  
     # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_course_backend:latest
