@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import course_eLearning.course_eLearning.constants.KafkaConstants;
 import course_eLearning.course_eLearning.model.Comment;
+import course_eLearning.course_eLearning.repository.CommentRepository;
 import course_eLearning.course_eLearning.service.CommentService;
 
 @RestController
@@ -22,6 +23,9 @@ public class CommentController {
     private CommentService commentService;
 
     @Autowired
+    private CommentRepository commentRepository;
+
+    @Autowired
     private KafkaTemplate<String, Comment> kafkaTemplate;
 
     @PostMapping(value = "/create", consumes = "application/json", produces = "application/json")
@@ -31,5 +35,13 @@ public class CommentController {
         } catch (InterruptedException | ExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Comment>> getAllComment(){
+
+        List<Comment> comments = commentRepository.findAll();
+
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 }
