@@ -58,4 +58,19 @@ public class Course implements Serializable {
         this.courseName = course.courseName;
         this.courseDescription = course.courseDescription;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseID='" + courseID + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", professorID='" + professorID + '\'' +
+                ", courseDescription='" + courseDescription + '\'' +
+                ", comments=" + comments +
+                ", skill=" + skill +
+                ", star=" + star +
+                ", modules=" + modules +
+                ", courseProgresses=" + courseProgresses +
+                '}';
+    }
 }

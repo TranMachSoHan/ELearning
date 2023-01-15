@@ -66,6 +66,18 @@ public class CourseProgressController {
         return new ResponseEntity<>(courseProgressDetailDTOS,  HttpStatus.OK);
     }
 
+    @GetMapping("/id/{courseProgressId}/student/dropCourseInProgress")
+    public ResponseEntity<List<CourseProgressOverviewListDTO>> dropCourseInProgress(
+            @PathVariable("courseProgressId") String course_progress_id,
+            @RequestParam("studentId") String student_id
+    ){
+        progressService.dropCourseProgress(course_progress_id);
+
+        List<CourseProgress> courseProgresses = progressService.getInProgress(student_id);
+        List<CourseProgressOverviewListDTO> courseProgressDetailDTOS = courseProgresses.stream().map(ModelMapperConfig::convertToCourseProgressOverviewDTO).collect(Collectors.toList());
+
+        return new ResponseEntity<>(courseProgressDetailDTOS,  HttpStatus.OK);
+    }
     @GetMapping("/id/{courseProgressId}/study")
     public ResponseEntity<CourseProgressDetailDTO> getCourse(
             @PathVariable("courseProgressId") String course_progress_id

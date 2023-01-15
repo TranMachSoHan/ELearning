@@ -7,14 +7,21 @@ import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.service.CourseProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseProgressServiceImpl implements CourseProgressService {
     @Autowired
     private CourseProgressRepository progressRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
 
     @Override
     public List<CourseProgress> getAll() {
@@ -61,6 +68,15 @@ public class CourseProgressServiceImpl implements CourseProgressService {
         courseProgress.saveCourseProgress();
         courseProgress = progressRepository.save(courseProgress);
         return courseProgress;
+    }
+
+    @Override
+    public void dropCourseProgress(String courseProgress_id) {
+        Optional<CourseProgress> courseProgressOptional = progressRepository.findById(courseProgress_id);
+        if (courseProgressOptional.isPresent()){
+            CourseProgress courseProgress = courseProgressOptional.get();
+            progressRepository.delete(courseProgress);
+        }
     }
 
     @Override

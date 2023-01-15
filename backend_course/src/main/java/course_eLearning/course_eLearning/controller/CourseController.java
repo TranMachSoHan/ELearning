@@ -135,6 +135,18 @@ public class CourseController {
         }
     }
 
+    @GetMapping("/id/{courseId}")
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable("courseId") String course_id){
+        Course course = courseService.getCourseById(course_id);
+        if(course == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        else{
+            CourseDTO courseDTO = ModelMapperConfig.convertToCourseDTO(course);
+            return new ResponseEntity<>(courseDTO,  HttpStatus.OK);
+        }
+    }
+
 
     /**
      * http://localhost:8080/course/id/63b5151a7e7b23000f83a709/enroll?studentId=studentId

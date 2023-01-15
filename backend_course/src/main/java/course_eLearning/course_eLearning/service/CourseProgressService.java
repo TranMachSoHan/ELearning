@@ -16,6 +16,7 @@ public interface CourseProgressService {
     public List<CourseProgress> getCompletedProgress(String student_id);
     public CourseProgress enrollCourseProgress(Course course, String student_id);
     public CourseProgress saveCourseProgress(Course course, String student_id);
+    public void dropCourseProgress(String courseProgress_id);
     public CourseProgress findExistedCourseProgress(List<CourseProgress> courseProgresses, String student_id);
 
     public CourseProgress setInProgress(CourseProgress courseProgress);
