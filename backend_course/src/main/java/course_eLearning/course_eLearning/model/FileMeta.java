@@ -5,10 +5,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
+
 @NoArgsConstructor
 @Data
 @AllArgsConstructor
-public class FileMeta {
+public class FileMeta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     private String fileID;

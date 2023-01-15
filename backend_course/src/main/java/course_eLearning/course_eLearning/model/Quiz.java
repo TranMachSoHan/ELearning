@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "quizzes")
-public class Quiz {
+public class Quiz implements Serializable {
     @Id
     private String quizID;
     private Date dueDate;

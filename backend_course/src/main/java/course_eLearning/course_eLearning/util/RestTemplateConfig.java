@@ -14,10 +14,11 @@ import java.util.List;
 public class RestTemplateConfig {
     private static final RestTemplate restTemplate = new RestTemplate();
 
-    private static final String BASE_URL_API = "http://localhost:8081";
+    private static final String BASE_URL_API = "http://backend-user:8081";
 
 
     public static ProfessorResponse getProfessorDTO(String professorID){
+        System.out.println(professorID);
         ResponseEntity<ProfessorResponse> response
                 = restTemplate.getForEntity(BASE_URL_API + "/profile/professor/"+professorID, ProfessorResponse.class);
         if( response.getStatusCode().is2xxSuccessful()) {
