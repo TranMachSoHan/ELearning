@@ -22,9 +22,10 @@ services:
       - ./database-data:/data/db
 
   backend-user:
-    # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_user_backend:latest
-    image: rmit_e_learning_user_backend:latest
+    image: docker.io/maklisa2000/rmit_e_learning_user_backend
+#    image: rmit_e_learning_user_backend:latest
     container_name: backend-user
+    restart: always
     depends_on:
       - mongodb
       - redis
@@ -40,9 +41,10 @@ services:
       - DB_NAME=course_eLearning
 
   backend-course:
-    # image: public.ecr.aws/l4i7m7o8/rmit_e_learning_course_backend:latest
-    image: rmit_e_learning_course_backend:latest
+    image: docker.io/maklisa2000/rmit_e_learning_course_backend
+#    image: rmit_e_learning_course_backend:latest
     container_name: backend-course
+    restart: always
     networks:
       - my_network
       - kafka_network
