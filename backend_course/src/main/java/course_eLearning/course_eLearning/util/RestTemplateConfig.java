@@ -18,6 +18,7 @@ public class RestTemplateConfig {
 
 
     public static ProfessorResponse getProfessorDTO(String professorID){
+        System.out.println(professorID);
         ResponseEntity<ProfessorResponse> response
                 = restTemplate.getForEntity(BASE_URL_API + "/profile/professor/"+professorID, ProfessorResponse.class);
         if( response.getStatusCode().is2xxSuccessful()) {
