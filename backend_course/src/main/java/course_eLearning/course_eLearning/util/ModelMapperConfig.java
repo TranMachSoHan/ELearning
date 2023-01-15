@@ -85,7 +85,9 @@ public class ModelMapperConfig {
 
     public static CourseDTO convertToCourseDTO(Course course){
         CourseDTO courseDTO = modelMapper.map(course, CourseDTO.class);
-        courseDTO.setCourseProgresses(course.getCourseProgresses());
+        List<CourseProgressDetailDTO> courseProgressDetailDTOS = course.getCourseProgresses().stream()
+                .map(ModelMapperConfig::convertToCourseProgressDetailDTO).toList();
+        courseDTO.setCourseProgresses(courseProgressDetailDTOS);
         return courseDTO;
     }
 

@@ -6,10 +6,12 @@ import course_eLearning.course_eLearning.model.Module;
 import course_eLearning.course_eLearning.model.helper.CourseProgressType;
 import course_eLearning.course_eLearning.repository.CourseProgressRepository;
 import course_eLearning.course_eLearning.service.CourseProgressService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -75,6 +77,12 @@ public class CourseProgressServiceImpl implements CourseProgressService {
         Optional<CourseProgress> courseProgressOptional = progressRepository.findById(courseProgress_id);
         if (courseProgressOptional.isPresent()){
             CourseProgress courseProgress = courseProgressOptional.get();
+
+            // remove from course
+            Query query= Query.query(Criteria.where("$id").is(new ObjectId(courseProgress_id)));
+            Update update = new Update().pull("courseProgresses", query);
+            mongoTemplate.updateMulti(new Query(), update, Course.class);
+
             progressRepository.delete(courseProgress);
         }
     }

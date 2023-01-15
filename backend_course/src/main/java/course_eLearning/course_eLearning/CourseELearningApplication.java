@@ -425,7 +425,7 @@ public class CourseELearningApplication implements CommandLineRunner {
 	}
 
 	public Course createCourseProgresses(Course course, List<String> students){
-		int numOfCourseProgress = new Random().nextInt(50);
+		int numOfCourseProgress = 5;
 		int i = 0 ;
 		List<String> helper = new ArrayList<>();
 		while (i != numOfCourseProgress){
@@ -434,7 +434,7 @@ public class CourseELearningApplication implements CommandLineRunner {
 
 			CourseProgress courseProgress = new CourseProgress(course, student, new Random().nextBoolean());
 			courseProgress = courseProgressRepository.save(courseProgress);
-			course.addCourseProgress(courseProgress.getCourseProgressID());
+			course.addCourseProgress(courseProgress);
 
 			helper.add(student);
 			i++;

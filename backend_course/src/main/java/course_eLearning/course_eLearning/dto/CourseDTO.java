@@ -18,6 +18,6 @@ import java.util.Collection;
 public class CourseDTO {
     private String courseID;
     private String courseName;
-    private Collection<String> courseProgresses;
+    private Collection<CourseProgressDetailDTO> courseProgresses;
 }
 

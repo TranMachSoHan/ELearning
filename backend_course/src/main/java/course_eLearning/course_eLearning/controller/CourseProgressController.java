@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/courseProgress")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseProgressController {
     @Autowired
     private CourseProgressService progressService;
@@ -66,7 +66,7 @@ public class CourseProgressController {
         return new ResponseEntity<>(courseProgressDetailDTOS,  HttpStatus.OK);
     }
 
-    @GetMapping("/id/{courseProgressId}/student/dropCourseInProgress")
+    @DeleteMapping("/id/{courseProgressId}/student/dropCourseInProgress")
     public ResponseEntity<List<CourseProgressOverviewListDTO>> dropCourseInProgress(
             @PathVariable("courseProgressId") String course_progress_id,
             @RequestParam("studentId") String student_id

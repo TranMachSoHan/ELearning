@@ -23,7 +23,6 @@ import java.util.stream.IntStream;
 public class CourseProgress implements Serializable {
     @Id
     private String courseProgressID;
-    @DBRef
     private Course course;
     private CourseProgressType courseProgressType;
     private String student;
