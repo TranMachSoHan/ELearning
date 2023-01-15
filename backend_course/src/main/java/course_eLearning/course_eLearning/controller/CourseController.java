@@ -30,6 +30,11 @@ public class CourseController {
     @Autowired
     private SkillService skillService;
 
+    @GetMapping("/getAllSkills")
+    public ResponseEntity<Skill[]> getAllSkills(){
+        return new ResponseEntity<>(Skill.values(), HttpStatus.OK);
+    }
+    
     @GetMapping("/pageableBySkill")
     public ResponseEntity<Map<String, Object>> pageableCourseBySkill(
             @RequestParam int pageNum,

@@ -98,3 +98,26 @@ export const uploadAvatar = async (file) => {
     return error;
   }
 };
+
+
+export const saveCourse = async (courseID, studentID) => {
+  try {
+    const res = await Base.post(
+      `/course/id/${courseID}/save?studentId=${studentID}`
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const getCoursesSavedByStdID = async (studentID) => {
+  try {
+    const res = await Base.get(
+      `/courseProgress/student/getSavedProgress?studentId=${studentID}`
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+};

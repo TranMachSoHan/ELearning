@@ -7,7 +7,7 @@ import Comment from "../components/Comment";
 import { Accordion } from "flowbite-react";
 import CourseContent from "../components/CourseContent";
 import { useEffect, useState } from "react";
-import { enrollCourse, getCourseById } from "../api/useCourseAPI";
+import { enrollCourse, getCourseById, saveCourse } from "../api/useCourseAPI";
 import {useAuth} from '../context/AuthContext'
 const commentData = [
     {
@@ -68,6 +68,16 @@ const CourseDetail = () => {
         }
     }
     
+    const save = async () => {
+        if (user){
+            let enrollMsg = await saveCourse(courseID, user.id)
+            navigate(`/studentDetail/${user.id}`)
+        }else{
+            navigate('/login')
+        }
+    }
+    
+
 
     if (detail){
         return ( <section className="pt-8">
@@ -81,7 +91,7 @@ const CourseDetail = () => {
                 <p className="py-4 text-lead-24">Created by {detail.professor.name} - {detail.numberOfStudent} students enrolled</p>
                 <div className="flex items-center gap-5">
                     <Button size="large" onClick={enroll} text={'Start Now!'}></Button>
-                    <Button isPrimary={false} size='large' text={'Save Later'}></Button>
+                    <Button isPrimary={false} size='large' onClick={save} text={'Save Later'}></Button>
                 </div>
             </div>
         </div>

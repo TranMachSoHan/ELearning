@@ -10,13 +10,13 @@ import course_eLearning.course_eLearning.repository.CommentRepository;
 
 @Component
 public class CommentListener {
-    @Autowired
-    private CommentRepository commentRepository;
-
-    @KafkaListener(topics = KafkaConstants.KAFKA_TOPIC, groupId = KafkaConstants.GROUP_ID)
-    public void listen(Comment comment) {
-        System.out.println(comment);
-        comment = commentRepository.save(comment);
-        System.out.println(comment.getId());
-    }
+//    @Autowired
+//    private CommentRepository commentRepository;
+//
+//    @KafkaListener(topics = KafkaConstants.KAFKA_TOPIC, groupId = KafkaConstants.GROUP_ID)
+//    public void listen(Comment comment) {
+//        System.out.println(comment);
+//        comment = commentRepository.save(comment);
+//        System.out.println(comment.getId());
+//    }
 }

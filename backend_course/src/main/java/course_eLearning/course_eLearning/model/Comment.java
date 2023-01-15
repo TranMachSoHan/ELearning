@@ -20,9 +20,9 @@ public class Comment implements Serializable {
     private String studentID ;
     private String details;
     private Date time;
-    private String star;
+    private int star;
 
-    public Comment(String studentID, String details, Date time, String star) {
+    public Comment(String studentID, String details, Date time, int star) {
         this.studentID = studentID;
         this.details = details;
         this.time = time;
