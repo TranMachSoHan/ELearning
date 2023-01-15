@@ -39,8 +39,7 @@ const SignUp = () => {
           major: major,
           minor: minor,
           userRole: "STUDENT",
-          avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/
-          ${avpath.filePath}`,
+          avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/${avpath.filePath}`,
           createdDate: new Date(),
           payment: {
             bank: bank,
@@ -59,8 +58,7 @@ const SignUp = () => {
           name: name,
           userRole: "PROFESSOR",
           createdDate: new Date(),
-          avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/
-          ${avpath.filePath}`,
+          avatar: `https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/${avpath.filePath}`,
           description: instructorDescription,
         }
       );
@@ -253,7 +251,13 @@ const SignUp = () => {
           </>
         )}
 
-        <Button type="submit" text={"Sign Up"} isPrimary={true} loadingText="Signing you up..." isLoading={isRegistering}></Button>
+        <Button
+          type="submit"
+          text={"Sign Up"}
+          isPrimary={true}
+          loadingText="Signing you up..."
+          isLoading={isRegistering}
+        ></Button>
       </form>
     </section>
   );

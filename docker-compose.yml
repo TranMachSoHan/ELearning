@@ -22,8 +22,8 @@ services:
       - ./database-data:/data/db
 
   backend-user:
-    image: docker.io/maklisa2000/rmit_e_learning_user_backend
-#    image: rmit_e_learning_user_backend:latest
+#    image: docker.io/maklisa2000/rmit_e_learning_user_backend
+    image: rmit_e_learning_user_backend:latest
     container_name: backend-user
     restart: always
     depends_on:
@@ -40,28 +40,28 @@ services:
       - DB_PASS=password
       - DB_NAME=course_eLearning
 
-  backend-course:
-    image: docker.io/maklisa2000/rmit_e_learning_course_backend
+#  backend-course:
+##    image: docker.io/maklisa2000/rmit_e_learning_course_backend
 #    image: rmit_e_learning_course_backend:latest
-    container_name: backend-course
-    restart: always
-    networks:
-      - my_network
-      - kafka_network
-    depends_on:
-      - mongodb
-      - redis
-      - backend-user
-    ports:
-      - "8082:8082"
-    links:
-      - "kafka:kafka"
-    environment:
-      - DB_HOST=mongodb
-      - DB_PORT=27017
-      - DB_USER=root
-      - DB_PASS=password
-      - DB_NAME=course_eLearning
+#    container_name: backend-course
+#    restart: always
+#    networks:
+#      - my_network
+#      - kafka_network
+#    depends_on:
+#      - mongodb
+#      - redis
+#      - backend-user
+#    ports:
+#      - "8082:8082"
+#    links:
+#      - "kafka:kafka"
+#    environment:
+#      - DB_HOST=mongodb
+#      - DB_PORT=27017
+#      - DB_USER=root
+#      - DB_PASS=password
+#      - DB_NAME=course_eLearning
 
   redis:
     container_name: redis
