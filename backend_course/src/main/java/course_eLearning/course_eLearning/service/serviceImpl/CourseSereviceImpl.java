@@ -10,6 +10,7 @@ import course_eLearning.course_eLearning.repository.ModuleRepository;
 import course_eLearning.course_eLearning.service.CourseProgressService;
 import course_eLearning.course_eLearning.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -64,7 +65,7 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
-//    @Cacheable(value = "courses")
+    @Cacheable(value = "courses")
     public List<Course> getCourses() {
         System.out.println("call get all courses service!!!");
         return courseRepository.findAll();
@@ -78,13 +79,14 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
-//    @Cacheable(value = "courses",key = "#skill")
+    @Cacheable(value = "courses",key = "#skill")
     public List<Course> getCoursesBySkill(String skill) {
         // Handle upper case
         return courseRepository.findBySkill(skill.toUpperCase());
     }
 
     @Override
+    @Cacheable(value = "courses",key = "#courseId")
     public Course getCourseById(String courseId) {
         return courseRepository.findById(courseId).orElse(null);
     }
@@ -126,6 +128,7 @@ public class CourseSereviceImpl implements CourseService {
     }
 
     @Override
+    @CacheEvict(value = "courses", allEntries = true)
     public CourseProgress saveCourse(String course_id, String student_id) {
         Optional<Course> courseOptional = courseRepository.findById(course_id);
         if(courseOptional.isPresent()){

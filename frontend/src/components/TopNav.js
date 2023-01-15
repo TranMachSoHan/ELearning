@@ -1,14 +1,19 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate, useLocation } from "react-router-dom";
+import { getAllSkills } from "../api/useCourseAPI";
 import { ACCESS_TOKEN } from "../constants";
 import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
 import ProfileLink from "./ProfileLink";
-const skillList = ["Python", "ReactJs", "C", "Java", "NodeJs"];
+
+
 const TopNav = () => {
   const [open, setOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
+
+  const [skillList, setSkillList] = useState(["Python", "ReactJs", "C", "Java", "NodeJs"]);
+
 
   //const [userName, setUserName] = useState(null);
 
@@ -22,6 +27,16 @@ const TopNav = () => {
       setSubMenuText("Skills");
     }
   }, [location.pathname]);
+
+  useEffect(() => {
+    const getSkills = async () => {
+      let data = await getAllSkills();
+
+      setSkillList(data)
+    }
+
+    getSkills()
+  }, [])
 
   //Check if student logged in
   const { user } = useAuth();

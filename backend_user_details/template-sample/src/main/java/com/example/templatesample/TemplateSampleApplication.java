@@ -58,12 +58,12 @@ public class TemplateSampleApplication implements CommandLineRunner {
 		Faker faker = new Faker();
 		for(int i = 0; i < 100; i++) {
 			String name = faker.name().fullName();
-			String email = fakeValuesService.numerify("prof####")+"@gmail.com";
+			String email = "prof" + i + "@gmail.com";
 			String password = bCryptPasswordEncoder.encode("123");
 			Integer age = faker.number().numberBetween(20,70);
 			Date createdDate = faker.date().birthday();
 			String description = faker.lorem().characters();
-			String avatar = faker.lorem().characters();
+			String avatar = "https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/f9305b23-2330-4d0c-b869-68a76c3fc3e6/profile.png";
 			Professor professor = new Professor(email, password, Role.PROFESSOR,name,age,avatar,description,createdDate);
 			profileRepository.save(professor);
 			professorRepository.save(professor);
@@ -71,11 +71,11 @@ public class TemplateSampleApplication implements CommandLineRunner {
 
 		for(int i = 0; i < 4900; i++) {
 			String name = faker.name().fullName();
-			String email = fakeValuesService.numerify("stud####")+"@gmail.com";
+			String email = "stud" + i + "@gmail.com";
 			String password = bCryptPasswordEncoder.encode("123");
 			Integer age = faker.number().numberBetween(15,50);
 			Date createdDate = faker.date().birthday();
-			String avatar = faker.lorem().characters();
+			String avatar = "https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/f9305b23-2330-4d0c-b869-68a76c3fc3e6/profile.png";
 			Random random = new Random();
 			int majorIndex = random.nextInt(majorList.length);
 			int minorIndex = random.nextInt(majorList.length);
