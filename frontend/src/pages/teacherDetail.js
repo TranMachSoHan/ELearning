@@ -22,7 +22,7 @@ const TeacherDetail = () => {
       <div className="bg-primary-50 h-[600px] grid mb-10">
         <div className="flex items-center self-center gap-7 container-padding-left">
           <img
-            src={Avatar}
+            src={profile?.avatar}
             className="block aspect-square w-[148px] rounded-full"
             alt=""
           />
