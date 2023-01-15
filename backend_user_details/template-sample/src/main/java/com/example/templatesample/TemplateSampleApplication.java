@@ -30,7 +30,6 @@ import java.util.Random;
 @SpringBootApplication
 @EnableSwagger2
 @EnableCaching
-
 public class TemplateSampleApplication implements CommandLineRunner {
 	@Autowired
 	private ProfileRepository profileRepository;

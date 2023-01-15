@@ -9,6 +9,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.stream.IntStream;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "courseProgresses")
-public class CourseProgress {
+public class CourseProgress implements Serializable {
     @Id
     private String courseProgressID;
     @DBRef
@@ -27,7 +28,6 @@ public class CourseProgress {
     private CourseProgressType courseProgressType;
     private String student;
     private double finishedPercentage;
-    private int numOfModuleFinished ;
     private List<Submission> submissions ;
 
     private HashMap<String, ModuleProgress> moduleProgresses;
@@ -36,7 +36,6 @@ public class CourseProgress {
         this.course = course;
         this.student = student;
         this.finishedPercentage = 0;
-        this.numOfModuleFinished = 0;
         this.submissions = new ArrayList<>();
         this.moduleProgresses = new HashMap<>();
         if (isEnrolled){
@@ -53,7 +52,6 @@ public class CourseProgress {
         this.course = course;
         this.student = student;
         this.finishedPercentage = 0;
-        this.numOfModuleFinished = 0;
         this.submissions = new ArrayList<>();
         this.moduleProgresses = new HashMap<>();
     }
@@ -100,7 +98,7 @@ public class CourseProgress {
                 foundModuleProgress.setLessonCompleted(prevLesson);
 
                 // TODO: check module is Finished
-
+                this.finishedPercentage = foundModuleProgress.getNumLessonCompleted()/module.getLessons().size()*100;
             }
             if(newLesson != null){
                 // when user hits next, the new article will be clicked
@@ -116,7 +114,7 @@ public class CourseProgress {
     }
 
     @Data
-    public static class ModuleProgress{
+    public static class ModuleProgress implements Serializable {
         HashMap<String, LessonStatus> lessonLearned;
 
         public ModuleProgress() {
@@ -128,6 +126,10 @@ public class CourseProgress {
         }
         public void addLessonLearned(String lesson_id) {
             this.lessonLearned.putIfAbsent(lesson_id, LessonStatus.IN_PROGRESS);
+        }
+        public long getNumLessonCompleted(){
+            return this.lessonLearned.values().stream()
+                    .filter(s -> s.equals(LessonStatus.FINISHED)).count();
         }
     }
 

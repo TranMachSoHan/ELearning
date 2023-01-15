@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "submissions")
-public class Submission {
+public class Submission implements Serializable {
     @Id
     private String submissionID;
     private Float grade;

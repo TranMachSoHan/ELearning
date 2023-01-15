@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,21 +15,18 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Document(collection = "modules")
-public class Module {
+public class Module implements Serializable {
     @Id
     private String moduleID;
     private String title;
     private boolean canViewed;
     @DBRef
     private List<Lesson> lessons = new ArrayList<>();
-    @DBRef
-    private FileMeta supportedFileMeta;
 
-    public Module(String title, boolean canViewed, List<Lesson> lessons, FileMeta supportedFileMeta) {
+    public Module(String title, boolean canViewed, List<Lesson> lessons) {
         this.title = title;
         this.canViewed = canViewed;
         this.lessons = lessons;
-        this.supportedFileMeta = supportedFileMeta;
     }
 
     public void addLesson(Lesson lesson){
