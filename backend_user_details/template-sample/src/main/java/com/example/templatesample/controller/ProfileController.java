@@ -90,6 +90,7 @@ public class ProfileController {
     }
 
     @GetMapping("student/countMajor")
+    @Cacheable(value = "majorStudent")
     public StudentMajorResponse countStudentMajor() {
         List<Student> addStudents = profileService.getAllStudents();
         long countSE = addStudents.stream().filter(c -> c.getMajor().equals("Software Engineering")).count();

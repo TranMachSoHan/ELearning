@@ -59,7 +59,7 @@ public class TemplateSampleApplication implements CommandLineRunner {
 		Faker faker = new Faker();
 		for(int i = 0; i < 100; i++) {
 			String name = faker.name().fullName();
-			String email = fakeValuesService.numerify("prof####")+"@gmail.com";
+			String email = "prof" + i + "@gmail.com";
 			String password = bCryptPasswordEncoder.encode("123");
 			Integer age = faker.number().numberBetween(20,70);
 			Date createdDate = faker.date().birthday();
@@ -72,7 +72,7 @@ public class TemplateSampleApplication implements CommandLineRunner {
 
 		for(int i = 0; i < 4900; i++) {
 			String name = faker.name().fullName();
-			String email = fakeValuesService.numerify("stud####")+"@gmail.com";
+			String email = "stud" + i + "@gmail.com";
 			String password = bCryptPasswordEncoder.encode("123");
 			Integer age = faker.number().numberBetween(15,50);
 			Date createdDate = faker.date().birthday();

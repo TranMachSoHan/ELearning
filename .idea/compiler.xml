@@ -7,9 +7,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="template-sample" />
         <module name="api-gateaway" />
         <module name="course_eLearning" />
+        <module name="template-sample" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
