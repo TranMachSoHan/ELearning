@@ -54,10 +54,13 @@ public class Course implements Serializable {
     }
 
     public void addModule(Module module){this.modules.add(module);}
+    public void addComment(Comment comment){this.comments.add(comment);}
+
     public void updateCourse(Course course){
         this.courseName = course.courseName;
         this.courseDescription = course.courseDescription;
     }
+
 
     @Override
     public String toString() {

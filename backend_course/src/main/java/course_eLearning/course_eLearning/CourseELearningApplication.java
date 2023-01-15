@@ -44,6 +44,7 @@ public class CourseELearningApplication implements CommandLineRunner {
 	@Autowired
 	private FileMetaRepository fileMetaRepository;
 
+	private final Random random = new Random();
 	private final Faker faker = new Faker();
 	public static void main(String[] args) {
 		SpringApplication.run(CourseELearningApplication.class, args);
@@ -65,7 +66,6 @@ public class CourseELearningApplication implements CommandLineRunner {
 		List<Course> courses = new ArrayList<>();
 		//Creating instance to avoid static member methods
 		for (Skill skillEnum : Skill.values()){
-			if (skillEnum == Skill.DESIGN) break;
 			String skill = skillEnum.name();
 			InputStream is = getFileAsIOStream("data/udemy_"+skill.toLowerCase()+".csv");
 			List<Course> skillCourse = csvToCourses(is, skill);
@@ -94,7 +94,7 @@ public class CourseELearningApplication implements CommandLineRunner {
 				System.out.println("Skill: "+ skill );
 				System.out.println(course.getCourseName());
 				courses.add(course);
-				if (courses.size() > 10) break;
+				if (courses.size() > 2000) break;
 			}
 
 			return courses;
@@ -103,23 +103,6 @@ public class CourseELearningApplication implements CommandLineRunner {
 		}
 	}
 
-	public List<String> createProffesorTemps(){
-		List<String> professors = new ArrayList<>();
-
-		for (int i = 0 ; i < 50;i++){
-			professors.add("professor_id"+i);
-		}
-		return professors;
-	}
-
-	public List<String> createStudentTemps(){
-		List<String> students = new ArrayList<>();
-
-		for (int i = 0 ; i < 50;i++){
-			students.add("student_id"+i);
-		}
-		return students;
-	}
 	public Course createCourse(CSVRecord csvRecord, String skill, List<String> professors, List<String> students ){
 		List<Comment> comments = createComments(students);
 		List<Module> modules = createModule();
@@ -130,7 +113,7 @@ public class CourseELearningApplication implements CommandLineRunner {
 					csvRecord.get("Summary"),
 					comments,
 					Skill.valueOf(skill),
-					new Random().nextDouble(5),
+						random.nextDouble(5),
 					modules
 				);
 		course = courseRepository.save(course);
@@ -182,10 +165,10 @@ public class CourseELearningApplication implements CommandLineRunner {
 		int i = 0 ;
 		List<String> helper = new ArrayList<>();
 		while (i != numOfCourseProgress){
-			String student = students.get(new Random().nextInt(students.size()));
+			String student = students.get(random.nextInt(students.size()));
 			if (helper.contains(student)) continue;
 
-			CourseProgress courseProgress = new CourseProgress(course, student, new Random().nextBoolean());
+			CourseProgress courseProgress = new CourseProgress(course, student, random.nextBoolean());
 			courseProgress = courseProgressRepository.save(courseProgress);
 			course.addCourseProgress(courseProgress);
 
@@ -199,8 +182,8 @@ public class CourseELearningApplication implements CommandLineRunner {
 		int numOfLessonNeeded = new Random().nextInt(100);
 
 		for (int i = 0 ; i < numOfLessonNeeded ;i ++){
-			String studentID = students.get(new Random().nextInt(students.size()));
-			Comment comment = new Comment(studentID, faker.lorem().paragraph(), faker.date().past(2, TimeUnit.DAYS),new Random().nextInt(5));
+			String studentID = students.get(random.nextInt(students.size()));
+			Comment comment = new Comment(studentID, faker.lorem().paragraph(), faker.date().past(2, TimeUnit.DAYS),random.nextInt(5));
 			comment = commentRepository.save(comment);
 			comments.add(comment);
 		}
