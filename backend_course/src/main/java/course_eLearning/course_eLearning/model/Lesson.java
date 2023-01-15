@@ -8,13 +8,14 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "lessons")
-public class Lesson {
+public class Lesson implements Serializable {
     @Id
     private String lessonID;
 
@@ -36,7 +37,7 @@ public class Lesson {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Article {
+    public static class Article implements Serializable {
         String paragraph;
         FileMeta imageFile;
     }
@@ -44,7 +45,7 @@ public class Lesson {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Video {
+    public static class Video implements Serializable  {
         FileMeta videoFile = null;
         double duration = 0;
 

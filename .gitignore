@@ -1,5 +1,8 @@
 **/database-data/
 **/my-database/
 **/node_modules/
+**/mongo-course/
+**/mongo-user/
 **/target/
+.DS_Store
 **/zk-single-kafka-single/

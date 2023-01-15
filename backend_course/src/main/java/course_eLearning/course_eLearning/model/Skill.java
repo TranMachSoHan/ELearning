@@ -1,9 +1,14 @@
 package course_eLearning.course_eLearning.model;
 
 public enum Skill {
-    PYTHON,
-    JAVA,
-    C,
+    BUSINESS,
+    DESIGN,
+    TECH,
+    MARKETING,
+    FINANCE,
     REACTJS,
+    PYTHON,
+    C,
+    JAVA,
     NODEJS
 }
