@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"; 
 
 const ProfileLink = ({imgSrc, name, role, userID}) => {
-    const {logout} = useAuth();
+    const {logout, user} = useAuth();
+    const navigate = useNavigate();
+
     const [open, setOpen] = useState(false);
     return ( <div className="relative flex items-center gap-2 cursor-pointer " onMouseEnter={() => {setOpen(true)}} onMouseLeave={() => {setOpen(false)}}>
         {imgSrc && <img src={imgSrc} className='block rounded-full aspect-square w-9' alt="" />}
@@ -16,7 +18,8 @@ const ProfileLink = ({imgSrc, name, role, userID}) => {
 
         <ul className={"absolute right-0 -bottom-0 transform min-w-[180px] translate-y-full z-10 p-4 space-y-2 bg-white drop-shadow-lg " + (open ? 'block' : 'hidden')}>
             <li className="hover:text-primary-500"><Link to={role == 'student' ? `studentDetail/${userID}` : `teacherDetail/${userID}`}>Go to Profile</Link></li>
-            <li className="cursor-pointer hover:text-primary-500" onClick={logout}>Sign Out</li>
+            <li className="cursor-pointer hover:text-primary-500" 
+            onClick={() => {logout(); navigate("/")}}>Sign Out</li>
         </ul>
         
     </div> );

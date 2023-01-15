@@ -147,3 +147,14 @@ export const createModule = async (module, courseID) => {
 export const getCourseSetting = async () => {
   
 }
+
+
+export const getAllSkills = async () => {
+  try {
+    const res = await Base.get(
+      `/course/getAllSkills`);
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+}

@@ -62,7 +62,7 @@ const CourseDetail = () => {
     const enroll = async () => {
         if (user){
             let enrollMsg = await enrollCourse(courseID, user.id)
-            navigate(`/learning/${enrollMsg.courseProgressID}`)
+            navigate(`/learning/${detail.courseName}/${enrollMsg.courseProgressID}`)
         }else{
             navigate('/login')
         }
