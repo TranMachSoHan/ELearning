@@ -5,5 +5,10 @@ public enum Skill {
     DESIGN,
     TECH,
     MARKETING,
-    FINANCE
+    FINANCE,
+    REACTJS,
+    PYTHON,
+    C,
+    JAVA,
+    NODEJS
 }
