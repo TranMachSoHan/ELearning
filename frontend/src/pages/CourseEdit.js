@@ -1,12 +1,16 @@
 import { Accordion, Modal } from "flowbite-react";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import { createModule } from "../api/useCourseAPI";
 import Button from "../components/Button";
 import CourseContent from "../components/CourseContent";
 import SectionTitle from "../components/SectionTitle";
 
 const CourseEdit = () => {
 
+    const {courseID} = useParams();
     const [lessonType, setLessonType] = useState(null);
+    const [moduleTitle, setModuleTitle] = useState(null);
 
     const [openEditCourseName, setOpenEditCourseName] = useState(false)
     const [openEditCourseDescription, setOpenEditCourseDescription] = useState(false)
@@ -43,6 +47,19 @@ const CourseEdit = () => {
 
         setUploadedFile(chosenFiles[0]);
     }
+
+    const submitModule = async () => {
+        const modulePayload = {
+            "title": moduleTitle, "canViewed": false
+        }
+        
+        let res = await createModule(modulePayload, courseID)
+        console.log(res);
+
+        
+    }
+    console.log(courseID)
+
     return ( <section>
         <SectionTitle title={'Edit Course'}></SectionTitle>
 
@@ -84,10 +101,10 @@ const CourseEdit = () => {
                                 New Module 
                             </h2>
                             
-                            <form className="space-y-5">
+                            <div className="space-y-5">
                                 <div className='space-y-2'>
                                     <label htmlFor="moduleName" className="font-medium" >Module Name</label>
-                                    <input type="text" name="moduleName" id="moduleName" className='block w-full p-2 border border-black' placeholder='Setting Up Python' />
+                                    <input type="text" onChange={(e) => {setModuleTitle(e.target.value) }} name="moduleName" id="moduleName" className='block w-full p-2 border border-black' placeholder='Setting Up Python' />
                                 </div>
 
                                 <div className='space-y-2'>
@@ -177,11 +194,11 @@ const CourseEdit = () => {
                                 
            
                                 <div className="flex justify-end pt-4">
-                                    <Button isPrimary={true} size="large"  text={"Add Module"}></Button>
+                                    <Button isPrimary={true} size="large" onClick={submitModule}  text={"Add Module"}></Button>
                                 </div>
                                 
                                 
-                            </form>
+                            </div>
                             
                         </div>
                         </Modal.Body>

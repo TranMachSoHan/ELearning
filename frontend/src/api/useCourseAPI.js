@@ -121,3 +121,29 @@ export const getCoursesSavedByStdID = async (studentID) => {
     return error;
   }
 };
+
+export const createCourse = async (course) => {
+  try {
+    const res = await Base.post(
+      `/course/create`, course
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const createModule = async (module, courseID) => {
+  try {
+    const res = await Base.post(
+      `/course/id/${courseID}/createModule`, module
+    );
+    return res.data;
+  } catch (error) {
+    return error;
+  }
+}
+
+export const getCourseSetting = async () => {
+  
+}
