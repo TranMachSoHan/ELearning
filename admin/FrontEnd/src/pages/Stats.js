@@ -24,9 +24,12 @@ export const Stats = () => {
     LinearScale,
     BarElement
   );
-  const [studentCount, setStudentCount] = useState(0);
-  const [professorCount, setProfessorCount] = useState(0);
-  const [majorCount, setMajorCount] = useState();
+  const [studentCount, setStudentCount] = useState(4900);
+  const [professorCount, setProfessorCount] = useState(100);
+  const [IT, setIT] = useState(10);
+  const [BM, setBM] = useState(20);
+  const [DM, setDM] = useState(15);
+  const [SE, setSE] = useState(25);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -35,7 +38,10 @@ export const Stats = () => {
         let professor = await getProfessorsString();
         setProfessorCount(Object.keys(professor).length);
         let major = await countStudentMajor();
-        setMajorCount(major);
+        setIT(major.countIT);
+        setBM(major.countBM);
+        setSE(major.countSE);
+        setDM(major.countDM);
       } catch (error) {
         console.log(error);
       }
@@ -60,12 +66,7 @@ export const Stats = () => {
               {
                 label: "Student",
                 backgroundColor: ["#B1BAFB", "#6475F7", "#3142C4", "#182162"],
-                data: [
-                  majorCount.countIT,
-                  majorCount.countBM,
-                  majorCount.countSE,
-                  majorCount.countDM,
-                ],
+                data: [IT, BM, SE, DM],
               },
             ],
           }}
