@@ -49,6 +49,12 @@ public class CourseELearningApplication implements CommandLineRunner {
 		SpringApplication.run(CourseELearningApplication.class, args);
 	}
 
+	@Override
+	public void run(String... args) throws IOException {
+		readFile();
+
+	}
+
 	public void readFile() throws IOException {
 		courseRepository.deleteAll();
 		moduleRepository.deleteAll();
@@ -215,9 +221,5 @@ public class CourseELearningApplication implements CommandLineRunner {
 		}
 	}
 
-	@Override
-	public void run(String... args) throws IOException {
-		readFile();
 
-	}
 }
