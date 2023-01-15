@@ -63,7 +63,7 @@ public class TemplateSampleApplication implements CommandLineRunner {
 			Integer age = faker.number().numberBetween(20,70);
 			Date createdDate = faker.date().birthday();
 			String description = faker.lorem().characters();
-			String avatar = faker.lorem().characters();
+			String avatar = "https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/f9305b23-2330-4d0c-b869-68a76c3fc3e6/profile.png";
 			Professor professor = new Professor(email, password, Role.PROFESSOR,name,age,avatar,description,createdDate);
 			profileRepository.save(professor);
 			professorRepository.save(professor);
@@ -75,7 +75,7 @@ public class TemplateSampleApplication implements CommandLineRunner {
 			String password = bCryptPasswordEncoder.encode("123");
 			Integer age = faker.number().numberBetween(15,50);
 			Date createdDate = faker.date().birthday();
-			String avatar = faker.lorem().characters();
+			String avatar = "https://elearning-sead-storage.s3.ap-south-1.amazonaws.com/f9305b23-2330-4d0c-b869-68a76c3fc3e6/profile.png";
 			Random random = new Random();
 			int majorIndex = random.nextInt(majorList.length);
 			int minorIndex = random.nextInt(majorList.length);

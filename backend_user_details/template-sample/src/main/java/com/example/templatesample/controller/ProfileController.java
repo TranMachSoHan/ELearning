@@ -41,6 +41,8 @@ public class ProfileController {
     @Cacheable(value = "profiles")
     @GetMapping("/all-profiles")
     public List<Profile> getAllProfiles() {
+
+        System.out.println("call api");
         return profileService.getAll();
     }
 
