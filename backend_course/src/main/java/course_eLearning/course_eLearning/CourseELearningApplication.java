@@ -64,10 +64,6 @@ public class CourseELearningApplication implements CommandLineRunner {
 	 		String professor_id5 = professors.get(4);
 	 		List<String> students = RestTemplateConfig.getStudentList();
 	 		String student_id1 = students.get(0);
-	 		String student_id2 = students.get(1);
-	 		String student_id3 = students.get(2);
-	 		String student_id4 = students.get(3);
-	 		String student_id5 = students.get(4);
 
 	 		courseRepository.deleteAll();
 	 		moduleRepository.deleteAll();
