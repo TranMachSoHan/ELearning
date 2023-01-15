@@ -166,4 +166,8 @@ public class ProfileServiceImpl implements ProfileService, UserDetailsService {
         return simpleGrantedAuthorities;
     }
 
+    @Override
+    public long countMajor(String major){
+        return studentRepository.countMajor(major);
+    }
 }
