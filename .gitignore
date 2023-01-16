@@ -1,4 +1,5 @@
 **/database-data/
+**/database-mongodb2/
 **/my-database/
 **/node_modules/
 **/mongo-course/
@@ -6,3 +7,4 @@
 **/target/
 .DS_Store
 **/zk-single-kafka-single/
+**/var

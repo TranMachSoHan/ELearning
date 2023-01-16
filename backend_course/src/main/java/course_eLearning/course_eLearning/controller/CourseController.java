@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/course")
-@CrossOrigin(origins = "http://localhost:3000/", maxAge = 3600)
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class CourseController {
     @Autowired
     private CourseService courseService;
@@ -132,6 +132,18 @@ public class CourseController {
             Long numberOfStudent = courseService.countInProgressCourse(course);
             CourseDetailDTO courseDetailDTO = ModelMapperConfig.convertToCourseDetailDTO(course,numberCoursesOfProf,numberOfStudent);
             return new ResponseEntity<>(courseDetailDTO,  HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("/id/{courseId}")
+    public ResponseEntity<CourseDTO> getCourseById(@PathVariable("courseId") String course_id){
+        Course course = courseService.getCourseById(course_id);
+        if(course == null){
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+        else{
+            CourseDTO courseDTO = ModelMapperConfig.convertToCourseDTO(course);
+            return new ResponseEntity<>(courseDTO,  HttpStatus.OK);
         }
     }
 

@@ -54,8 +54,26 @@ public class Course implements Serializable {
     }
 
     public void addModule(Module module){this.modules.add(module);}
+    public void addComment(Comment comment){this.comments.add(comment);}
+
     public void updateCourse(Course course){
         this.courseName = course.courseName;
         this.courseDescription = course.courseDescription;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseID='" + courseID + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", professorID='" + professorID + '\'' +
+                ", courseDescription='" + courseDescription + '\'' +
+                ", comments=" + comments +
+                ", skill=" + skill +
+                ", star=" + star +
+                ", modules=" + modules +
+                ", courseProgresses=" + courseProgresses +
+                '}';
     }
 }

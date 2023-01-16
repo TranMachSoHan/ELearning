@@ -33,6 +33,6 @@ public interface ProfileService {
     Optional<ProfessorGetDTO> getProfessorById(String id);
 
 
-
+    long countMajor(String major);
 
 }

@@ -2,6 +2,10 @@ version: '3.3'
 networks:
   my_network:
     driver: bridge
+  course_network:
+    driver: bridge
+  user_network:
+    driver: bridge
   kafka_network:
     driver: bridge
 
@@ -14,54 +18,69 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: password
       MONGO_INITDB_DATABASE: course_eLearning
     ports:
-      - "27017:27017"
+      - "27018:27017"
     container_name: mongodb
     networks:
-      - my_network
+      - course_network
     volumes:
       - ./database-data:/data/db
 
+  mongodb2:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: course_eLearning
+    ports:
+      - "27017:27017"
+    container_name: mongodb2
+    networks:
+      - user_network
+    volumes:
+      - ./database-mongodb2:/data/db
   backend-user:
 #    image: docker.io/maklisa2000/rmit_e_learning_user_backend
     image: rmit_e_learning_user_backend:latest
     container_name: backend-user
     restart: always
     depends_on:
-      - mongodb
+      - mongodb2
       - redis
     networks:
+      - user_network
       - my_network
     ports:
       - "8081:8081"
+    environment:
+      - DB_HOST=mongodb2
+      - DB_PORT=27018
+      - DB_USER=root
+      - DB_PASS=password
+      - DB_NAME=course_eLearning
+
+  backend-course:
+#    image: docker.io/maklisa2000/rmit_e_learning_course_backend
+    image: rmit_e_learning_course_backend:latest
+    container_name: backend-course
+    restart: always
+    networks:
+      - my_network
+      - kafka_network
+      - course_network
+    depends_on:
+      - mongodb
+      - redis
+      - backend-user
+    ports:
+      - "8082:8082"
+    links:
+      - "kafka:kafka"
     environment:
       - DB_HOST=mongodb
       - DB_PORT=27017
       - DB_USER=root
       - DB_PASS=password
       - DB_NAME=course_eLearning
-
-#  backend-course:
-##    image: docker.io/maklisa2000/rmit_e_learning_course_backend
-#    image: rmit_e_learning_course_backend:latest
-#    container_name: backend-course
-#    restart: always
-#    networks:
-#      - my_network
-#      - kafka_network
-#    depends_on:
-#      - mongodb
-#      - redis
-#      - backend-user
-#    ports:
-#      - "8082:8082"
-#    links:
-#      - "kafka:kafka"
-#    environment:
-#      - DB_HOST=mongodb
-#      - DB_PORT=27017
-#      - DB_USER=root
-#      - DB_PASS=password
-#      - DB_NAME=course_eLearning
 
   redis:
     container_name: redis
@@ -109,53 +128,6 @@ services:
 
 
 volumes:
-  mongodb_data_container:
+  var:
   cache:
     driver: local
-
-  # mongodb_course:
-  #     image: mongo:latest
-  #     environment:
-  #       MONGO_INITDB_ROOT_USERNAME: root
-  #       MONGO_INITDB_ROOT_PASSWORD: password
-  #       MONGO_INITDB_DATABASE: course_eLearning
-  #     ports:
-  #       - "27018:27018"
-  #     container_name: mongodb_course
-  #     networks:
-  #       - kong-net
-  #     volumes:
-  #       - ./my-database:/data/db
-
-  # 
-  
-  # kong:
-  #   image: kong:2.2.0
-  #   environment:
-  #     KONG_ADMIN_ACCESS_LOG: /dev/stdout
-  #     KONG_ADMIN_ERROR_LOG: /dev/stderr
-  #     KONG_ADMIN_LISTEN: '0.0.0.0:8001'
-  #     KONG_DATABASE: "off"
-  #     KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
-  #     KONG_PROXY_ACCESS_LOG: /dev/stdout
-  #     KONG_PROXY_ERROR_LOG: /dev/stderr
-  #   volumes:
-  #     - ./kong/:/usr/local/kong/declarative
-  #   networks:
-  #     - kong-net
-  #   ports:
-  #     - "8000:8000/tcp"
-  #     - "127.0.0.1:8001:8001/tcp"
-  #     - "8443:8443/tcp"
-  #     - "127.0.0.1:8444:8444/tcp"
-  #   healthcheck:
-  #     test: ["CMD", "kong", "health"]
-  #     interval: 10s
-  #     timeout: 10s
-  #     retries: 10
-  #   restart: on-failure
-  #   deploy:
-  #     restart_policy:
-  #       condition: on-failure
-
-

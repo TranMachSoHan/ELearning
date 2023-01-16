@@ -51,6 +51,7 @@ public class ModelMapperConfig {
         return courseListDTO;
     }
 
+
     public static CourseDetailDTO convertToCourseDetailDTO(Course course, Long numberCoursesOfProf, Long numberOfStudent){
         CourseDetailDTO courseDetailDTO = modelMapper.map(course, CourseDetailDTO.class);
 
@@ -80,6 +81,14 @@ public class ModelMapperConfig {
         courseDetailDTO.setProfessor(professorDTO);
 
         return courseDetailDTO;
+    }
+
+    public static CourseDTO convertToCourseDTO(Course course){
+        CourseDTO courseDTO = modelMapper.map(course, CourseDTO.class);
+        List<CourseProgressDetailDTO> courseProgressDetailDTOS = course.getCourseProgresses().stream()
+                .map(ModelMapperConfig::convertToCourseProgressDetailDTO).toList();
+        courseDTO.setCourseProgresses(courseProgressDetailDTOS);
+        return courseDTO;
     }
 
     public static CourseProgressDetailDTO convertToCourseProgressDetailDTO(CourseProgress courseProgress){

@@ -11,6 +11,7 @@ import com.example.templatesample.model.ProfileDetails;
 import com.example.templatesample.model.Student;
 import com.example.templatesample.payload.StudentMajorResponse;
 import com.example.templatesample.repository.ProfileRepository;
+import com.example.templatesample.repository.StudentRepository;
 import com.example.templatesample.security.oauth2.user.CurrentUser;
 import com.example.templatesample.service.ProfileService;
 import org.slf4j.Logger;
@@ -37,6 +38,9 @@ public class ProfileController {
 
     @Autowired
     private ProfileRepository profileRepository;
+
+    @Autowired
+    private StudentRepository studentRepository;
 
     @Cacheable(value = "profiles")
     @GetMapping("/all-profiles")

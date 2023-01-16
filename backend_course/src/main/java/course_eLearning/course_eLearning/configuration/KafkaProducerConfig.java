@@ -2,6 +2,8 @@ package course_eLearning.course_eLearning.configuration;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import course_eLearning.course_eLearning.dto.CommentDTO;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
@@ -17,7 +19,7 @@ import static course_eLearning.course_eLearning.constants.KafkaConstants.KAFKA_B
 @Configuration
 public class KafkaProducerConfig {
     @Bean
-    public ProducerFactory<String, Comment> producerFactory() {
+    public ProducerFactory<String, CommentDTO> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KAFKA_BROKER);
         configProps.put(
@@ -30,7 +32,7 @@ public class KafkaProducerConfig {
     }
 
     @Bean
-    public KafkaTemplate<String, Comment> kafkaTemplate() {
+    public KafkaTemplate<String, CommentDTO> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());
     }
 }
